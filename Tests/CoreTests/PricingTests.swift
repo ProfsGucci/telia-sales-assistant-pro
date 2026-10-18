@@ -62,8 +62,9 @@ final class PricingTests: XCTestCase {
             ]
         )
         let result = CostCalculator.planTotal(plan, months: 3)!
+        let expectedTotal: Double = 100 * 3 + 59 * 3 + 300 + 195
         XCTAssertEqual(result.oneTimeTotalSEK, 495, accuracy: 0.01)
-        XCTAssertEqual(result.totalSEK, 100 * 3 + 59 * 3 + 300 + 195, accuracy: 0.01)
+        XCTAssertEqual(result.totalSEK, expectedTotal, accuracy: 0.01)
     }
 
     func testZeroMonthsReturnsNil() {
