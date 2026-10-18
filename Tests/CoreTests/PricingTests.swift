@@ -54,17 +54,18 @@ final class PricingTests: XCTestCase {
     }
 
     func testUpfrontAndChargesIncluded() {
-        let plan = makePlan(
-            monthly: 100, upfront: 300,
-            charges: [
-                ChargeItem(name: "Faktura papper", amountSEK: 59, recurring: true),
-                ChargeItem(name: "Öppning", amountSEK: 195, recurring: false),
-            ]
-        )
-        let result = CostCalculator.planTotal(plan, months: 3)!
-        let expectedTotal: Double = 100 * 3 + 59 * 3 + 300 + 195
-        assertClose(result.oneTimeTotalSEK, 495)
-        assertClose(result.totalSEK, expectedTotal)
+        let recurringCharge = ChargeItem(name: "Faktura papper", amountSEK: 59, recurring: true)
+        let openingCharge = ChargeItem(name: "Öppning", amountSEK: 195, recurring: false)
+        let plan = makePlan(monthly: 100, upfront: 300, charges: [recurringCharge, openingCharge])
+        guard let result = CostCalculator.planTotal(plan, months: 3) else {
+            return XCTFail("planTotal returnerade nil")
+        }
+        let monthly: Double = 100
+        let recurring: Double = 59
+        let upfront: Double = 300
+        let opening: Double = 195
+        assertClose(result.oneTimeTotalSEK, upfront + opening)
+        assertClose(result.totalSEK, (monthly + recurring) * 3 + upfront + opening)
     }
 
     func testZeroMonthsReturnsNil() {
