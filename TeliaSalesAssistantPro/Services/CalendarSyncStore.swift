@@ -47,18 +47,23 @@ final class CalendarSyncStore: ObservableObject {
 
     // MARK: Settings conveniences
 
-    /// The settings store is injected once at app startup. SettingsStore
-    /// does not reference back, so a strong reference is cycle-free.
-    private var settings: SettingsStore!
+    /// The settings store is injected once at app startup. Until injection
+    /// happens (a beat after launch), every entry point no-ops gracefully —
+    /// scenePhase events can fire before the inject task runs, and that
+    /// must never crash (found by the simulator test run).
+    private var settingsStore: SettingsStore?
 
     func inject(settings: SettingsStore) {
-        self.settings = settings
+        self.settingsStore = settings
     }
 
-    var googleClient: OAuthClient { .google(clientID: settings.data.googleClientID) }
-    var microsoftClient: OAuthClient { .microsoft(clientID: settings.data.microsoftClientID) }
+    private var settings: SettingsStore? { settingsStore }
+
+    var googleClient: OAuthClient { .google(clientID: settings?.data.googleClientID ?? "") }
+    var microsoftClient: OAuthClient { .microsoft(clientID: settings?.data.microsoftClientID ?? "") }
 
     func isConfigured(_ provider: CalendarProvider) -> Bool {
+        guard let settings else { return false }
         switch provider {
         case .apple: return true
         case .google: return !settings.data.googleClientID.trimmingCharacters(in: .whitespaces).isEmpty
@@ -67,6 +72,7 @@ final class CalendarSyncStore: ObservableObject {
     }
 
     func isEnabled(_ provider: CalendarProvider) -> Bool {
+        guard let settings else { return false }
         switch provider {
         case .apple: return settings.data.appleCalendarsEnabled
         case .google: return settings.data.googleCalendarsEnabled
@@ -83,7 +89,7 @@ final class CalendarSyncStore: ObservableObject {
     }
 
     func lastSynced(_ provider: CalendarProvider) -> Date? {
-        settings.data.calendarLastSync[provider.rawValue]
+        settings?.data.calendarLastSync[provider.rawValue]
     }
 
     // MARK: Sync window
@@ -100,6 +106,7 @@ final class CalendarSyncStore: ObservableObject {
 
     /// Refreshes every enabled provider. Throttled unless `force`.
     func syncAllIfNeeded(force: Bool = false) {
+        guard let settings else { return }
         guard force || settings.data.calendarSyncOnOpen else { return }
         if !force, let last = settings.data.calendarLastSync.values.max(),
            Date().timeIntervalSince(last) < 15 * 60 {
@@ -109,6 +116,7 @@ final class CalendarSyncStore: ObservableObject {
     }
 
     func syncAll() async {
+        guard settings != nil else { return }
         async let a: Void = isEnabled(.apple) ? syncApple() : ()
         async let g: Void = isEnabled(.google) ? syncGoogle() : ()
         async let o: Void = isEnabled(.outlook) ? syncOutlook() : ()
@@ -118,6 +126,7 @@ final class CalendarSyncStore: ObservableObject {
     // MARK: Apple
 
     func connectApple() async {
+        guard let settings else { return }
         let granted = await apple.requestAccess()
         if granted {
             settings.data.appleCalendarsEnabled = true
@@ -131,7 +140,7 @@ final class CalendarSyncStore: ObservableObject {
     }
 
     func syncApple() async {
-        guard settings.data.appleCalendarsEnabled else { return }
+        guard let settings, settings.data.appleCalendarsEnabled else { return }
         if apple.isDenied {
             lastErrors[.apple] = "Åtkomst till Apple Kalender har nekats i systeminställningarna."
             return
@@ -152,6 +161,7 @@ final class CalendarSyncStore: ObservableObject {
     // MARK: Google
 
     func connectGoogle() async {
+        guard let settings else { return }
         do {
             guard isConfigured(.google) else { throw OAuthError.notConfigured }
             settings.data.googleCalendarsEnabled = true
@@ -166,6 +176,7 @@ final class CalendarSyncStore: ObservableObject {
     }
 
     func syncGoogle() async {
+        guard let settings else { return }
         // Capture selection BEFORE the (nonisolated) fetch closure so it
         // never touches MainActor-isolated state off the main actor.
         let selectedIDs = settings.data.selectedGoogleCalendarIDs
@@ -189,6 +200,7 @@ final class CalendarSyncStore: ObservableObject {
     // MARK: Outlook
 
     func connectOutlook() async {
+        guard let settings else { return }
         do {
             guard isConfigured(.outlook) else { throw OAuthError.notConfigured }
             settings.data.outlookCalendarsEnabled = true
@@ -203,6 +215,7 @@ final class CalendarSyncStore: ObservableObject {
     }
 
     func syncOutlook() async {
+        guard let settings else { return }
         let selectedIDs = settings.data.selectedOutlookCalendarIDs
         await syncRemote(provider: .outlook, client: microsoftClient) { token, from, to in
             let lists = try await MicrosoftCalendarAPI.calendars(token: token)
@@ -242,6 +255,7 @@ final class CalendarSyncStore: ObservableObject {
     // MARK: Calendar lists (for the picker)
 
     func refreshCalendarLists(_ provider: CalendarProvider) async {
+        guard let settings else { return }
         switch provider {
         case .apple:
             availableCalendars[.apple] = apple.availableCalendars().map {
@@ -284,6 +298,7 @@ final class CalendarSyncStore: ObservableObject {
     // MARK: Disconnect
 
     func disconnect(_ provider: CalendarProvider) {
+        guard let settings else { return }
         switch provider {
         case .apple:
             settings.data.appleCalendarsEnabled = false
@@ -307,7 +322,7 @@ final class CalendarSyncStore: ObservableObject {
     // MARK: Helpers
 
     private func noteSync(provider: CalendarProvider) {
-        settings.data.calendarLastSync[provider.rawValue] = Date()
+        settings?.data.calendarLastSync[provider.rawValue] = Date()
     }
 
     /// Events (imported + app shifts) on one day, merged for the unified view.

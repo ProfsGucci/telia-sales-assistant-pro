@@ -55,6 +55,10 @@ struct TeliaSalesAssistantApp: App {
                         }
                         // Imported calendars: throttled refresh on app-active
                         // (15 min) — periodic sync, never claimed as real-time.
+                        // inject() is idempotent and guards the (extremely
+                        // rare) case where scenePhase fires before the
+                        // startup task has run.
+                        calendarSync.inject(settings: settings)
                         calendarSync.syncAllIfNeeded()
                         if settings.data.autoRefreshOnOpen,
                            !settings.data.campaignFeedURL.isEmpty,
