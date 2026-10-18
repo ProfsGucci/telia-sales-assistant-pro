@@ -4,6 +4,7 @@ import TeliaCore
 struct ChatView: View {
     @EnvironmentObject private var chat: ChatStore
     @EnvironmentObject private var catalog: CatalogStore
+    @EnvironmentObject private var campaigns: CampaignStore
     @EnvironmentObject private var settings: SettingsStore
 
     @State private var draft = ""
@@ -18,7 +19,7 @@ struct ChatView: View {
             messageList
             inputBar
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide custom background shows through.
         .navigationTitle("AI Coach")
         .navigationDestination(for: AppDestination.self) { destination in
             DestinationDetail(destination: destination)
@@ -184,7 +185,7 @@ struct ChatView: View {
         guard !text.trimmingCharacters(in: .whitespaces).isEmpty else { return }
         draft = ""
         atBottom = true
-        chat.send(message: text, catalog: catalog.products, settings: settings.data)
+        chat.send(message: text, catalog: catalog.products, campaigns: campaigns.activeCampaigns, settings: settings.data)
     }
 }
 

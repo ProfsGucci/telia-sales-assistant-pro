@@ -10,6 +10,7 @@ struct TeliaSalesAssistantApp: App {
     @StateObject private var schedule = ScheduleStore()
     @StateObject private var progress = ProgressStore()
     @StateObject private var learning = LearningStore()
+    @StateObject private var campaigns = CampaignStore()
     @StateObject private var appState = AppState()
     @Environment(\.scenePhase) private var scenePhase
 
@@ -23,6 +24,7 @@ struct TeliaSalesAssistantApp: App {
                 .environmentObject(schedule)
                 .environmentObject(progress)
                 .environmentObject(learning)
+                .environmentObject(campaigns)
                 .environmentObject(appState)
                 .preferredColorScheme(settings.data.theme.colorScheme)
                 .tint(DS.Purple.base)
@@ -44,6 +46,18 @@ struct TeliaSalesAssistantApp: App {
                                 await catalog.refreshFromFeed(urlString: settings.data.priceFeedURL)
                             }
                         }
+                        if settings.data.autoRefreshOnOpen,
+                           !settings.data.campaignFeedURL.isEmpty,
+                           campaignsNeedRefresh() {
+                            Task {
+                                do {
+                                    try await campaigns.refresh(feedURL: settings.data.campaignFeedURL)
+                                    campaigns.scheduleFavoriteExpiryNotifications(settings: settings.data)
+                                } catch {
+                                    campaigns.noteRefreshFailure((error as? LocalizedError)?.errorDescription ?? String(describing: error))
+                                }
+                            }
+                        }
                     }
                 }
         }
@@ -52,6 +66,11 @@ struct TeliaSalesAssistantApp: App {
     private func catalogNeedsRefresh() -> Bool {
         guard let last = catalog.lastUpdated else { return true }
         return Date().timeIntervalSince(last) > 6 * 3600
+    }
+
+    private func campaignsNeedRefresh() -> Bool {
+        guard let last = campaigns.data.lastRefresh else { return true }
+        return Date().timeIntervalSince(last) > 15 * 60
     }
 }
 
@@ -106,7 +125,7 @@ enum AppTab: Hashable {
 
 /// Every reachable top-level destination.
 enum AppDestination: String, Hashable, Identifiable, CaseIterable {
-    case home, products, coach, calendar, progress
+    case home, products, campaign, coach, calendar, progress
     case playbook, roleplay, academy, library, settings
 
     var id: String { rawValue }
@@ -115,6 +134,7 @@ enum AppDestination: String, Hashable, Identifiable, CaseIterable {
         switch self {
         case .home: return "Hem"
         case .products: return "Produkter"
+        case .campaign: return "Kampanj Center"
         case .coach: return "AI Coach"
         case .calendar: return "Kalender"
         case .progress: return "Min utveckling"
@@ -130,6 +150,7 @@ enum AppDestination: String, Hashable, Identifiable, CaseIterable {
         switch self {
         case .home: return "house.fill"
         case .products: return "cart.fill"
+        case .campaign: return "tag.fill"
         case .coach: return "bubble.left.and.text.bubble.right.fill"
         case .calendar: return "calendar"
         case .progress: return "chart.line.uptrend.xyaxis"

@@ -4,7 +4,7 @@ import TeliaCore
 // MARK: - Card registry
 
 enum DashboardCard: String, CaseIterable, Identifiable {
-    case shift, search, checklist, goals, featured, coach, tip, quiz, recents, scripts, reminders, freshness, training
+    case shift, search, checklist, goals, campaigns, featured, coach, tip, quiz, recents, scripts, reminders, freshness, training
 
     var id: String { rawValue }
 
@@ -14,6 +14,7 @@ enum DashboardCard: String, CaseIterable, Identifiable {
         case .search: return "Snabb prisök"
         case .checklist: return "Dagens förberedelser"
         case .goals: return "Dagens mål"
+        case .campaigns: return "Kampanj Center"
         case .featured: return "Utvald kampanj"
         case .coach: return "AI Coach"
         case .tip: return "Dagens säljtips"
@@ -77,7 +78,7 @@ struct DashboardView: View {
             .padding(.horizontal, DS.Space.m)
             .padding(.bottom, DS.Space.xl)
         }
-        .background(Color(.systemGroupedBackground))
+        // ScrollView is transparent by default — the app-wide BackgroundLayer shows through.
         .navigationTitle(greeting)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -128,6 +129,7 @@ struct DashboardView: View {
         case .search: QuickSearchCard()
         case .checklist: ChecklistCard()
         case .goals: GoalsCard()
+        case .campaigns: CampaignsCard()
         case .featured: FeaturedCampaignCard()
         case .coach: CoachShortcutCard()
         case .tip: TipCard()
@@ -142,6 +144,9 @@ struct DashboardView: View {
 
     private var footer: some View {
         VStack(spacing: 6) {
+            Text("Made by Kevork Khagadurian")
+                .font(.system(.caption2, design: .rounded))
+                .foregroundStyle(.tertiary)
             Text("Personligt verktyg – inte en officiell Telia-app")
                 .font(.system(.caption2, design: .rounded))
                 .foregroundStyle(.secondary)
@@ -307,6 +312,51 @@ private struct GoalsCard: View {
                 RingGauge(progress: salesProgress, title: "Affärer", detail: "\(today.sales) av \(progress.goals.dailySales)")
                 RingGauge(progress: customersProgress, title: "Kunder", detail: "\(today.customers) av \(progress.goals.dailyCustomers)", color: .blue)
                 RingGauge(progress: trainingProgress, title: "Träning", detail: "\(todayAnswers) quiz svar", color: .pink)
+            }
+        }
+    }
+}
+
+private struct CampaignsCard: View {
+    @EnvironmentObject private var campaigns: CampaignStore
+
+    private var top: CampaignRecord? {
+        campaigns.activeCampaigns.first
+    }
+
+    private var endingSoon: CampaignRecord? {
+        campaigns.activeCampaigns.first { campaign in
+            if case .expiresSoon = CampaignEngine.status(campaign) { return true }
+            return false
+        }
+    }
+
+    var body: some View {
+        SectionCard(title: "Kampanj Center", symbol: "tag.fill") {
+            VStack(alignment: .leading, spacing: DS.Space.s) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("\(campaigns.activeCampaigns.count) aktiva kampanjer")
+                        .font(.system(.body, design: .rounded).weight(.semibold))
+                    Spacer()
+                    Text("verifierade \(campaigns.newestVerification.map { Format.dayMonth.string(from: $0) } ?? "–")")
+                        .font(.system(.caption2, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
+                if let endingSoon {
+                    Label(endingSoon.title, systemImage: "hourglass")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundStyle(DS.warning)
+                        .lineLimit(1)
+                } else if let top {
+                    Label(top.title, systemImage: "sparkles")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+                NavigationLink(value: AppDestination.campaign) {
+                    Text("Öppna Kampanj Center")
+                        .font(.system(.footnote, design: .rounded).weight(.semibold))
+                }
             }
         }
     }

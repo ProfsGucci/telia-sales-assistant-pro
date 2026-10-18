@@ -61,7 +61,7 @@ final class ChatStore: ObservableObject {
         return DemoCoachService()
     }
 
-    func send(message: String, catalog: [ProductRecord], settings: SettingsData) {
+    func send(message: String, catalog: [ProductRecord], campaigns: [CampaignRecord] = [], settings: SettingsData) {
         let text = message.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty, !isStreaming else { return }
 
@@ -99,7 +99,8 @@ final class ChatStore: ObservableObject {
                 let reply = try await service.reply(
                     to: text,
                     history: history,
-                    catalog: catalog
+                    catalog: catalog,
+                    campaigns: campaigns
                 ) { [weak self] chunk in
                     Task { @MainActor [weak self] in
                         guard let self,

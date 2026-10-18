@@ -14,17 +14,18 @@ iPhone och iPad, allt lokalt på din enhet.**
 
 | Område | Funktioner |
 |---|---|
-| **Hem** | personlig dashboard: nästa pass, checklista, målringar, kampanj-i-fokus, snabbsök, dagens tips, mini-quiz, senast visade produkter, prisfräschhet, anpassningsbar ordning |
+| **Hem** | personlig dashboard: nästa pass, checklista, målringar, Kampanj Center-kort, kampanj-i-fokus, snabbsök, dagens tips, mini-quiz, senast visade produkter, prisfräschhet, anpassningsbar ordning |
+| **Kampanj Center** | kampanjer verifierade mot offentliga telia.se-sidor: kort med pris (månads-/engångspris hålls isär), ordinarie pris, besparing endast när jämförbart, bindningstid, villkor, källa + verifieringstid. Detaljvy, jämför upp till 3, sök/filter/sortering, favoriter, senast visade, "slutar snart"-hantering, utgångna visas aldrig som aktiva |
 | **Produkter** | verifierad pris-/produktkatalog med sök, filter, sortering, jämför upp till 3, total-/snittkostnad per bindningstid, kampanjpris & slutdatum |
 | **Räknare** | abonnemangstotalkostnad, enhet+abonnemang (kontant vs delbetalning), familjeräknare, kampanjutgång — allt mot inläst katalogdata |
-| **AI-coach** | chatt med svensk, produktförankrad coach. Echtd streaming mot egen OpenAI-kompatibel server; **demoläge tydligt märkt** när ingen server konfigurerats. Historik, källhänvisningar, försök-igen |
+| **AI-coach** | chatt med svensk, produkt- och kampanjförankrad coach. Echtd streaming mot egen OpenAI-kompatibel server; **demoläge tydligt märkt** när ingen server konfigurerats. Historik, källhänvisningar, försök-igen |
 | **Kalender** | månad/vecka/kommande, pass & uppgifter, återkommande händelser, valfri export till Apple Calendar (fungerar utan behörighet), lokala påminnelser 30 min före pass |
 | **Min utveckling** | manuella passloggar (appens hittar **aldrig** på siffror), Swift Charts-grafer, mål vs utfall, personliga förslag, träningsstatistik |
 | **Säljmanus** | spelbok med 6-delad objectionsstruktur, redigerbara manus |
 | **Rollspel** | kundsimulator med svårighetsgrad, 9-dimensionell bedömning — belönar aldrig påtryckningstaktik |
 | **Akademin** | lektioner, quiz, flashcards med intervallrepetition, streak, svaga områden, 30-dagarsprogram |
 | **Bibliotek** | favoriter, manus, anteckningar, sparade coachsvar, ordlista, källista |
-| **Inställningar** | tema, prisfeed-URL, AI-backend (nyckel i Keychain), import/export, radera allt |
+| **Inställningar** | tema, **egen bakgrund** (förinställda gradienter, egen färg, egen bild från PhotosPicker — allt lokalt), kampanjfeed-URL, prisfeed-URL, AI-backend (nyckel i Keychain), import/export, radera allt |
 
 ## Projektstruktur
 
@@ -106,3 +107,24 @@ tidsstämpel per produkt. Uppdatera via:
 Import vs inbyggt: egenimport märks tydligt i källvyn. Medarbetarerbjudanden
 som inte finns publikt får bara komma in via din egen import och visas med
 den källan.
+
+## Kampanjdata (1.1)
+
+`Resources/CampaignSeed.json` (19 poster) verifierad mot offentliga sidor på
+telia.se 2026-10-18 (erbjudanden, mobilabonnemang, bredband, TV, tillbehör).
+Varje post har stabil ID, käll-URL, verifieringstid och — när Telia publicerar
+det — slutdatum. Poster utan publicerat slutdatum märks "slutdatum overifierat".
+
+Appen hämtar som standard projektets publicerade kampanj-JSON på GitHub vid
+öppning (och på begäran). Misslyckas hämtningen behålls sparad data och en
+tydlig varning visas — innehåll blir aldrig tyst inaktuellt. HTML-skrapning
+av telia.se görs aldrig; Halebops inloggningskrävande personliga erbjudanden
+ingår inte.
+
+## Versionshistorik
+
+- **1.1 (2) — Update 1.1 BETA**: Kampanj Center, egen bakgrund (gradienter,
+  egen färg, egen bild — lokalt), AI-coach kampanjförankrad, skapare tillskriven
+  ("Made by Kevork Khagadurian"), uppgraderingssäker inställningsläsning,
+  107 kärntester (varav 35 nya).
+- **1.0 (1)**: första leveransen.

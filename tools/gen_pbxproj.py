@@ -37,6 +37,7 @@ TEST_SOURCES = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "Tests" / "CoreT
 RESOURCES = [
     "TeliaSalesAssistantPro/Resources/Assets.xcassets",
     "TeliaSalesAssistantPro/Resources/SeedCatalog.json",
+    "TeliaSalesAssistantPro/Resources/CampaignSeed.json",
     "TeliaSalesAssistantPro/Resources/LearningContent.json",
     "TeliaSalesAssistantPro/Resources/PlaybookContent.json",
 ]
@@ -335,12 +336,12 @@ APP_BASE = {
     "ASSETCATALOG_COMPILER_APPICON_NAME": q("AppIcon"),
     "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": q("AccentColor"),
     "CODE_SIGN_STYLE": "Automatic",
-    "CURRENT_PROJECT_VERSION": "1",
+    "CURRENT_PROJECT_VERSION": "2",
     "ENABLE_PREVIEWS": "YES",
     "GENERATE_INFOPLIST_FILE": "NO",
     "INFOPLIST_FILE": q(INFOPLIST),
     "LD_RUNPATH_SEARCH_PATHS": qlist(['"$(inherited)"', '"@executable_path/Frameworks"']),
-    "MARKETING_VERSION": "1.0",
+    "MARKETING_VERSION": "1.1",
     "PRODUCT_BUNDLE_IDENTIFIER": BUNDLE_ID,
     "PRODUCT_NAME": '"$(TARGET_NAME)"',
     "SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD": "NO",

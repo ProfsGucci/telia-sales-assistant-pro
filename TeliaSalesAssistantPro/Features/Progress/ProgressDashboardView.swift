@@ -34,6 +34,7 @@ struct ProgressDashboardView: View {
             insightsSection
             entriesSection
         }
+        .scrollContentBackground(.hidden) // let the app-wide background show through
         .navigationTitle("Min utveckling")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

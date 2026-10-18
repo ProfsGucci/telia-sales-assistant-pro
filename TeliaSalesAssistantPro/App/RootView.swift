@@ -10,6 +10,8 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
+            BackgroundLayer()
+                .ignoresSafeArea()
             if horizontalSizeClass == .regular {
                 SidebarRootView()
             } else {
@@ -44,6 +46,10 @@ struct SplashView: View {
             Text("Personlig säljcoach")
                 .font(.system(.caption, design: .rounded))
                 .foregroundStyle(.secondary)
+            Text("Made by Kevork Khagadurian")
+                .font(.system(.caption2, design: .rounded))
+                .foregroundStyle(.tertiary)
+                .padding(.top, DS.Space.s)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemBackground))
@@ -97,7 +103,7 @@ struct SidebarRootView: View {
     @EnvironmentObject private var appState: AppState
     @State private var selection: AppDestination? = .home
 
-    private let primary: [AppDestination] = [.home, .products, .coach, .calendar, .progress]
+    private let primary: [AppDestination] = [.home, .products, .campaign, .coach, .calendar, .progress]
     private let secondary: [AppDestination] = [.playbook, .roleplay, .academy, .library, .settings]
 
     var body: some View {
@@ -145,6 +151,7 @@ struct DestinationDetail: View {
         switch destination {
         case .home: DashboardView()
         case .products: CatalogueView()
+        case .campaign: CampaignCenterView()
         case .coach: ChatView()
         case .calendar: CalendarView()
         case .progress: ProgressDashboardView()

@@ -69,15 +69,16 @@ struct RemoteCoachService: CoachService {
     // MARK: Prompt construction
 
     /// Grounded system prompt: the model may only quote prices from the retrieved context.
-    func systemPrompt(catalog: [ProductRecord], retrieved: [ProductRecord]) -> String {
+    func systemPrompt(catalog: [ProductRecord], retrieved: [ProductRecord], campaigns: [CampaignRecord]) -> String {
         var lines: [String] = []
         lines.append("""
         Du är en erfaren svensk butikssäljcoach för Telia i Sverige. Du hjälper en säljare i butik att bli bättre: ge konkreta råd, exempelfraser och Rollspel. Alltid ärligt: press, överdrifter eller dolda avgifter är aldrig okej.
 
         VIKTIGA REGLER:
-        - Citera bara priser som finns i PRODUKTDATA nedan. Osäker? Säg att säljaren ska kontrollera telia.se.
+        - Citera bara priser som finns i PRODUKTDATA eller KAMPANJDATA nedan. Osäker? Säg att säljaren ska kontrollera telia.se.
         - Skilj tydligt på verifierade produktfakta och allmänt råd.
         - Redovisa alltid kampanjperiod, ordinarie pris och bindningstid när du nämner priser.
+        - Nämner du en kampanj: redogör för dess slutdatum om det finns i KAMPANJDATA, och påminn om att kampanjer kan ha utgått sedan verifieringen. Hittar du kampanjen inte i KAMPANJDATA — säg det istället för att hitta på priser, datum eller villkor.
         - Svara på samma språk som frågan (svenska eller engelska).
         """)
         if !retrieved.isEmpty {
@@ -97,6 +98,26 @@ struct RemoteCoachService: CoachService {
                 lines.append(line)
             }
         }
+        let activeCampaigns = CampaignEngine.activeCampaigns(campaigns)
+        if !activeCampaigns.isEmpty {
+            lines.append("KAMPANJDATA (aktiva poster ur säljarens Kampanj Center, verifierade mot telia.se):")
+            for c in activeCampaigns {
+                var line = "- \(c.title) [\(c.id)]"
+                line += c.priceKind == .monthly
+                    ? ": \(Int(c.campaignPriceSEK)) kr/mån"
+                    : ": \(Int(c.campaignPriceSEK)) kr engångspris"
+                if let o = c.ordinaryPriceSEK { line += " (ord. \(Int(o)))" }
+                if let promo = c.promoMonths { line += ", kampanjpris \(promo) mån" }
+                if let after = c.priceAfterCampaignSEK { line += ", därefter \(Int(after)) kr/mån" }
+                if let b = c.bindingMonths, b > 0 { line += ", \(b) mån bindning" }
+                if let end = c.endDate { line += ", t.o.m. \(Format.dayMonth.string(from: end))" } else { line += ", slutdatum ej verifierat" }
+                if let elig = c.eligibility { line += ". Villkor: \(elig)" }
+                line += ". Källa: \(c.sourceURL)"
+                lines.append(line)
+            }
+        } else {
+            lines.append("KAMPANJDATA: inga aktiva kampanjer cachade. Säg det ärligt om säljaren frågar om kampanjer.")
+        }
         return lines.joined(separator: "\n")
     }
 
@@ -110,11 +131,12 @@ struct RemoteCoachService: CoachService {
         to message: String,
         history: [ChatMessage],
         catalog: [ProductRecord],
+        campaigns: [CampaignRecord],
         streamChunk: @escaping (String) -> Void
     ) async throws -> CoachReply {
         let retrieved = CatalogQuery.retrieve(message: message, in: catalog, topK: 5)
 
-        var messages: [[String: String]] = [["role": "system", "content": systemPrompt(catalog: catalog, retrieved: retrieved)]]
+        var messages: [[String: String]] = [["role": "system", "content": systemPrompt(catalog: catalog, retrieved: retrieved, campaigns: campaigns)]]
         for m in history.suffix(10) where m.role != .system && !m.failed {
             messages.append(["role": m.role == .user ? "user" : "assistant", "content": m.text])
         }

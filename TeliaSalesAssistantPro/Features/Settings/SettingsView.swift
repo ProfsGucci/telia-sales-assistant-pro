@@ -5,6 +5,7 @@ import TeliaCore
 struct SettingsView: View {
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var catalog: CatalogStore
+    @EnvironmentObject private var campaigns: CampaignStore
     @EnvironmentObject private var chat: ChatStore
     @EnvironmentObject private var library: LibraryStore
     @EnvironmentObject private var progress: ProgressStore
@@ -27,6 +28,7 @@ struct SettingsView: View {
         Form {
             appearanceSection
             priceSection
+            campaignSection
             aiSection
             reminderSection
             dataSection
@@ -34,6 +36,7 @@ struct SettingsView: View {
             aboutSection
         }
         .navigationTitle("Inställningar")
+        .scrollContentBackground(.hidden)
         .fileImporter(isPresented: $showImporter, allowedContentTypes: [.json, .commaSeparatedText]) { result in
             switch result {
             case .success(let url):
@@ -100,6 +103,11 @@ struct SettingsView: View {
                 }
             }
             .pickerStyle(.segmented)
+            NavigationLink {
+                BackgroundSettingsView()
+            } label: {
+                Label("Bakgrund", systemImage: "paintpalette.fill")
+            }
         }
     }
 
@@ -196,7 +204,8 @@ struct SettingsView: View {
                 let reply = try await service.reply(
                     to: "Svara med ett ord: hej",
                     history: [],
-                    catalog: catalog.products
+                    catalog: catalog.products,
+                    campaigns: []
                 ) { _ in }
                 await MainActor.run {
                     testResult = reply.text.isEmpty ? "Servern svarade men utan text." : "Anslutningen fungerar."
@@ -227,10 +236,57 @@ struct SettingsView: View {
                     }
                 }
             ))
+            Toggle("Påminn när sparade kampanjer slutar", isOn: Binding(
+                get: { settings.data.campaignNotificationsEnabled },
+                set: { enabled in
+                    settings.data.campaignNotificationsEnabled = enabled
+                    if enabled {
+                        Task {
+                            let granted = await NotificationService.shared.requestPermission()
+                            if !granted {
+                                await MainActor.run { settings.data.campaignNotificationsEnabled = false }
+                            } else {
+                                campaigns.scheduleFavoriteExpiryNotifications(settings: settings.data)
+                            }
+                        }
+                    } else {
+                        campaigns.scheduleFavoriteExpiryNotifications(settings: settings.data)
+                    }
+                }
+            ))
         } header: {
             Text("Notiser")
         } footer: {
-            Text("Lokala notiser 30 minuter före pass, om iOS tillåter. Inga push-notiser skickas från någon server.")
+            Text("Lokala notiser 30 minuter före pass, om iOS tillåter. Kampanjpåminnelser skickas tre dagar innan en stjärnmärkt kampanjs verifierade slutdatum – bara sådana är meningsfulla. Inga push-notiser skickas från någon server.")
+        }
+    }
+
+    private var campaignSection: some View {
+        Section {
+            TextField("Kampanjfeed-URL (https://…)", text: Binding(
+                get: { settings.data.campaignFeedURL },
+                set: { settings.data.campaignFeedURL = $0 }
+            ))
+            .keyboardType(.URL)
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
+            Button {
+                Task {
+                    do {
+                        try await campaigns.refresh(feedURL: settings.data.campaignFeedURL)
+                        campaigns.scheduleFavoriteExpiryNotifications(settings: settings.data)
+                    } catch {
+                        campaigns.noteRefreshFailure((error as? LocalizedError)?.errorDescription ?? String(describing: error))
+                    }
+                }
+            } label: {
+                Label("Uppdatera kampanjer nu", systemImage: "arrow.clockwise")
+            }
+            .disabled(settings.data.campaignFeedURL.isEmpty || campaigns.isRefreshing)
+        } header: {
+            Text("Kampanjdata")
+        } footer: {
+            Text("Kampanjerna verifieras manuellt mot offentliga sidor på telia.se och publiceras som JSON. Appen hämtar den publika listan vid öppning – HTML-skrapning av telia.se görs inte. Senast hämtat: \(campaigns.data.lastRefresh.map { Format.dateTime.string(from: $0) } ?? "aldrig").")
         }
     }
 
@@ -279,10 +335,13 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: DS.Space.s) {
                 Text("Telia Sales Assistant Pro")
                     .font(.system(.subheadline, design: .rounded).weight(.bold))
-                Text("Personligt säljverktyg för egen utveckling. Inte en officiell Telia-produkt och inte kopplad till Telias system. Priser läses från offentliga sidor på telia.se – verifiera alltid mot källan.")
+                Text("Made by Kevork Khagadurian")
+                    .font(.system(.caption, design: .rounded).weight(.semibold))
+                    .foregroundStyle(DS.Purple.base)
+                Text("Personligt säljverktyg för egen utveckling. Inte en officiell Telia-produkt och inte kopplad till Telias system. Priser och kampanjer läses från offentliga sidor på telia.se – verifiera alltid mot källan.")
                     .font(.system(.caption, design: .rounded))
                     .foregroundStyle(.secondary)
-                Text("Version 1.0 (1)")
+                Text("Version 1.1 (2) · Update 1.1 BETA")
                     .font(.system(.caption2, design: .rounded))
                     .foregroundStyle(.tertiary)
             }

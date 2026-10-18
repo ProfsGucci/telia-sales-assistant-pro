@@ -45,6 +45,11 @@ struct CatalogueView: View {
                 }
                 .accessibilityLabel(showGrid ? "Vy: lista" : "Vy: rutnät")
 
+                NavigationLink(value: AppDestination.campaign) {
+                    Image(systemName: "tag.fill")
+                }
+                .accessibilityLabel("Kampanj Center")
+
                 Menu {
                     Picker("Sortering", selection: $sort) {
                         Text("Relevans").tag(CatalogQuery.Sort.relevance)
@@ -61,6 +66,9 @@ struct CatalogueView: View {
                     NavigationLink(value: AppDestination.settings) {
                         Label("Importera priser", systemImage: "square.and.arrow.down")
                     }
+                    NavigationLink(value: AppDestination.campaign) {
+                        Label("Kampanj Center", systemImage: "tag.fill")
+                    }
                 } label: {
                     Image(systemName: filters.isActive ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
                 }
@@ -70,6 +78,7 @@ struct CatalogueView: View {
             FilterSheet(filters: $filters)
                 .presentationDetents([.medium, .large])
         }
+        .scrollContentBackground(.hidden) // let the app-wide background show through
         .navigationDestination(for: String.self) { productID in
             ProductDetailView(productID: productID)
         }

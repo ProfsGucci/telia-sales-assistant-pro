@@ -41,14 +41,26 @@ I demoläge skickas ingenting alls — svaren genereras lokalt och märks "demo"
 
 - **Kalender (valfri):** används bara om du trycker "Lägg även i Apple
   Calendar". Appens egen kalender fungerar helt utan behörighet.
-- **Notiser (valfritt):** lokala påminnelser 30 minuter före pass. Inga
-  push-notiser från server skickas någonsin.
+- **Notiser (valfritt):** lokala påminnelser 30 minuter före pass, samt (1.1)
+  lokala påminnelser när en stjärnmärkt kampanjs verifierade slutdatum närmar
+  sig. Inga push-notiser från server skickas någonsin.
+- **Bilder (1.1):** appen begär **inte** behörighet till bildbiblioteket. Du
+  väljer en enskild bild via systemets PhotosPicker; en nedskalad kopia sparas
+  i appens egen mapp och lämnar aldrig enheten. Originalet lämnas orört.
+
+## Kampanjdata (1.1)
+
+Kampanj Center hämtar som standard en JSON-fil med verifierade kampanjer från
+det här projektets publika GitHub-repo. Vid den hämtningen kontaktas
+raw.githubusercontent.com — inga persondata skickas, och inga identifierare
+lagras på någon server. Misslyckas hämtningen används sparad lokal data.
 
 ## Radera data
 
 Inställningar → Data → **Radera all data…** tar bort alla lokala filer,
 nollställer appens tillstånd och tar bort AI-nyckeln från Keychain.
-Avinstallera appen tar givetvis bort allt.
+Avinstallera appen tar givetvis bort allt. En importerad bakgrundsbild raderas
+via Inställningar → Bakgrund → Återställ (eller med all övrig data ovan).
 
 ## Export
 

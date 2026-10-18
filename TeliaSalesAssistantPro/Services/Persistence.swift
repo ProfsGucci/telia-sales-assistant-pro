@@ -108,4 +108,42 @@ struct SettingsData: Codable, Equatable {
     var dashboardOrder: [String] = DashboardCard.defaultOrder
     var hiddenDashboardCards: Set<String> = []
     var remindersEnabled: Bool = false
+    var background: BackgroundPreference = .default
+    /// Opt-in notifications for saved campaigns nearing a verified expiry.
+    var campaignNotificationsEnabled: Bool = false
+    /// JSON feed with verified campaign records. Defaults to the project's
+    /// published seed so campaign data can update without scraping telia.se.
+    var campaignFeedURL: String = SettingsData.defaultCampaignFeedURL
+
+    /// Raw GitHub URL of the bundled seed in the public repository.
+    static let defaultCampaignFeedURL =
+        "https://raw.githubusercontent.com/ProfsGucci/telia-sales-assistant-pro/main/TeliaSalesAssistantPro/Resources/CampaignSeed.json"
+
+    private enum CodingKeys: String, CodingKey {
+        case theme, autoRefreshOnOpen, priceFeedURL, aiBaseURL, aiModel, aiUsesKey
+        case staleAfterDays, dashboardOrder, hiddenDashboardCards, remindersEnabled
+        case background, campaignNotificationsEnabled, campaignFeedURL
+    }
+
+    /// Tolerant decoding: settings saved by earlier app versions must keep
+    /// loading (with defaults for new fields) instead of being wiped.
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        theme = try c.decodeIfPresent(ThemePreference.self, forKey: .theme) ?? .system
+        autoRefreshOnOpen = try c.decodeIfPresent(Bool.self, forKey: .autoRefreshOnOpen) ?? true
+        priceFeedURL = try c.decodeIfPresent(String.self, forKey: .priceFeedURL) ?? ""
+        aiBaseURL = try c.decodeIfPresent(String.self, forKey: .aiBaseURL) ?? ""
+        aiModel = try c.decodeIfPresent(String.self, forKey: .aiModel) ?? "gpt-4o-mini"
+        aiUsesKey = try c.decodeIfPresent(Bool.self, forKey: .aiUsesKey) ?? false
+        staleAfterDays = try c.decodeIfPresent(Int.self, forKey: .staleAfterDays) ?? 7
+        dashboardOrder = try c.decodeIfPresent([String].self, forKey: .dashboardOrder) ?? DashboardCard.defaultOrder
+        hiddenDashboardCards = try c.decodeIfPresent(Set<String>.self, forKey: .hiddenDashboardCards) ?? []
+        remindersEnabled = try c.decodeIfPresent(Bool.self, forKey: .remindersEnabled) ?? false
+        background = try c.decodeIfPresent(BackgroundPreference.self, forKey: .background) ?? .default
+        campaignNotificationsEnabled = try c.decodeIfPresent(Bool.self, forKey: .campaignNotificationsEnabled) ?? false
+        campaignFeedURL = try c.decodeIfPresent(String.self, forKey: .campaignFeedURL) ?? SettingsData.defaultCampaignFeedURL
+    }
+
+    init() {}
 }
+

@@ -2,6 +2,7 @@ import Foundation
 import EventKit
 import UserNotifications
 import TeliaCore
+import TeliaCore
 
 // MARK: - EventKit (optional, requested only on use)
 
@@ -74,6 +75,29 @@ final class NotificationService {
 
     func cancelShiftReminder(for event: ScheduleEvent) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["shift-\(event.id.uuidString)"])
+    }
+
+    /// Opt-in reminder that a saved campaign is nearing its *verified* end date.
+    /// Fires three days before the end date, morning local time; only campaigns
+    /// with a published end date are meaningful to remind about.
+    func scheduleCampaignExpiryReminder(for campaign: CampaignRecord) {
+        guard let end = campaign.endDate else { return }
+        let content = UNMutableNotificationContent()
+        content.title = "Kampanj slutar snart"
+        content.body = "\(campaign.title) har verifierat slutdatum \(Format.dayMonth.string(from: end)). Kontrollera telia.se innan du citerar den."
+        content.sound = .default
+
+        guard let fireDate = Calendar.current.date(byAdding: .day, value: -3, to: end),
+              fireDate > Date() else { return }
+        var components = Calendar.current.dateComponents([.year, .month, .day], from: fireDate)
+        components.hour = 9
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        let request = UNNotificationRequest(identifier: "campaign-\(campaign.id)", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
+    }
+
+    func cancelCampaignReminders(ids: [String]) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids.map { "campaign-\($0)" })
     }
 
     func cancelAll() {

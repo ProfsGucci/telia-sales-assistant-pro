@@ -86,10 +86,13 @@ public protocol CoachService {
     var isDemo: Bool { get }
     /// Produces one complete reply. `streamChunk` is called with text deltas when
     /// the backend genuinely streams; the demo engine calls it once.
+    /// `campaigns` carries the currently cached Kampanj Center records so every
+    /// campaign answer stays grounded in verified data.
     func reply(
         to message: String,
         history: [ChatMessage],
         catalog: [ProductRecord],
+        campaigns: [CampaignRecord],
         streamChunk: @escaping (String) -> Void
     ) async throws -> CoachReply
 }
@@ -123,9 +126,14 @@ public enum CoachError: LocalizedError, Equatable {
 /// and points to the official source.
 public struct DemoCoachEngine {
     public let catalog: [ProductRecord]
+    /// Verified campaign records from Kampanj Center, when available. The demo
+    /// coach answers campaign questions from these and never invents campaign
+    /// prices, dates or terms.
+    public let campaigns: [CampaignRecord]
 
-    public init(catalog: [ProductRecord]) {
+    public init(catalog: [ProductRecord], campaigns: [CampaignRecord] = []) {
         self.catalog = catalog
+        self.campaigns = campaigns
     }
 
     // MARK: Intent
@@ -377,6 +385,40 @@ public struct DemoCoachEngine {
     }
 
     func campaignReply(_ products: [ProductRecord]) -> CoachReply {
+        // Prefer the dedicated Kampanj Center records when they exist — they
+        // carry verified prices, terms, end dates and source links.
+        let now = Date()
+        let activeCampaignRecords = CampaignEngine.activeCampaigns(campaigns, now: now)
+        if !activeCampaignRecords.isEmpty {
+            let lines = activeCampaignRecords.prefix(6).map { c in
+                let price = c.priceKind == .monthly
+                    ? "\(intSEK(c.campaignPriceSEK)) kr/mån"
+                    : "\(intSEK(c.campaignPriceSEK)) kr engångspris"
+                var line = "• \(c.title) – \(price)"
+                if let saving = CampaignEngine.monthlySavingSEK(c), saving > 0 {
+                    line += " (ord. \(intSEK(c.ordinaryPriceSEK ?? 0)) kr/mån)"
+                }
+                switch CampaignEngine.status(c, now: now) {
+                case .expiresSoon(let days): line += ", slutar om \(days) dagar"
+                case .active: if let end = c.endDate { line += ", t.o.m. \(Format.dayMonth.string(from: end))" }
+                case .noVerifiedEndDate: line += ", slutdatum ej verifierat"
+                case .expired: break
+                }
+                return line
+            }
+            let expiredNote = campaigns.contains { CampaignEngine.status($0, now: now) == .expired }
+                ? "\nVissa tidigare kampanjer har utgått och visas inte längre som aktuella." : ""
+            return CoachReply(
+                text: """
+                Aktuella kampanjer i Kampanj Center:
+
+                \(lines.joined(separator: "\n"))
+
+                Öppna Kampanj Center för fullständiga villkor, källor, jämförelser och verifieringstider.\(expiredNote)
+                """,
+                suggestions: ["Jämför bredbandskampanjer", "Hur hanterar jag prisinvändningar?", "Briefing inför passet"]
+            )
+        }
         guard !products.isEmpty else {
             return CoachReply(
                 text: "Jag hittar inga aktiva kampanjer i katalogen just nu. Kontrollera telia.se/erbjudanden för aktuella erbjudanden – citera bara kampanjer du har sett i källan.",
@@ -498,9 +540,10 @@ public struct DemoCoachService: CoachService {
         to message: String,
         history: [ChatMessage],
         catalog: [ProductRecord],
+        campaigns: [CampaignRecord],
         streamChunk: @escaping (String) -> Void
     ) async throws -> CoachReply {
-        let engine = DemoCoachEngine(catalog: catalog)
+        let engine = DemoCoachEngine(catalog: catalog, campaigns: campaigns)
         let reply = engine.reply(to: message)
         // The demo engine does not stream; deliver in one chunk and say so honestly.
         streamChunk(reply.text)

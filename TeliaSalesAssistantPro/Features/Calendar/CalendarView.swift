@@ -41,7 +41,7 @@ struct CalendarView: View {
                 .padding(.bottom, DS.Space.xl)
             }
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide custom background shows through.
         .navigationTitle("Kalender")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {

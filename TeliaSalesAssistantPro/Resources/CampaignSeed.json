@@ -1,0 +1,397 @@
+{
+  "campaigns": [
+    {
+      "campaignPriceSEK": 175,
+      "category": "familjeabonnemang",
+      "eligibility": "Kräver att du har eller skaffar ett Obegränsad Plus-abonnemang.",
+      "id": "familj-extra-anvandare-175",
+      "imageURL": "https://www.telia.se/images/transform/e19c88a4-620d-47a6-b31c-9388e0763a56/extra-anvandare-abonnemang-familjeveckor-telia-2026-2048x1366",
+      "includedServices": [],
+      "ordinaryPriceSEK": 239,
+      "priceAfterCampaignSEK": 239,
+      "priceKind": "monthly",
+      "productName": "Telia Mobil – extra användare",
+      "promoMonths": 12,
+      "relatedProductIDs": [
+        "telia-mobil-extra-anvandare",
+        "mobil-obegraensad-plus"
+      ],
+      "sourceName": "telia.se/erbjudanden/mobilabonnemang",
+      "sourceURL": "https://www.telia.se/mobilabonnemang/telia-mobil-extra-anvandare",
+      "termsSummary": "Gäller i 12 mån, därefter 239 kr/mån. Senast lägsta pris 199 kr/mån.",
+      "title": "Familjeveckor: extra användare för 175 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 469,
+      "category": "mobilabonnemang",
+      "id": "obegraensad-streaming-469",
+      "imageURL": "https://www.telia.se/images/transform/a74df481-0898-43ca-a846-3e43b4adaf52/B2C_CMPGN_SOMMAR_2026_MOBILT_ALL_STREAMING_2048x1366",
+      "includedServices": [
+        "Obegränsad surf",
+        "Valfri streaming: Disney+, Amazon Prime, TV4 Play Plus, HBO Max eller Netflix"
+      ],
+      "ordinaryPriceSEK": 599,
+      "priceKind": "monthly",
+      "productName": "Mobilabonnemang med obegränsad surf + streaming",
+      "relatedProductIDs": [
+        "mobil-obegraensad-plus-netflix",
+        "mobil-obegraensad-plus-max",
+        "mobil-obegraensad-plus-tv4-play",
+        "mobil-obegraensad-plus-prime",
+        "mobil-obegraensad-plus-disney"
+      ],
+      "sourceName": "telia.se/erbjudanden/mobilabonnemang",
+      "sourceURL": "https://www.telia.se/mobilabonnemang?mobile-subscriptions=streaming",
+      "title": "Obegränsad surf och valfri streaming på köpet",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 469,
+      "category": "mobilabonnemang",
+      "eligibility": "Gäller när du köper valfritt Obegränsad Plus-abonnemang.",
+      "id": "obegraensad-plus-469",
+      "imageURL": "https://www.telia.se/images/transform/f348ff01-c542-4f0e-ab6a-35368334b26f/B2C_PROD_PP_Mobilt_OBG_Plus_2048x1366-001",
+      "includedServices": [],
+      "ordinaryPriceSEK": 569,
+      "priceKind": "monthly",
+      "productName": "Telia Obegränsad Plus",
+      "relatedProductIDs": [
+        "mobil-obegraensad-plus"
+      ],
+      "sourceName": "telia.se/erbjudanden/mobilabonnemang",
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus",
+      "title": "Obegränsad Plus från 469 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "bindingMonths": 24,
+      "campaignPriceSEK": 799,
+      "category": "iphone",
+      "id": "iphone-18-pro-799",
+      "includedServices": [
+        "Obegränsad surf",
+        "Netflix på köpet"
+      ],
+      "ordinaryPriceSEK": 959,
+      "priceKind": "monthly",
+      "productName": "Apple iPhone 18 Pro",
+      "relatedProductIDs": [
+        "apple-iphone-18-pro"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/apple/apple-iphone-18-pro?subscription=500058598&activelySelectedSubscription=true",
+      "title": "iPhone 18 Pro för 799 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "bindingMonths": 24,
+      "campaignPriceSEK": 699,
+      "category": "iphone",
+      "id": "iphone-17-699",
+      "includedServices": [
+        "Obegränsad surf",
+        "Netflix på köpet"
+      ],
+      "ordinaryPriceSEK": 859,
+      "priceKind": "monthly",
+      "productName": "Apple iPhone 17",
+      "relatedProductIDs": [
+        "apple-iphone-17"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/apple/apple-iphone-17?subscription=500058598&activelySelectedSubscription=true",
+      "title": "iPhone 17 för 699 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 999,
+      "category": "iphone",
+      "id": "iphone-duo-forkop-999",
+      "includedServices": [
+        "Obegränsad surf",
+        "Sveriges bästa nät enligt umlaut 2025"
+      ],
+      "ordinaryPriceSEK": 1099,
+      "priceKind": "monthly",
+      "productName": "Apple iPhone Duo",
+      "relatedProductIDs": [
+        "apple-iphone-duo"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/apple/apple-iphone-duo?subscription=500058588&activelySelectedSubscription=true",
+      "title": "Förköp iPhone Duo för 999 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "bindingMonths": 24,
+      "campaignPriceSEK": 769,
+      "category": "samsung",
+      "id": "galaxy-s26plus-769",
+      "includedServices": [
+        "Obegränsad surf",
+        "Netflix",
+        "Galaxy Watch7 på köpet"
+      ],
+      "ordinaryPriceSEK": 929,
+      "priceKind": "monthly",
+      "productName": "Samsung Galaxy S26+",
+      "relatedProductIDs": [
+        "samsung-galaxy-s26plus"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/samsung/samsung-galaxy-s26plus?subscription=500058598&activelySelectedSubscription=true",
+      "title": "Galaxy S26+ med klocka på köpet",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "bindingMonths": 24,
+      "campaignPriceSEK": 549,
+      "category": "samsung",
+      "id": "galaxy-s26-fe-549",
+      "includedServices": [
+        "Obegränsad surf",
+        "Buds3 Pro på köpet",
+        "Netflix"
+      ],
+      "ordinaryPriceSEK": 709,
+      "priceKind": "monthly",
+      "productName": "Samsung Galaxy S26 FE",
+      "relatedProductIDs": [
+        "samsung-galaxy-s26-fe"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/samsung/samsung-galaxy-s26-fe?subscription=500058598&activelySelectedSubscription=true",
+      "title": "Galaxy S26 FE för 549 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "bindingMonths": 24,
+      "campaignPriceSEK": 649,
+      "category": "samsung",
+      "id": "galaxy-s26-649",
+      "includedServices": [
+        "Obegränsad surf",
+        "Netflix på köpet"
+      ],
+      "ordinaryPriceSEK": 809,
+      "priceKind": "monthly",
+      "productName": "Samsung Galaxy S26",
+      "relatedProductIDs": [
+        "samsung-galaxy-s26"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/samsung/samsung-galaxy-s26?subscription=500058598&activelySelectedSubscription=true",
+      "title": "Galaxy S26 för 649 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "bindingMonths": 24,
+      "campaignPriceSEK": 549,
+      "category": "andra_smartphones",
+      "id": "pixel-11-pro-549",
+      "includedServices": [
+        "Obegränsad surf",
+        "SHL-ring med favoritlag",
+        "Netflix på köpet"
+      ],
+      "notes": "Telia anger en besparing på 13 535 kr.",
+      "ordinaryPriceSEK": 709,
+      "priceKind": "monthly",
+      "productName": "Google Pixel 11 Pro",
+      "relatedProductIDs": [
+        "google-pixel-11-pro"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/google/google-pixel-11-pro?subscription=500058598&activelySelectedSubscription=true",
+      "title": "Superpris på Google Pixel 11 Pro",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 379,
+      "category": "bredband",
+      "eligibility": "Endast nya bredbandskunder.",
+      "id": "fiber-150-379",
+      "includedServices": [],
+      "notes": "Telia har flest fasta bredbandsabonnemang, enligt PTS 2025.",
+      "ordinaryPriceSEK": 599,
+      "priceKind": "monthly",
+      "productName": "Bredband 150/150 via fiber",
+      "relatedProductIDs": [
+        "bredband-150-fiber"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/bredband/fiber/bredband-150",
+      "title": "Populäraste bredbandet i Sverige från 379 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 249,
+      "category": "bredband",
+      "eligibility": "Endast nya bredbandskunder.",
+      "id": "bredband-5g-249",
+      "includedServices": [],
+      "ordinaryPriceSEK": 399,
+      "priceKind": "monthly",
+      "productName": "Bredband via 5G (Hemma)",
+      "relatedProductIDs": [
+        "bredband-5g-hemma"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/bredband/bredband-via-5g/hemma",
+      "termsSummary": "Prova i 30 dagar med nöjdhetsgaranti.",
+      "title": "Supersnabbt 5G-bredband från 249 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 399,
+      "category": "bundles",
+      "eligibility": "Endast nya bredbands- och tv-kunder.",
+      "id": "fiber-tv-mini-399",
+      "includedServices": [
+        "Bredband 150",
+        "Tv Mini med 19 kanaler",
+        "Streaming från TV4 Play"
+      ],
+      "ordinaryPriceSEK": 848,
+      "priceKind": "monthly",
+      "productName": "Bredband 150 + Tv Mini",
+      "relatedProductIDs": [
+        "bredband-tv-mini-paket",
+        "bredband-150-fiber"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/bredband/fiber/bredband-via-fiber-med-tv?pid=bredband-150&pid=tv-paket-mini",
+      "title": "Samla bredband och tv från 399 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 599,
+      "category": "bundles",
+      "eligibility": "Endast nya bredbands- och tv-kunder.",
+      "id": "fiber-tv-streaming-599",
+      "includedServices": [
+        "Bredband 150",
+        "Tv Mini med 19 kanaler",
+        "Streaming Mer – fyra streamingfavoriter"
+      ],
+      "ordinaryPriceSEK": 1117,
+      "priceKind": "monthly",
+      "productName": "Bredband 150 + Tv Mini + Streaming Mer",
+      "relatedProductIDs": [
+        "bredband-tv-mini-paket"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/bredband/fiber/bredband-via-fiber-med-tv?pid=bredband-150&pid=tv-paket-mini&pid=streaming-mer",
+      "title": "Samla bredband, tv och streaming från 599 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 299,
+      "category": "bundles",
+      "eligibility": "Endast nya bredbands- och tv-kunder.",
+      "id": "bredband-5g-tv-299",
+      "includedServices": [
+        "Bredband via 5G",
+        "Tv Mini med 19 kanaler",
+        "TV4 Play"
+      ],
+      "ordinaryPriceSEK": 648,
+      "priceKind": "monthly",
+      "productName": "Bredband via 5G + Tv Mini",
+      "relatedProductIDs": [
+        "bredband-5g-tv-mini"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/bredband/bredband-via-5g/hemma-med-tv?pid=tv-paket-mini",
+      "title": "Samla 5G-bredband och tv från 299 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 349,
+      "category": "bundles",
+      "id": "mbb-router-e6888-349",
+      "includedServices": [
+        "Obegränsad surf",
+        "Router Huawei E6888 (värde 2 895 kr)"
+      ],
+      "oneTimeValueSEK": 2895,
+      "ordinaryPriceSEK": 529,
+      "priceKind": "monthly",
+      "productName": "Mobilt bredband + Huawei E6888",
+      "relatedProductIDs": [
+        "mobilt-bredband-huawei-e6888"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/bredband/routrar/huawei-e6888",
+      "title": "Mobilt bredband med router på köpet för 349 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 499,
+      "category": "tv_streaming",
+      "eligibility": "Endast nya tv-kunder.",
+      "id": "tv4-hockey-499",
+      "includedServices": [
+        "SHL",
+        "HockeyAllsvenskan",
+        "TV4 Play"
+      ],
+      "ordinaryPriceSEK": 549,
+      "priceKind": "monthly",
+      "productName": "TV4 Play Sport Hockey",
+      "relatedProductIDs": [
+        "tv4-play-sport-hockey"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/tv/sport/tv4-play-sport-hockey",
+      "termsSummary": "Utan bindningstid. Säsongspris 'i höst'.",
+      "title": "Streama höstens hockey för 499 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 699,
+      "category": "tv_streaming",
+      "eligibility": "Endast nya tv-kunder.",
+      "id": "stora-sportpaketet-699",
+      "includedServices": [
+        "Alla matcher i Premier League",
+        "Mer fotboll från flera stora ligor"
+      ],
+      "ordinaryPriceSEK": 799,
+      "priceKind": "monthly",
+      "productName": "Stora sportpaketet",
+      "relatedProductIDs": [
+        "stora-sportpaketet"
+      ],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/tv/sport/stora-sportpaketet",
+      "title": "Höstens ligastarter för 699 kr/mån",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    },
+    {
+      "campaignPriceSEK": 1199,
+      "category": "accessories",
+      "eligibility": "Endast i Telia Butik – så länge lagret räcker.",
+      "endDate": "2026-10-31T00:00:00Z",
+      "id": "haale-smart-band-1199",
+      "includedServices": [
+        "Aktivitet, sömn och stress",
+        "Lång batteritid",
+        "Inga abonnemangsavgifter"
+      ],
+      "notes": "Ord. pris härlett av Telias angivna 'spara 300 kr' på kampanjpris 1 199 kr. Slutdatum angivet av Telia: t.o.m. 31 oktober 2026.",
+      "ordinaryPriceSEK": 1499,
+      "priceKind": "oneTime",
+      "productName": "HAALE Smart Band",
+      "relatedProductIDs": [],
+      "sourceName": "telia.se/erbjudanden",
+      "sourceURL": "https://www.telia.se/erbjudanden",
+      "title": "HAALE Smart Band – mät din hälsodata, spara 300 kr",
+      "verifiedAt": "2026-10-18T09:00:00Z"
+    }
+  ],
+  "generatedAt": "2026-10-18T09:00:00Z",
+  "schemaVersion": 1,
+  "sourceNote": "Verifierad manuellt mot telia.se/erbjudanden och telia.se/erbjudanden/mobilabonnemang den 2026-10-18. Halebop-migreringens personliga priser kräver inloggning och ingår inte."
+}

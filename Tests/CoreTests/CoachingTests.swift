@@ -27,6 +27,51 @@ final class CoachingTests: XCTestCase {
 
     // MARK: - Demo coach grounding
 
+    func testDemoCoachCampaignReplyGroundsInCampaignRecords() {
+        let campaigns = [
+            CampaignRecord(
+                id: "familj-extra-anvandare-175",
+                title: "Familjeveckor: extra användare för 175 kr/mån",
+                productName: "Telia Mobil – extra användare",
+                category: .familjeabonnemang,
+                priceKind: .monthly,
+                campaignPriceSEK: 175,
+                ordinaryPriceSEK: 239,
+                promoMonths: 12,
+                priceAfterCampaignSEK: 239,
+                sourceURL: "https://www.telia.se/mobilabonnemang/telia-mobil-extra-anvandare",
+                sourceName: "telia.se/erbjudanden",
+                verifiedAt: Date()
+            ),
+        ]
+        let engine = DemoCoachEngine(catalog: catalog, campaigns: campaigns)
+        let reply = engine.reply(to: "Vilka kampanjer gäller just nu?")
+        XCTAssertTrue(reply.text.contains("Familjeveckor"),
+                      "Campaign reply must come from the verified records: \(reply.text)")
+        XCTAssertTrue(reply.text.contains("175"))
+        // The ordinary price must be stated so the seller can be honest about after-promo.
+        XCTAssertTrue(reply.text.contains("239"))
+    }
+
+    func testDemoCoachExpiredCampaignsNotPresentedAsCurrent() {
+        let expired = CampaignRecord(
+            id: "old-campaign",
+            title: "Gammal utgången kampanj",
+            productName: "Någonting",
+            category: .other,
+            priceKind: .monthly,
+            campaignPriceSEK: 99,
+            endDate: Date(timeIntervalSince1970: 0),
+            sourceURL: "https://www.telia.se/erbjudanden",
+            sourceName: "telia.se/erbjudanden",
+            verifiedAt: Date(timeIntervalSince1970: 0)
+        )
+        let engine = DemoCoachEngine(catalog: catalog, campaigns: [expired])
+        let reply = engine.reply(to: "Vilka kampanjer gäller just nu?")
+        XCTAssertFalse(reply.text.contains("Gammal utgången kampanj"),
+                       "Expired campaigns must never be listed as current")
+    }
+
     func testDemoCoachPriceReplyUsesRealPrice() {
         let engine = DemoCoachEngine(catalog: catalog)
         let reply = engine.reply(to: "Vad kostar Obegränsad?")
@@ -84,7 +129,7 @@ final class CoachingTests: XCTestCase {
     func testDemoServiceStreamsOnceAndIsLabelledDemo() async throws {
         let service = DemoCoachService()
         var chunks: [String] = []
-        let reply = try await service.reply(to: "hej", history: [], catalog: catalog) { chunks.append($0) }
+        let reply = try await service.reply(to: "hej", history: [], catalog: catalog, campaigns: []) { chunks.append($0) }
         XCTAssertTrue(service.isDemo)
         XCTAssertEqual(chunks, [reply.text], "Demo must not fake streaming with multiple chunks")
         XCTAssertTrue(reply.isGroundedForTesting || true)
