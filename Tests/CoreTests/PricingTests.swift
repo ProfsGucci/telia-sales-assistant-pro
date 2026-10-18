@@ -26,7 +26,7 @@ final class PricingTests: XCTestCase {
     func testPlainPlanTotalOver12Months() {
         let plan = makePlan(monthly: 299)
         let result = CostCalculator.planTotal(plan, months: 12)!
-        XCTAssertEqual(result.totalSEK, 299 * 12, accuracy: 0.01)
+        assertClose(result.totalSEK, 299 * 12)
         XCTAssertEqual(result.monthlyAfterCampaignSEK, 299)
         XCTAssertEqual(result.campaignMonths, 0)
         XCTAssertEqual(result.oneTimeTotalSEK, 0)
@@ -39,7 +39,7 @@ final class PricingTests: XCTestCase {
         XCTAssertEqual(result.monthlyNowSEK, 599)
         XCTAssertEqual(result.monthlyAfterCampaignSEK, 699)
         XCTAssertEqual(result.campaignMonths, 12)
-        XCTAssertEqual(result.totalSEK, 599 * 12 + 699 * 12, accuracy: 0.01)
+        assertClose(result.totalSEK, 599 * 12 + 699 * 12)
         // Lines expose both periods for the UI.
         XCTAssertEqual(result.lines.filter { $0.recurring }.count, 2)
         XCTAssertEqual(result.lines[0].months, 12)
@@ -50,7 +50,7 @@ final class PricingTests: XCTestCase {
         let plan = makePlan(monthly: 379, ordinary: 599, binding: 12, campaignMonths: 12)
         let result = CostCalculator.planTotal(plan, months: 6)!
         XCTAssertEqual(result.campaignMonths, 6)
-        XCTAssertEqual(result.totalSEK, 379 * 6, accuracy: 0.01)
+        assertClose(result.totalSEK, 379 * 6)
     }
 
     func testUpfrontAndChargesIncluded() {
@@ -63,8 +63,8 @@ final class PricingTests: XCTestCase {
         )
         let result = CostCalculator.planTotal(plan, months: 3)!
         let expectedTotal: Double = 100 * 3 + 59 * 3 + 300 + 195
-        XCTAssertEqual(result.oneTimeTotalSEK, 495, accuracy: 0.01)
-        XCTAssertEqual(result.totalSEK, expectedTotal, accuracy: 0.01)
+        assertClose(result.oneTimeTotalSEK, 495)
+        assertClose(result.totalSEK, expectedTotal)
     }
 
     func testZeroMonthsReturnsNil() {
@@ -74,10 +74,10 @@ final class PricingTests: XCTestCase {
     // MARK: - Installments & devices
 
     func testInstallmentMonthly() {
-        XCTAssertEqual(CostCalculator.installmentMonthly(devicePriceSEK: 16_495, months: 24)!,
-                       16_495.0 / 24.0, accuracy: 0.01)
-        XCTAssertEqual(CostCalculator.installmentMonthly(devicePriceSEK: 16_495, months: 24, upfrontSEK: 1_495)!,
-                       15_000.0 / 24.0, accuracy: 0.01)
+        assertClose(CostCalculator.installmentMonthly(devicePriceSEK: 16_495, months: 24)!,
+                       16_495.0 / 24.0)
+        assertClose(CostCalculator.installmentMonthly(devicePriceSEK: 16_495, months: 24, upfrontSEK: 1_495)!,
+                       15_000.0 / 24.0)
         XCTAssertNil(CostCalculator.installmentMonthly(devicePriceSEK: 100, months: 0))
         XCTAssertNil(CostCalculator.installmentMonthly(devicePriceSEK: 100, months: 24, upfrontSEK: 200))
     }
@@ -91,8 +91,8 @@ final class PricingTests: XCTestCase {
         )!
         XCTAssertEqual(result.lines[0].amountSEK, 499)
         XCTAssertEqual(result.lines[1].amountSEK, 150)
-        XCTAssertEqual(result.totalSEK, 649 * 24, accuracy: 0.01)
-        XCTAssertEqual(result.monthlyAverageSEK, 649, accuracy: 0.01)
+        assertClose(result.totalSEK, 649 * 24)
+        assertClose(result.monthlyAverageSEK, 649)
     }
 
     // MARK: - Family
@@ -104,9 +104,9 @@ final class PricingTests: XCTestCase {
             extraUserMonthlySEK: 175, extraUserOrdinarySEK: 239,
             extraUserCampaignMonths: 12
         )!
-        XCTAssertEqual(result.monthlyNowSEK, 569 + 3 * 175, accuracy: 0.01)
-        XCTAssertEqual(result.monthlyAfterCampaignSEK, 569 + 3 * 239, accuracy: 0.01)
-        XCTAssertEqual(result.monthlyPerPersonSEK, (569 + 525) / 4, accuracy: 0.01)
+        assertClose(result.monthlyNowSEK, 569 + 3 * 175)
+        assertClose(result.monthlyAfterCampaignSEK, 569 + 3 * 239)
+        assertClose(result.monthlyPerPersonSEK, (569 + 525) / 4)
     }
 
     // MARK: - Comparison

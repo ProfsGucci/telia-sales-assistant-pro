@@ -21,7 +21,7 @@ final class LearningTests: XCTestCase {
 
         let good3 = SrsEngine.review(good2, quality: 4)
         // 3 * ease (2.5) = 7.5
-        XCTAssertEqual(good3.intervalDays, 7.5, accuracy: 0.01)
+        assertClose(good3.intervalDays, 7.5)
     }
 
     func testSrsEaseFloor() {

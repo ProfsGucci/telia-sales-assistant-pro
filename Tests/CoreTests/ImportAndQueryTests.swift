@@ -31,7 +31,7 @@ final class ImportAndQueryTests: XCTestCase {
         // Swedish decimal comma inside a quoted cell: "349,50" → 349.50
         let valid = "name,monthlyPrice,sourceUrl,verification\nTest,\"349,50\",https://x.se,unverified"
         let (snapshot, _) = try PriceImport.parseCSV(csv(valid))
-        XCTAssertEqual(snapshot.products.first?.monthlyPriceSEK ?? 0, 349.5, accuracy: 0.001)
+        assertClose(snapshot.products.first?.monthlyPriceSEK ?? 0, 349.5, accuracy: 0.001)
     }
 
     func testCSVSkipsRowsWithoutNameAndReports() throws {

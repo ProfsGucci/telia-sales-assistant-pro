@@ -103,7 +103,7 @@ final class ScheduleProgressTests: XCTestCase {
         XCTAssertEqual(agg.customers, 15)
         XCTAssertEqual(agg.sales, 5)
         XCTAssertEqual(agg.accessories, 4)
-        XCTAssertEqual(agg.conversion ?? 0, 5.0 / 15.0, accuracy: 0.001)
+        assertClose(agg.conversion ?? 0, 5.0 / 15.0, accuracy: 0.001)
     }
 
     func testConversionNilWithoutCustomers() {
@@ -121,7 +121,7 @@ final class ScheduleProgressTests: XCTestCase {
     func testTrendDetectsChange() {
         let values = [1.0, 1.0, 2.0, 2.0, 4.0, 4.0]
         let trend = ProgressEngine.trend(values: values)
-        XCTAssertEqual(trend ?? 0, 1.5, accuracy: 0.001)
+        assertClose(trend ?? 0, 1.5, accuracy: 0.001)
         XCTAssertNil(ProgressEngine.trend(values: [1, 2]))
     }
 
