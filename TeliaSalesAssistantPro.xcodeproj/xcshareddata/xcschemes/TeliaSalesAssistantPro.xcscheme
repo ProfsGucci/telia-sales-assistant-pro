@@ -45,7 +45,7 @@
          <TestableReference
             skipped = "NO">
             <BuildableProductRunnable
-               runnable debugging = "NO">
+               runnableDebuggingMode = "0">
 					<BuildableReference
 						BuildableIdentifier = "primary"
 						BlueprintIdentifier = "5FD13B96FA3092CCE761ED06"
@@ -68,7 +68,7 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
-         runnable debugging = "NO">
+         runnableDebuggingMode = "0">
 					<BuildableReference
 						BuildableIdentifier = "primary"
 						BlueprintIdentifier = "876C73F9212177BB109E252F"
@@ -85,7 +85,7 @@
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
-         runnable debugging = "NO">
+         runnableDebuggingMode = "0">
 					<BuildableReference
 						BuildableIdentifier = "primary"
 						BlueprintIdentifier = "876C73F9212177BB109E252F"

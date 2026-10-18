@@ -821,8 +821,8 @@
 						SDKROOT = "iphoneos";
 						SWIFT_VERSION = 5.0;
 						DEBUG_INFORMATION_FORMAT = dwarf;
-						SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG;
-						SWIFT_OPTIMIZATION_LEVEL = -Onone;
+						SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+						SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 					};
 			name = "Debug";
 		};
@@ -837,7 +837,7 @@
 						SWIFT_VERSION = 5.0;
 						DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 						SWIFT_COMPILATION_MODE = wholemodule;
-						SWIFT_OPTIMIZATION_LEVEL = -O;
+						SWIFT_OPTIMIZATION_LEVEL = "-O";
 						VALIDATE_PRODUCT = YES;
 						CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 					};
@@ -853,8 +853,8 @@
 						SDKROOT = "iphoneos";
 						SWIFT_VERSION = 5.0;
 						DEBUG_INFORMATION_FORMAT = dwarf;
-						SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG;
-						SWIFT_OPTIMIZATION_LEVEL = -Onone;
+						SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+						SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 						PRODUCT_NAME = "$(TARGET_NAME)";
 						PRODUCT_BUNDLE_IDENTIFIER = se.sthlm.teliacoachpro.core;
 						SKIP_INSTALL = YES;
@@ -873,7 +873,7 @@
 						SWIFT_VERSION = 5.0;
 						DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 						SWIFT_COMPILATION_MODE = wholemodule;
-						SWIFT_OPTIMIZATION_LEVEL = -O;
+						SWIFT_OPTIMIZATION_LEVEL = "-O";
 						VALIDATE_PRODUCT = YES;
 						PRODUCT_NAME = "$(TARGET_NAME)";
 						PRODUCT_BUNDLE_IDENTIFIER = se.sthlm.teliacoachpro.core;
@@ -891,8 +891,8 @@
 						SDKROOT = "iphoneos";
 						SWIFT_VERSION = 5.0;
 						DEBUG_INFORMATION_FORMAT = dwarf;
-						SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG;
-						SWIFT_OPTIMIZATION_LEVEL = -Onone;
+						SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+						SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 						ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon";
 						ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "AccentColor";
 						CODE_SIGN_STYLE = Automatic;
@@ -921,7 +921,7 @@
 						SWIFT_VERSION = 5.0;
 						DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 						SWIFT_COMPILATION_MODE = wholemodule;
-						SWIFT_OPTIMIZATION_LEVEL = -O;
+						SWIFT_OPTIMIZATION_LEVEL = "-O";
 						VALIDATE_PRODUCT = YES;
 						ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon";
 						ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "AccentColor";
@@ -950,8 +950,8 @@
 						SDKROOT = "iphoneos";
 						SWIFT_VERSION = 5.0;
 						DEBUG_INFORMATION_FORMAT = dwarf;
-						SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG;
-						SWIFT_OPTIMIZATION_LEVEL = -Onone;
+						SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+						SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 						BUNDLE_LOADER = "$(TEST_HOST)";
 						GENERATE_INFOPLIST_FILE = YES;
 						LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@loader_path/Frameworks");
@@ -973,7 +973,7 @@
 						SWIFT_VERSION = 5.0;
 						DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 						SWIFT_COMPILATION_MODE = wholemodule;
-						SWIFT_OPTIMIZATION_LEVEL = -O;
+						SWIFT_OPTIMIZATION_LEVEL = "-O";
 						VALIDATE_PRODUCT = YES;
 						BUNDLE_LOADER = "$(TEST_HOST)";
 						GENERATE_INFOPLIST_FILE = YES;

@@ -284,13 +284,13 @@ BASE_SETTINGS = {
 }
 DEBUG_SETTINGS = {
     "DEBUG_INFORMATION_FORMAT": "dwarf",
-    "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "$(inherited) DEBUG",
-    "SWIFT_OPTIMIZATION_LEVEL": "-Onone",
+    "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "\"$(inherited) DEBUG\"",
+    "SWIFT_OPTIMIZATION_LEVEL": '"-Onone"',
 }
 RELEASE_SETTINGS = {
     "DEBUG_INFORMATION_FORMAT": '"dwarf-with-dsym"',
     "SWIFT_COMPILATION_MODE": "wholemodule",
-    "SWIFT_OPTIMIZATION_LEVEL": "-O",
+    "SWIFT_OPTIMIZATION_LEVEL": '"-O"',
     "VALIDATE_PRODUCT": "YES",
 }
 
@@ -491,7 +491,7 @@ scheme = f"""<?xml version="1.0" encoding="UTF-8"?>
          <TestableReference
             skipped = "NO">
             <BuildableProductRunnable
-               runnable debugging = "NO">
+               runnableDebuggingMode = "0">
 {TESTS_BUILDABLE}
             </BuildableProductRunnable>
          </TestableReference>
@@ -508,7 +508,7 @@ scheme = f"""<?xml version="1.0" encoding="UTF-8"?>
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
-         runnable debugging = "NO">
+         runnableDebuggingMode = "0">
 {APP_BUILDABLE}
       </BuildableProductRunnable>
    </LaunchAction>
@@ -519,7 +519,7 @@ scheme = f"""<?xml version="1.0" encoding="UTF-8"?>
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
-         runnable debugging = "NO">
+         runnableDebuggingMode = "0">
 {APP_BUILDABLE}
       </BuildableProductRunnable>
    </ProfileAction>
