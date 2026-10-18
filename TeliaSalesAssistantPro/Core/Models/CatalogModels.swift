@@ -236,7 +236,7 @@ public struct ProductRecord: Codable, Hashable, Identifiable, Sendable {
 
 // MARK: - Catalog snapshot
 
-public struct CatalogSnapshot: Codable, Sendable {
+public struct CatalogSnapshot: Codable, Hashable, Sendable {
     public var products: [ProductRecord]
     public var generatedAt: Date
     /// Human note about where this data came from, shown in the app.
