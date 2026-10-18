@@ -395,6 +395,7 @@ struct LoadingCard: View {
 struct SectionCard<Content: View>: View {
     let title: String
     var symbol: String?
+    var gradient: Bool = false
     @ViewBuilder var content: Content
 
     var body: some View {
@@ -403,6 +404,6 @@ struct SectionCard<Content: View>: View {
             content
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .card()
+        .card(gradient: gradient)
     }
 }
