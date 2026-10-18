@@ -48,14 +48,16 @@ jobs:
         id: sim
         run: |
           set -euo pipefail
+          # Lists (and auto-creates) schemes; shows destinations in the format:
+          #   { platform:iOS Simulator, id:ABCD-1234..., OS:18.2, name:iPhone 16 }
+          xcodebuild -project TeliaSalesAssistantPro.xcodeproj -list || true
           LINE="$(xcodebuild -project TeliaSalesAssistantPro.xcodeproj -scheme TeliaSalesAssistantPro -showdestinations 2>/dev/null \
-            | grep 'iOS Simulator' | grep 'Available: yes' | head -n1 || true)"
+            | grep -m1 'platform:iOS Simulator, id:')" || true
           if [ -z "$LINE" ]; then
-            # Fallback: build-only destination if no simulator is available.
             echo "destination=generic/platform=iOS Simulator" >> "$GITHUB_OUTPUT"
             echo "has_sim=false" >> "$GITHUB_OUTPUT"
           else
-            DEST_ID="$(printf '%s' "$LINE" | grep -oE 'id: *[-A-Za-z0-9]+' | head -n1 | sed 's/id: *//')"
+            DEST_ID="$(printf '%s' "$LINE" | sed -n 's/.*id:\([-A-Za-z0-9]*\).*/\1/p')"
             echo "destination=platform=iOS Simulator,id=$DEST_ID" >> "$GITHUB_OUTPUT"
             echo "has_sim=true" >> "$GITHUB_OUTPUT"
           fi

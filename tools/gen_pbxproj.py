@@ -435,107 +435,13 @@ def render(objects_list: list[Obj]) -> str:
 
 
 xcodeproj = ROOT / f"{PROJECT_NAME}.xcodeproj"
-(xcodeproj / "xcshareddata" / "xcschemes").mkdir(parents=True, exist_ok=True)
 (xcodeproj / "project.pbxproj").write_text(render(objects))
+# NOTE: no shared scheme is written on purpose. xcodebuild auto-creates schemes
+# from the targets (including wiring hosted tests via TEST_HOST), which avoids
+# Xcode's very particular scheme unarchiver crashing on hand-written XML.
 
-
-# ---------------------------------------------------------------- scheme
-
-def buildable(target_uuid: str, name: str, product: str) -> str:
-    return (
-        f"\t\t\t\t\t<BuildableReference\n"
-        f"\t\t\t\t\t\tBuildableIdentifier = \"primary\"\n"
-        f"\t\t\t\t\t\tBlueprintIdentifier = \"{target_uuid}\"\n"
-        f"\t\t\t\t\t\tBuildableName = \"{product}\"\n"
-        f"\t\t\t\t\t\tBlueprintName = \"{name}\"\n"
-        f"\t\t\t\t\t\tReferencedContainer = \"container:{PROJECT_NAME}.xcodeproj\">\n"
-        f"\t\t\t\t\t</BuildableReference>"
-    )
-
-
-APP_BUILDABLE = buildable(APP_TARGET_UUID, PROJECT_NAME, f"{PROJECT_NAME}.app")
-TESTS_BUILDABLE = buildable(TESTS_TARGET_UUID, "TeliaCoreTests", "TeliaCoreTests.xctest")
-
-scheme = f"""<?xml version="1.0" encoding="UTF-8"?>
-<Scheme
-   LastUpgradeVersion = "1600"
-   version = "1.7">
-   <BuildAction
-      parallelizableBuildables = "YES"
-      buildImplicitDependencies = "YES">
-      <BuildActionEntries>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-{APP_BUILDABLE}
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-{TESTS_BUILDABLE}
-         </BuildActionEntry>
-      </BuildActionEntries>
-   </BuildAction>
-   <TestAction
-      buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableProductRunnable
-               runnableDebuggingMode = "0">
-{TESTS_BUILDABLE}
-            </BuildableProductRunnable>
-         </TestableReference>
-      </Testables>
-   </TestAction>
-   <LaunchAction
-      buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.LLDB"
-      launchStyle = "0"
-      useCustomWorkingDirectory = "NO"
-      ignoresPersistentStateOnLaunch = "NO"
-      debugDocumentVersioning = "YES"
-      debugServiceExtension = "internal"
-      allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-{APP_BUILDABLE}
-      </BuildableProductRunnable>
-   </LaunchAction>
-   <ProfileAction
-      buildConfiguration = "Release"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      savedToolIdentifier = ""
-      useCustomWorkingDirectory = "NO"
-      debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-{APP_BUILDABLE}
-      </BuildableProductRunnable>
-   </ProfileAction>
-   <AnalyzeAction
-      buildConfiguration = "Debug">
-   </AnalyzeAction>
-   <ArchiveAction
-      buildConfiguration = "Release"
-      revealArchiveInOrganizer = "YES">
-   </ArchiveAction>
-</Scheme>
-"""
-(xcodeproj / "xcshareddata" / "xcschemes" / f"{PROJECT_NAME}.xcscheme").write_text(scheme)
 
 print(f"Wrote {xcodeproj / 'project.pbxproj'}")
-print(f"Wrote {xcodeproj / 'xcshareddata' / 'xcschemes' / f'{PROJECT_NAME}.xcscheme'}")
 print(f"  Targets: TeliaCore ({len(CORE_SOURCES)} files), "
       f"{PROJECT_NAME} ({len(APP_SOURCES)} files, {len(RESOURCES)} resources), "
       f"TeliaCoreTests ({len(TEST_SOURCES)} files)")
