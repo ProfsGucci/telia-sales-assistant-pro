@@ -86,7 +86,7 @@ struct CampaignDetailView: View {
             expiryLine
         }
         .padding(DS.Space.m)
-        .cardStyle(gradient: true)
+        .card(gradient: true)
     }
 
     @ViewBuilder
@@ -163,7 +163,7 @@ struct CampaignDetailView: View {
             }
         }
         .padding(DS.Space.m)
-        .cardStyle()
+        .card()
     }
 
     private var comparableSaving: Double? {
@@ -212,7 +212,7 @@ struct CampaignDetailView: View {
             }
         }
         .padding(DS.Space.m)
-        .cardStyle()
+        .card()
     }
 
     private func termRow(_ label: String, _ value: String) -> some View {
@@ -242,7 +242,7 @@ struct CampaignDetailView: View {
             }
         }
         .padding(DS.Space.m)
-        .cardStyle()
+        .card()
     }
 
     // MARK: Related products
@@ -272,7 +272,7 @@ struct CampaignDetailView: View {
             }
         }
         .padding(DS.Space.m)
-        .cardStyle()
+        .card()
     }
 
     // MARK: Source & actions
@@ -321,7 +321,7 @@ struct CampaignDetailView: View {
             }
         }
         .padding(DS.Space.m)
-        .cardStyle()
+        .card()
     }
 
     private var footer: some View {
@@ -454,7 +454,7 @@ struct CampaignCompareView: View {
             }
         }
         .padding(DS.Space.m)
-        .cardStyle()
+        .card()
     }
 
     private var hint: some View {

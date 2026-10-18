@@ -94,7 +94,7 @@ struct CampaignCenterView: View {
             Spacer(minLength: 0)
         }
         .padding(DS.Space.m)
-        .cardStyle()
+        .card()
     }
 
     // MARK: Header
@@ -127,7 +127,7 @@ struct CampaignCenterView: View {
             }
         }
         .padding(DS.Space.m)
-        .cardStyle(gradient: true)
+        .card(gradient: true)
     }
 
     // MARK: Filters
@@ -265,7 +265,7 @@ struct CampaignCenterView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DS.Space.xl)
-        .cardStyle()
+        .card()
     }
 
     private func sectionTitle(_ title: String, icon: String) -> some View {
@@ -378,7 +378,7 @@ struct CampaignCardView: View {
             metaRow
         }
         .padding(DS.Space.m)
-        .cardStyle(gradient: isComparing)
+        .card(gradient: isComparing)
         .overlay(alignment: .topTrailing) { favoriteStar }
         .accessibilityElement(children: .combine)
     }
