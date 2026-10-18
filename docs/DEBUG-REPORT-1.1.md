@@ -33,7 +33,7 @@ miljön. Inga resultat har hittats på.
 | Bakgrundsinställning (Core-delen) | Ny, testad med 6 tester |
 | Coach-integration (demo + remote) | Signatur breddad; grunderingstestade |
 | Projektgenerering | `gen_pbxproj.py` — 56 filreferenser validerar mot disk |
-| iOS-bygge | Verifieras av CI (macOS) — **pågår när detta skrivs**; resultat rapporteras i releasen |
+| iOS-bygge (CI) | **Grönt på d6f7d76** (run 39095444634): bygg ✓, simulatortester 107/107 ✓, osignerad Release-IPA ✓. Tre iterationer krävdes — se F-6. Releasens IPA är exakt det bygget (artefakt 12124258127), verifierad: Mach-O arm64, version 1.1 (2), CampaignSeed.json inkluderad |
 
 ## 3. Hitta problem, orsak, åtgärd
 
@@ -76,6 +76,24 @@ miljön. Inga resultat har hittats på.
 - Kampanjer navar med eget värde (`CampaignRecord`) och relaterade produkter
   med egen ruttyp (`CampaignProductRoute`) för att aldrig kollidera med
   befintliga `String`-destinationer i samma stack (känd kraschkälla från 1.0).
+
+### F-6 (allvarlighet: MEDEL — åtgärdad) Tre appskiktsfel synliga först i CI
+Lokal miljö har ingen Xcode, så typfel i SwiftUI-skiktet upptäcks först av
+CI-bygget. Tre iterationer krävdes (varje fel rättades, committades och
+byggdes om):
+1. `Section("titel") { … } footer: { … }` finns inte som initializer i SwiftUI
+   (3 st i BackgroundSettingsView) → omskrivet till `header:`/`footer:`-form.
+2. `.cardStyle(…)` fanns inte i designsystemet — korrekt API är `.card(…)`
+   (11 st i kampanjvyerna; jag hade missminnts namnet).
+3. Releasesteget saknade `permissions: contents: write` för GITHUB_TOKEN →
+   softprops kunde inte ladda upp IPA:n ("Resource not accessible by
+   integration"). Åtgärdat i `.github/workflows/ci.yml`.
+- **Tillvägagångssätt vid taggfelen:** taggen v1.1-beta skapades först på ett
+  commit vars bygg misslyckades; taggen och den tomma releasen togs bort inom
+  minuter (inga nedladdningar hade skett) och återskapades på det gröna
+  committet d6f7d76 — ingen annan tagg rördes. IPA:n som sits på releasen
+  byggdes av CI exakt från d6f7d76 (bygg ✓, simulatortester ✓, IPA ✓ —
+  bara uppladdningssteget hade fel behörighet och slutfördes via API).
 
 ## 4. Tester
 
