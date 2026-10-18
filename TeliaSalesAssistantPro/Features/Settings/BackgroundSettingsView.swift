@@ -26,8 +26,10 @@ struct BackgroundSettingsView: View {
 
             presetSection
 
-            Section("Egen färg") {
+            Section {
                 ColorPicker("Solid färg", selection: solidBinding, supportsOpacity: false)
+            } header: {
+                Text("Egen färg")
             } footer: {
                 Text("Väljer du en egen färg används den som lugn, enfärgad bakgrund.")
             }
@@ -156,7 +158,7 @@ struct BackgroundSettingsView: View {
     // MARK: Photo
 
     private var photoSection: some View {
-        Section("Egen bild") {
+        Section {
             PhotosPicker(selection: $photoItem, matching: .images) {
                 Label("Välj bild från bilder", systemImage: "photo.on.rectangle.angled")
             }
@@ -184,6 +186,8 @@ struct BackgroundSettingsView: View {
                     .font(.system(.caption, design: .rounded))
                     .foregroundStyle(DS.negative)
             }
+        } header: {
+            Text("Egen bild")
         } footer: {
             Text("Bilden kopieras till appens egna lagring och lämnar aldrig enheten. Ingen behörighet till hela bildbiblioteket begärs – du väljer en enskild bild. För stora bilder skalas ned automatiskt.")
         }
@@ -214,7 +218,7 @@ struct BackgroundSettingsView: View {
     // MARK: Adjustments
 
     private var adjustSection: some View {
-        Section("Justering") {
+        Section {
             if preference.kind == .photo {
                 VStack(alignment: .leading, spacing: 6) {
                     LabeledContent("Oskärpa") {
@@ -235,6 +239,8 @@ struct BackgroundSettingsView: View {
                 Slider(value: intensityBinding, in: 0...1)
                     .accessibilityLabel("Intensitet")
             }
+        } header: {
+            Text("Justering")
         } footer: {
             Text(preference.kind == .photo
                  ? "Oskärpa gör bilden mjukare bakom innehållet. Intensitet sänker bakgrunden mot appens standardfärg – använd den om texten känns svår att läsa."
