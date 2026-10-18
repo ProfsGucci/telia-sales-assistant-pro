@@ -240,10 +240,10 @@ final class CatalogStore: ObservableObject {
             applyImport(snapshot, source: report.source)
             return .success(report)
         } catch let error as PriceImportError {
-            data.lastRefreshError = error.localizedDescription
+            self.data.lastRefreshError = error.localizedDescription
             return .failure(error)
         } catch {
-            data.lastRefreshError = error.localizedDescription
+            self.data.lastRefreshError = error.localizedDescription
             return .failure(.malformedJSON(error.localizedDescription))
         }
     }
@@ -259,12 +259,10 @@ final class CatalogStore: ObservableObject {
         do {
             var request = URLRequest(url: url, timeoutInterval: 20)
             request.cachePolicy = .reloadIgnoringLocalCacheData
-            let (bytes, response) = try await URLSession.shared.bytes(for: request)
+            let (feedData, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
                 throw CoachError.server((response as? HTTPURLResponse)?.statusCode ?? -1)
             }
-            let content = try await bytes.lines.reduce(into: "") { $0 += $0 + "\n" }
-            guard let feedData = content.data(using: .utf8) else { throw CoachError.emptyResponse }
             let (snapshot, _) = try PriceImport.parseJSON(feedData)
             applyImport(snapshot, source: "Feed: \(url.host ?? url.absoluteString)")
         } catch {
