@@ -52,7 +52,7 @@ jobs:
           #   { platform:iOS Simulator, id:ABCD-1234..., OS:18.2, name:iPhone 16 }
           xcodebuild -project TeliaSalesAssistantPro.xcodeproj -list || true
           DESTS="$(xcodebuild -project TeliaSalesAssistantPro.xcodeproj -scheme TeliaSalesAssistantPro -showdestinations 2>/dev/null \
-            | grep 'platform:iOS Simulator, id:' | grep -v 'Placeholder' || true)"
+            | grep 'platform:iOS Simulator' | grep -v 'Placeholder' || true)"
           LINE="$(printf '%s\n' "$DESTS" | grep -m1 'name:iPhone' || true)"
           if [ -z "$LINE" ]; then LINE="$(printf '%s\n' "$DESTS" | head -n1)"; fi
           if [ -z "$LINE" ]; then
