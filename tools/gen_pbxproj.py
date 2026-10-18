@@ -15,6 +15,7 @@ Run from repo root:  python3 tools/gen_pbxproj.py
 """
 
 import hashlib
+import re
 import io
 import sys
 from pathlib import Path
@@ -203,7 +204,9 @@ def subtree(dirs_root: Path, relative: str):
                 children.append(core_refs[rel])
             elif str(entry.relative_to(ROOT)) in app_refs:
                 children.append(app_refs[rel])
-    return group(relative, children, path=relative)
+    # Group paths are relative to the PARENT group — use the basename only,
+    # otherwise the parent's path component gets prepended twice.
+    return group(relative, children, path=Path(relative).name)
 
 
 core_group = subtree(APP_DIR, "Core")
@@ -219,9 +222,11 @@ for entry in sorted(features_root.iterdir()):
         feature_children.append(group(f"Features/{entry.name}", files, path=entry.name))
 features_group = group("Features", feature_children, path="Features")
 
+# Info.plist is NOT a bundled resource — it lives at the app source root and
+# is referenced by INFOPLIST_FILE. Keep it out of the Resources group.
 resources_group = group(
     "Resources",
-    [resource_refs[p] for p in RESOURCES] + [infoplist_ref],
+    [resource_refs[p] for p in RESOURCES],
     path="Resources",
 )
 tests_group = group("CoreTests", [test_refs[p] for p in TEST_SOURCES], path="CoreTests")
@@ -230,7 +235,7 @@ frameworks_group = group("Frameworks", [CHARTS_REF], path=None)
 products_group = group("Products", [APP_PRODUCT, CORE_PRODUCT, TESTS_PRODUCT], path="Products")
 main_group_children = [  # first child is the app source root
     group("TeliaSalesAssistantPro",
-          [app_group, core_group, design_group, features_group, services_group, resources_group],
+          [app_group, core_group, design_group, features_group, services_group, resources_group, infoplist_ref],
           path="TeliaSalesAssistantPro"),
     frameworks_group, tests_root_group, products_group,
 ]
@@ -441,6 +446,48 @@ xcodeproj = ROOT / f"{PROJECT_NAME}.xcodeproj"
 # Xcode's very particular scheme unarchiver crashing on hand-written XML.
 
 
+def validate_group_paths(objects_list: list[Obj], main_group_uuid: str) -> None:
+    """Resolve every group-relative PBXFileReference against SRCROOT and verify
+    the file exists. Catches path-doubling bugs before Xcode ever sees them."""
+    groups: dict[str, tuple[str | None, list[str]]] = {}
+    filerefs: dict[str, str] = {}
+    for o in objects_list:
+        if o.isa == "PBXGroup":
+            raw_path = o.fields.get("path")
+            path = raw_path.strip('"') if raw_path else None
+            children = re.findall(r"([0-9A-F]{24})", o.fields.get("children", "()"))
+            groups[o.uuid] = (path, children)
+        elif o.isa == "PBXFileReference":
+            if o.fields.get("sourceTree", '"<group>"').strip('"') == "<group>":
+                filerefs[o.uuid] = o.fields.get("path", '""').strip('"')
+
+    parent: dict[str, str] = {}
+    for guuid, (_, children) in groups.items():
+        for child in children:
+            parent[child] = guuid
+
+    def full_path(uuid: str) -> str:
+        parts: list[str] = []
+        current = uuid
+        while current in parent:
+            group_path = groups[parent[current]][0]
+            if group_path:
+                parts.append(group_path)
+            current = parent[current]
+        return "/".join(reversed(parts))
+
+    errors = []
+    for uuid, filename in filerefs.items():
+        relative_dir = full_path(uuid)
+        absolute = ROOT / relative_dir / filename if relative_dir else ROOT / filename
+        if not absolute.exists():
+            errors.append(f"  {uuid} -> {relative_dir}/{filename} (missing)")
+    if errors:
+        raise SystemExit("group path validation FAILED:\n" + "\n".join(errors))
+    print(f"Group path validation OK ({len(filerefs)} file references resolve on disk)")
+
+
+validate_group_paths(objects, main_group)
 print(f"Wrote {xcodeproj / 'project.pbxproj'}")
 print(f"  Targets: TeliaCore ({len(CORE_SOURCES)} files), "
       f"{PROJECT_NAME} ({len(APP_SOURCES)} files, {len(RESOURCES)} resources), "

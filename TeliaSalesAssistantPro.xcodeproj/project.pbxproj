@@ -519,63 +519,63 @@
 		};
 /* End PBXFrameworksBuildPhase section */
 /* Begin PBXGroup section */
-		850E61B33C05F27CD23BDB5E /* PBXGroup */ = {
+		47EF3A365510CBC4D03898B4 /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("112978F9DA182AA3A8D6E4D3");
-			path = "Core/Catalog";
+			path = "Catalog";
 			sourceTree = "<group>";
 		};
-		BE15ACC9F764362C82C6D2DB /* PBXGroup */ = {
+		EDABE7AF198EB47BDAA1ADA6 /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("8711EFADF67611E1A2640165", "5FAFFE5856B6B753A1B95B87", "56CA586CCD80F024ED65EBA1");
-			path = "Core/Coaching";
+			path = "Coaching";
 			sourceTree = "<group>";
 		};
-		9E50996905343E4BDF5934D5 /* PBXGroup */ = {
+		8F9165224AA9E3DBABFD4F03 /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("FF84B69ED1EF4C97A233F441");
-			path = "Core/Import";
+			path = "Import";
 			sourceTree = "<group>";
 		};
-		EA624ECE7AF24981E4E21FD7 /* PBXGroup */ = {
+		4BF93F0D28E9DA77272C87D8 /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("2C4F34C164DA01689CA616A6");
-			path = "Core/Learning";
+			path = "Learning";
 			sourceTree = "<group>";
 		};
-		E8CF8CDEBFE8480440F29378 /* PBXGroup */ = {
+		D6F9859CA5A5D89E2FF0F4EC /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("A49E5BC8E514523406F75994");
-			path = "Core/Models";
+			path = "Models";
 			sourceTree = "<group>";
 		};
-		ED3DE1276355D896701B521F /* PBXGroup */ = {
+		DE91631076021A10CFDCDE31 /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("B11B0C21B3FE7D68E40165CE", "FA6BB81295F5AAF7F9313451");
-			path = "Core/Pricing";
+			path = "Pricing";
 			sourceTree = "<group>";
 		};
-		511D8A97460BB3D53C5BFA6A /* PBXGroup */ = {
+		610CE48D0922B59CDE49C6E5 /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("5AC4CDBE4DCA8DC9A829FFFE");
-			path = "Core/Progress";
+			path = "Progress";
 			sourceTree = "<group>";
 		};
-		B75E4143D6F9FA57A31CE829 /* PBXGroup */ = {
+		1C0B96B3065D40D73A9C7568 /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("FB038374C447838ACFC433EB");
-			path = "Core/Schedule";
+			path = "Schedule";
 			sourceTree = "<group>";
 		};
-		C96BA12AFBB39863C063FF34 /* PBXGroup */ = {
+		B1BC7F1AC33A783EFA0526F0 /* PBXGroup */ = {
 			isa = PBXGroup;
 			children = ("62002E3B153AD25A298B1074");
-			path = "Core/Support";
+			path = "Support";
 			sourceTree = "<group>";
 		};
 		CF583C588513A8D60A3325CF /* PBXGroup */ = {
 			isa = PBXGroup;
-			children = ("850E61B33C05F27CD23BDB5E", "BE15ACC9F764362C82C6D2DB", "9E50996905343E4BDF5934D5", "EA624ECE7AF24981E4E21FD7", "E8CF8CDEBFE8480440F29378", "ED3DE1276355D896701B521F", "511D8A97460BB3D53C5BFA6A", "B75E4143D6F9FA57A31CE829", "C96BA12AFBB39863C063FF34");
+			children = ("47EF3A365510CBC4D03898B4", "EDABE7AF198EB47BDAA1ADA6", "8F9165224AA9E3DBABFD4F03", "4BF93F0D28E9DA77272C87D8", "D6F9859CA5A5D89E2FF0F4EC", "DE91631076021A10CFDCDE31", "610CE48D0922B59CDE49C6E5", "1C0B96B3065D40D73A9C7568", "B1BC7F1AC33A783EFA0526F0");
 			path = "Core";
 			sourceTree = "<group>";
 		};
@@ -665,7 +665,7 @@
 		};
 		4D66544E332CC80E22A6D410 /* PBXGroup */ = {
 			isa = PBXGroup;
-			children = ("142BECFE45EA4D29D09C05FE", "FC072792FF51C550DFA72969", "A5A6122EA07826FDB3C7E4A5", "4FF896D334C46771D9DCB45E", "92A392E137639BF96DD6C898");
+			children = ("142BECFE45EA4D29D09C05FE", "FC072792FF51C550DFA72969", "A5A6122EA07826FDB3C7E4A5", "4FF896D334C46771D9DCB45E");
 			path = "Resources";
 			sourceTree = "<group>";
 		};
@@ -695,7 +695,7 @@
 		};
 		D94F40F2E0D827CA5F5D69AA /* PBXGroup */ = {
 			isa = PBXGroup;
-			children = ("CCAF1513E2467A493F2463E8", "CF583C588513A8D60A3325CF", "A767C4A4BCD95132D1FA0F29", "92CF966198B85633F2F1F229", "332960A70C88DDBEEEED0A34", "4D66544E332CC80E22A6D410");
+			children = ("CCAF1513E2467A493F2463E8", "CF583C588513A8D60A3325CF", "A767C4A4BCD95132D1FA0F29", "92CF966198B85633F2F1F229", "332960A70C88DDBEEEED0A34", "4D66544E332CC80E22A6D410", "92A392E137639BF96DD6C898");
 			path = "TeliaSalesAssistantPro";
 			sourceTree = "<group>";
 		};
