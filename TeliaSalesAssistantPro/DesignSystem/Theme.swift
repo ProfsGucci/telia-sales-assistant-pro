@@ -567,9 +567,10 @@ struct SectionCard<Content: View>: View {
     let title: String
     var symbol: String?
     var gradient: Bool = false
-    /// DS 2.2: apply the subtle gloss treatment (static sheen + lit rim).
-    /// Only for select cards — restraint is part of the system.
-    var glossy: Bool = false
+    /// DS 2.3 (1.4): every section card gets the static glass treatment by
+    /// default — visible gloss with zero animation cost. Pass false for a
+    /// plain card.
+    var glossy: Bool = true
     @ViewBuilder var content: Content
 
     var body: some View {

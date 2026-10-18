@@ -197,16 +197,42 @@ private struct QuickActionLink: View {
 
 /// Quick Actions — the fastest paths through a busy shift.
 private struct QuickActionsCard: View {
+    @State private var showFollowUpAdd = false
+
     var body: some View {
         SectionCard(title: "Snabbåtgärder", symbol: "bolt.fill") {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 68), spacing: DS.Space.m)], spacing: DS.Space.l) {
                 QuickActionLink(destination: .products, icon: "cart.fill", label: "Produkter")
                 QuickActionLink(destination: .campaign, icon: "tag.fill", label: "Kampanjer", tint: DS.Orange.base)
                 QuickActionLink(destination: .coach, icon: "bubble.left.and.text.bubble.right.fill", label: "AI Coach")
-                QuickActionLink(destination: .calendar, icon: "calendar", label: "Kalender", tint: .blue)
+                QuickActionLink(destination: .calendar, icon: "calendar", label: "Schema", tint: .blue)
                 QuickActionLink(destination: .roleplay, icon: "theatermasks.fill", label: "Rollspel", tint: DS.Orange.base)
                 QuickActionLink(destination: .library, icon: "bookmark.fill", label: "Bibliotek")
+                Button {
+                    Haptics.tap()
+                    showFollowUpAdd = true
+                } label: {
+                    VStack(spacing: DS.Space.s) {
+                        Image(systemName: "person.crop.circle.badge.clock")
+                            .font(.system(.title3, design: .rounded).weight(.semibold))
+                            .foregroundStyle(DS.Purple.base)
+                            .frame(width: 54, height: 54)
+                            .background(Circle().fill(DS.Purple.base.opacity(0.13)))
+                            .overlay(Circle().strokeBorder(DS.Surface.hairline, lineWidth: 1))
+                        Text("Kolla senare")
+                            .font(.system(.caption2, design: .rounded).weight(.medium))
+                            .foregroundStyle(.primary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(PressableStyle(scale: 0.92))
+                .accessibilityLabel("Ny kund att kolla senare")
             }
+        }
+        .sheet(isPresented: $showFollowUpAdd) {
+            FollowUpQuickAddSheet()
         }
     }
 }

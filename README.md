@@ -19,7 +19,7 @@ iPhone och iPad, allt lokalt på din enhet.**
 | **Produkter** | verifierad pris-/produktkatalog med sök, filter, sortering, jämför upp till 3, total-/snittkostnad per bindningstid, kampanjpris & slutdatum |
 | **Räknare** | abonnemangstotalkostnad, enhet+abonnemang (kontant vs delbetalning), familjeräknare, kampanjutgång — allt mot inläst katalogdata |
 | **AI-coach** | chatt med svensk, produkt- och kampanjförankrad coach. Echtd streaming mot egen OpenAI-kompatibel server; **demoläge tydligt märkt** när ingen server konfigurerats. Historik, källhänvisningar, försök-igen |
-| **Kalender** | månad/vecka/kommande, pass & uppgifter, återkommande händelser, valfri export till Apple Calendar (fungerar utan behörighet), lokala påminnelser 30 min före pass |
+| **Schema** | månad/vecka/kommande + dagsvy, pass & uppgifter, återkommande händelser, valfri export till Apple Calendar, lokala påminnelser, **enhetlig kalender: Apple/Google/Outlook-import (skrivskyddat, dupliceringsskydd)**, snabba uppföljningar (Kolla senare) och **säljmål med per-dag-beräkning** |
 | **Min utveckling** | manuella passloggar (appens hittar **aldrig** på siffror), Swift Charts-grafer, mål vs utfall, personliga förslag, träningsstatistik |
 | **Säljmanus** | spelbok med 6-delad objectionsstruktur, redigerbara manus |
 | **Rollspel** | kundsimulator med svårighetsgrad, 9-dimensionell bedömning — belönar aldrig påtryckningstaktik |
@@ -140,13 +140,14 @@ ingår inte.
   (`PressableStyle`), `PrimaryButton`/`SecondaryButton`, subtila haptics.
 - **Tillgänglighet:** Reduce Motion respekteras överallt, kontrast via
   opaka kortytor, VoiceOver-etiketter på alla kontroller.
-- **Gloss (DS 2.2, 1.3):** `DesignSystem/Gloss.swift` — glasglans på kort:
-  statisk speglande ljusning (`GlossSheen`), ljusen kantlinje
-  (`GlossEdge`), långsam diagonal reflektionssvep (`GlossSweep`, endast
-  hero-kort, avstängd vid Reduce Motion), markeringsglöd
-  (`glossSelection`) och tryckfeedback (`GlossPressStyle`). Återhållsam
-  princip: `.animated` endast Dagens fokus + Kampanj-rubrik, `.subtle` på
-  utvalda kort — resten håller DS 2.0-kortet.
+- **Gloss (DS 2.3, 1.4):** `DesignSystem/Gloss.swift` — synligt glas:
+  tonad glasbas (ljust läge), ljusband med skarp fallkant
+  (`GlossSheen`), ljusen 1,5 pt-kant (`GlossEdge`), långsam diagonal
+  reflektionssvep (`GlossSweep` 0,22–0,30 opacitet — endast hero-kort,
+  avstängd vid Reduce Motion), markeringsglöd och tryckfeedback.
+  Alla SectionCards får den statiska glansen; animering endast på hero.
+  1.3-felen (osynlig 0,12–0,16 vit på vit yta) är omgjorda — se
+  docs/DEBUG-REPORT-1.4.md.
 - **Bakgrund (DS 2.2, 1.3):** delad renderare `BackgroundSurface` (app +
   studio-preview använder EXAKT samma kod), tolerant per-fält-dekodning
   (en korrupt rad nollställer aldrig hela inställningarna), NSCache för
@@ -155,6 +156,12 @@ ingår inte.
 
 ## Versionshistorik
 
+- **1.4 (5) — Update 1.4 BETA**: enhetlig kalender (Apple/Google/Outlook,
+  riktiga OAuth-flöden med PKCE, dupliceringsskydd, skrivskyddade
+  importer), snabba Kolla senare-uppföljningar (fyra fält, validerat
+  personnummer, maskerad visning, allt lokalt), Säljmål i Schema med
+  automatisk per-dag-beräkning (kalender-/arbets-/passdagar), synligt
+  glossy-designsystem (DS 2.3), 151 kärntester gröna (+38).
 - **1.3 (4) — Update 1.3 BETA**: bakgrundssystemet omgjort på rotorssak
   (cached foto-dekodning, tolerant inställningsläsning, delad
   förhandsgranskningsrenderare, Fit/Fill + mörkning), Bakgrundsstudio med

@@ -27,6 +27,7 @@ struct SettingsView: View {
     var body: some View {
         Form {
             appearanceSection
+            calendarsSection
             priceSection
             campaignSection
             aiSection

@@ -1,84 +1,128 @@
 import SwiftUI
 
-// MARK: - Gloss system (DS 2.2, Update 1.3)
+// MARK: - Gloss system (DS 2.3, Update 1.4) — VISIBLE gloss
 //
-// The app's glossy surface language, layered on top of the DS 2.0 card
-// system. Principles:
+// 1.3's gloss was real code but visually imperceptible. Diagnosis (see
+// docs/DEBUG-REPORT-1.4.md): white overlays at 0.12–0.16 opacity on a WHITE
+// card are invisible (white over white); on dark cards they were a faint
+// haze. Real gloss reads through CONTRAST: a bright band with a crisp
+// falloff edge, a lit rim, and a base that isn't already pure white.
 //
-// - RESTRAINT: gloss marks hierarchy, not decoration. `.animated` is for hero
-//   cards only (Dagens fokus, Kampanj header). `.subtle` is for select
-//   content cards. Everything else keeps the plain DS 2.0 card. Never a
-//   rainbow, never a gaming rig — one slow, low-opacity light pass.
-// - READABILITY: sheen and sweep stay well under content contrast limits;
-//   text sits on solid/inset surfaces first.
-// - ACCESSIBILITY: with Reduce Motion on, the animated sweep is replaced by
-//   the static sheen (light without movement). The sweep also stops by itself
-//   when the view leaves the hierarchy.
-// - PERFORMANCE: no blend modes, no per-frame TimelineView. One repeating
-//   position animation on a small gradient stripe — GPU-composited, zero
-//   layout invalidation. Sheen/edges are plain static gradients.
-// - iOS 16: uses only APIs available on iOS 16 (no PhaseAnimator,
-//   symbolEffect or scroll transitions).
+// 1.4 therefore reworks the optics:
+// - Light surfaces get a tinted glass base (white → faint lavender) so
+//   white highlights have something to contrast against.
+// - The sheen is a pronounced top band with a HARD falloff edge (the
+//   "light line" the eye catches), not a smooth invisible fade.
+// - The sweep runs at visible opacity (0.26–0.32) with a wide soft band.
+// - SectionCards are glossed by default (static — cheap); only hero cards
+//   animate (battery/restraint), and never under Reduce Motion.
+//
+// Principles kept from 1.3: no blend modes, no per-frame TimelineView, iOS
+// 16 APIs only, sweep off with Reduce Motion, text sits above the sheen.
 
 // MARK: Level
 
 enum GlossLevel {
     /// Plain DS 2.0 card — no gloss.
     case none
-    /// Static specular sheen + refined edge light + soft depth. Cheap.
+    /// Static glass: tinted base + bright top band + lit rim + depth.
     case subtle
     /// Subtle plus a slow diagonal reflection sweep (Reduce Motion → subtle).
     case animated
 }
 
-// MARK: Specular sheen (static)
+// MARK: Adaptive optics
 
-/// A top-down specular highlight — the "glass catch light". Static, so it is
-/// always available as the Reduce Motion alternative.
+/// Contrast values tuned per color scheme so highlights are actually VISIBLE.
+private struct GlossOptics {
+    let sheenTop: Double
+    let edgeTop: Double
+    let sweepIntensity: Double
+    let sweepTint: Color
+
+    static func forScheme(_ scheme: ColorScheme, hero: Bool = false) -> GlossOptics {
+        if hero {
+            return GlossOptics(
+                sheenTop: scheme == .dark ? 0.34 : 0.30,
+                edgeTop: scheme == .dark ? 0.55 : 0.45,
+                sweepIntensity: scheme == .dark ? 0.24 : 0.22,
+                sweepTint: DS.Orange.light.opacity(0.5)
+            )
+        }
+        return GlossOptics(
+            sheenTop: scheme == .dark ? 0.32 : 0.55,
+            edgeTop: scheme == .dark ? 0.50 : 0.65,
+            sweepIntensity: scheme == .dark ? 0.26 : 0.30,
+            sweepTint: DS.Purple.light.opacity(0.45)
+        )
+    }
+}
+
+// MARK: Specular sheen (static, the visible "glass catch light")
+
+/// A bright top band with a CRISP falloff edge at ~22% height. The hard stop
+/// is what makes it read as gloss — smooth fades vanish, edges don't.
+/// Static, so it doubles as the Reduce Motion alternative.
 struct GlossSheen: View {
     var cornerRadius: CGFloat
-    var opacity: Double = 0.16
+    var optics: GlossOptics
 
     var body: some View {
-        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-            .fill(
-                LinearGradient(
-                    stops: [
-                        .init(color: Color.white.opacity(opacity), location: 0),
-                        .init(color: Color.white.opacity(opacity * 0.35), location: 0.28),
-                        .init(color: .clear, location: 0.55),
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+        ZStack {
+            // The specular band itself.
+            LinearGradient(
+                stops: [
+                    .init(color: Color.white.opacity(optics.sheenTop), location: 0),
+                    .init(color: Color.white.opacity(optics.sheenTop * 0.9), location: 0.08),
+                    .init(color: Color.white.opacity(optics.sheenTop * 0.30), location: 0.20),
+                    .init(color: .clear, location: 0.36),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
             )
-            .allowsHitTesting(false)
+            // Bottom depth: faint darkening that gives the surface thickness.
+            LinearGradient(
+                stops: [
+                    .init(color: Color.black.opacity(0.07), location: 0),
+                    .init(color: .clear, location: 0.18),
+                ],
+                startPoint: .bottom,
+                endPoint: .top
+            )
+        }
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .allowsHitTesting(false)
     }
 }
 
 // MARK: Reflection sweep (animated)
 
-/// A single soft diagonal band of light that slowly travels across the card —
-/// the "living glass" moment. Low opacity, slow period, one stripe.
+/// A single soft, WIDE band of light that slowly travels across the card.
+/// Visible: 0.22–0.30 opacity with a white core and tinted fringes.
 struct GlossSweep: View {
     var cornerRadius: CGFloat
-    var tint: Color = .white
-    var intensity: Double = 0.12
-    var period: TimeInterval = 9
+    var optics: GlossOptics
+    var period: TimeInterval = 8
 
     /// Stripe travel, from off-left to off-right.
-    @State private var travel: CGFloat = -0.6
+    @State private var travel: CGFloat = -0.7
 
     var body: some View {
         GeometryReader { geo in
             let width = geo.size.width
             LinearGradient(
-                colors: [.clear, tint.opacity(intensity), .clear],
+                stops: [
+                    .init(color: .clear, location: 0),
+                    .init(color: optics.sweepTint.opacity(optics.sweepIntensity * 0.35), location: 0.2),
+                    .init(color: Color.white.opacity(optics.sweepIntensity), location: 0.5),
+                    .init(color: optics.sweepTint.opacity(optics.sweepIntensity * 0.35), location: 0.8),
+                    .init(color: .clear, location: 1),
+                ],
                 startPoint: .top,
                 endPoint: .bottom
             )
-            .frame(width: max(60, width * 0.34))
-            .rotationEffect(.degrees(-22))
+            .frame(width: max(90, width * 0.45))
+            .rotationEffect(.degrees(-20))
             .offset(x: travel * width)
             .frame(width: width, height: geo.size.height, alignment: .leading)
         }
@@ -86,35 +130,33 @@ struct GlossSweep: View {
         .allowsHitTesting(false)
         .onAppear {
             withAnimation(.linear(duration: period).repeatForever(autoreverses: false)) {
-                travel = 1.6
+                travel = 1.7
             }
         }
     }
 }
 
-// MARK: Edge light
+// MARK: Edge light (the lit rim)
 
-/// A vertical white gradient stroke — brighter along the top edge, fading
-/// out — that gives glossy cards their lit rim. Stronger than the DS 2.0
-/// hairline, which keeps card edges visible over dark photo backgrounds.
+/// A vertical gradient stroke — bright along the top edge, fading out —
+/// at 1.5 pt. Pronounced enough to see over dark photo backgrounds.
 struct GlossEdge: View {
     var cornerRadius: CGFloat
-    var topOpacity: Double = 0.28
-    var bottomOpacity: Double = 0.06
+    var optics: GlossOptics
 
     var body: some View {
         RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
             .strokeBorder(
                 LinearGradient(
                     stops: [
-                        .init(color: Color.white.opacity(topOpacity), location: 0),
-                        .init(color: Color.white.opacity(bottomOpacity), location: 0.45),
-                        .init(color: Color.clear, location: 1),
+                        .init(color: Color.white.opacity(optics.edgeTop), location: 0),
+                        .init(color: Color.white.opacity(optics.edgeTop * 0.35), location: 0.4),
+                        .init(color: .clear, location: 1),
                     ],
                     startPoint: .top,
                     endPoint: .bottom
                 ),
-                lineWidth: 1
+                lineWidth: 1.5
             )
             .allowsHitTesting(false)
     }
@@ -122,8 +164,9 @@ struct GlossEdge: View {
 
 // MARK: Glossy card modifier
 
-/// Glossy translucent card surface (DS 2.2). Use INSTEAD of `.card()`:
-/// same padding contract, upgraded treatment.
+/// Glossy glass card (DS 2.3). Use INSTEAD of `.card()`: same padding
+/// contract, visibly glossy treatment. Static layers render under the
+/// content (no text wash); the sweep passes over the whole surface.
 struct GlossBackground: ViewModifier {
     var level: GlossLevel
     var tinted: Bool = false
@@ -131,71 +174,101 @@ struct GlossBackground: ViewModifier {
     var padding: CGFloat = DS.Space.l
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var scheme
 
     func body(content: Content) -> some View {
         let shape = RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+        let optics = GlossOptics.forScheme(scheme)
         content
             .padding(padding)
             .background(
-                shape.fill(
-                    tinted ? AnyShapeStyle(DS.Surface.tintGradient) : AnyShapeStyle(DS.Surface.card)
-                )
+                ZStack {
+                    shape.fill(baseFill)
+                    // Sheen sits UNDER the content: glass, not fog over text.
+                    GlossSheen(cornerRadius: cornerRadius, optics: optics)
+                }
+                .clipShape(shape)
             )
-            .overlay(GlossSheen(cornerRadius: cornerRadius))
             .overlay(
                 Group {
                     if level == .animated && !reduceMotion {
-                        GlossSweep(cornerRadius: cornerRadius)
+                        GlossSweep(cornerRadius: cornerRadius, optics: optics)
                     }
                 }
             )
-            .overlay(GlossEdge(cornerRadius: cornerRadius))
+            .overlay(GlossEdge(cornerRadius: cornerRadius, optics: optics))
             .shadow(color: Color.black.opacity(0.08), radius: 14, y: 6)
+    }
+
+    /// Light surfaces get a tinted glass base (white → faint lavender) so
+    /// the white sheen has contrast. Dark surfaces keep the charcoal card.
+    private var baseFill: some ShapeStyle {
+        if tinted {
+            return AnyShapeStyle(DS.Surface.tintGradient)
+        }
+        if scheme == .light {
+            return AnyShapeStyle(
+                LinearGradient(
+                    stops: [
+                        .init(color: Color.white, location: 0),
+                        .init(color: Color(red: 0.955, green: 0.935, blue: 0.985), location: 1),
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+        }
+        return AnyShapeStyle(DS.Surface.card)
     }
 }
 
 // MARK: Hero gloss (dark translucent hero cards)
 
-/// The hero treatment: DS 2.0 hero gradient + warm corner glow + sheen +
-/// slow sweep (Reduce Motion aware) + lit rim with an orange accent edge.
+/// The hero treatment: DS 2.0 hero gradient + warm corner glow + bright top
+/// band + slow warm sweep (Reduce Motion aware) + lit rim + orange accent.
 struct HeroGlossBackground: ViewModifier {
     var padding: CGFloat = DS.Space.l
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var scheme
 
     func body(content: Content) -> some View {
         let shape = RoundedRectangle(cornerRadius: DS.Radius.hero, style: .continuous)
+        let optics = GlossOptics.forScheme(scheme, hero: true)
         content
             .padding(padding)
-            .background(shape.fill(DS.Surface.heroGradient))
             .background(
-                // Warm orange catch light in the top-trailing corner.
-                shape.fill(
-                    LinearGradient(
-                        colors: [DS.Orange.light.opacity(0.16), .clear],
-                        startPoint: .topTrailing,
-                        endPoint: .center
+                ZStack {
+                    shape.fill(DS.Surface.heroGradient)
+                    // Warm orange catch light in the top-trailing corner.
+                    shape.fill(
+                        LinearGradient(
+                            colors: [DS.Orange.light.opacity(0.20), .clear],
+                            startPoint: .topTrailing,
+                            endPoint: .center
+                        )
                     )
-                )
+                    // Bright glass band along the top — under the text.
+                    GlossSheen(cornerRadius: DS.Radius.hero, optics: optics)
+                }
+                .clipShape(shape)
             )
-            .overlay(GlossSheen(cornerRadius: DS.Radius.hero, opacity: 0.20))
             .overlay(
                 Group {
                     if !reduceMotion {
                         GlossSweep(
                             cornerRadius: DS.Radius.hero,
-                            tint: DS.Orange.light,
-                            intensity: 0.10,
-                            period: 11
+                            optics: optics,
+                            period: 9
                         )
                     }
                 }
             )
-            .overlay(GlossEdge(cornerRadius: DS.Radius.hero, topOpacity: 0.34))
+            .overlay(GlossEdge(cornerRadius: DS.Radius.hero, optics: optics))
             .overlay(
                 // Restrained orange accent along the leading edge.
                 shape.trim(from: 0.08, to: 0.42)
-                    .stroke(DS.Orange.base.opacity(0.55), lineWidth: 1.5)
+                    .stroke(DS.Orange.base.opacity(0.65), lineWidth: 1.5)
             )
             .shadow(color: DS.Purple.ink.opacity(0.35), radius: 18, y: 8)
     }
@@ -217,7 +290,7 @@ struct GlossSelection: ViewModifier {
                     LinearGradient(
                         colors: selected
                             ? [DS.Orange.light, DS.Purple.base]
-                            : [Color.primary.opacity(0.08), Color.primary.opacity(0.08)],
+                            : [Color.primary.opacity(0.10), Color.primary.opacity(0.10)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -248,7 +321,7 @@ struct GlossPressStyle: ButtonStyle {
 // MARK: - View extensions
 
 extension View {
-    /// Glossy card surface (DS 2.2). See `GlossLevel` for restraint guidance.
+    /// Glossy glass card surface (DS 2.3). See `GlossLevel` for guidance.
     func gloss(
         _ level: GlossLevel = .subtle,
         tinted: Bool = false,

@@ -46,10 +46,21 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Appen kan lägga in dina arbetspass i Apple Calendar. Kalendern i appen fungerar även utan åtkomst.</string>
+	<string>Appen kan visa dina Apple-kalenderhändelser i appens Schema och lägga in arbetspass i Apple Calendar. Kalendern fungerar även utan åtkomst.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Appen kan lägga in dina arbetspass i Apple Calendar. Kalendern i appen fungerar även utan åtkomst.</string>
+	<string>Appen kan visa dina Apple-kalenderhändelser i appens Schema och lägga in arbetspass i Apple Calendar. Kalendern fungerar även utan åtkomst.</string>
 	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
-	<string>Appen kan lägga in dina arbetspass i Apple Calendar. Kalendern i appen fungerar även utan åtkomst.</string>
+	<string>Appen kan lägga in dina arbetspass i Apple Calendar. Kalendern fungerar även utan åtkomst.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>se.sthlm.teliacoachpro.oauth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>se.sthlm.teliacoachpro.oauth</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

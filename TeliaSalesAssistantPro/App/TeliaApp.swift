@@ -11,6 +11,9 @@ struct TeliaSalesAssistantApp: App {
     @StateObject private var progress = ProgressStore()
     @StateObject private var learning = LearningStore()
     @StateObject private var campaigns = CampaignStore()
+    @StateObject private var calendarSync = CalendarSyncStore()
+    @StateObject private var followUps = FollowUpStore()
+    @StateObject private var salesGoals = SalesGoalStore()
     @StateObject private var appState = AppState()
     @Environment(\.scenePhase) private var scenePhase
 
@@ -25,10 +28,14 @@ struct TeliaSalesAssistantApp: App {
                 .environmentObject(progress)
                 .environmentObject(learning)
                 .environmentObject(campaigns)
+                .environmentObject(calendarSync)
+                .environmentObject(followUps)
+                .environmentObject(salesGoals)
                 .environmentObject(appState)
                 .preferredColorScheme(settings.data.theme.colorScheme)
                 .tint(DS.Purple.base)
                 .task {
+                    calendarSync.inject(settings: settings)
                     // Brief branded splash on cold start only; never blocks interaction
                     // longer than the content needs to be ready.
                     try? await Task.sleep(nanoseconds: 650_000_000)
@@ -46,6 +53,9 @@ struct TeliaSalesAssistantApp: App {
                                 await catalog.refreshFromFeed(urlString: settings.data.priceFeedURL)
                             }
                         }
+                        // Imported calendars: throttled refresh on app-active
+                        // (15 min) — periodic sync, never claimed as real-time.
+                        calendarSync.syncAllIfNeeded()
                         if settings.data.autoRefreshOnOpen,
                            !settings.data.campaignFeedURL.isEmpty,
                            campaignsNeedRefresh() {
@@ -136,7 +146,7 @@ enum AppDestination: String, Hashable, Identifiable, CaseIterable {
         case .products: return "Produkter"
         case .campaign: return "Kampanj Center"
         case .coach: return "AI Coach"
-        case .calendar: return "Kalender"
+        case .calendar: return "Schema"
         case .progress: return "Min utveckling"
         case .playbook: return "Säljmanus"
         case .roleplay: return "Rollspel"

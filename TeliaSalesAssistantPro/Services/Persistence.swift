@@ -115,6 +115,22 @@ struct SettingsData: Codable, Equatable {
     /// published seed so campaign data can update without scraping telia.se.
     var campaignFeedURL: String = SettingsData.defaultCampaignFeedURL
 
+    // MARK: External calendars (1.4)
+    // Client IDs are the user's OWN app registrations (never compiled into
+    // the binary). See docs/CALENDAR-SETUP.md.
+    var googleClientID: String = ""
+    var microsoftClientID: String = ""
+    var appleCalendarsEnabled: Bool = false
+    var selectedAppleCalendarIDs: Set<String> = []
+    var googleCalendarsEnabled: Bool = false
+    var selectedGoogleCalendarIDs: Set<String> = []
+    var outlookCalendarsEnabled: Bool = false
+    var selectedOutlookCalendarIDs: Set<String> = []
+    /// provider rawValue → last successful sync date.
+    var calendarLastSync: [String: Date] = [:]
+    /// Refresh imported calendars when the app becomes active (throttled).
+    var calendarSyncOnOpen: Bool = true
+
     /// Raw GitHub URL of the bundled seed in the public repository.
     static let defaultCampaignFeedURL =
         "https://raw.githubusercontent.com/ProfsGucci/telia-sales-assistant-pro/main/TeliaSalesAssistantPro/Resources/CampaignSeed.json"
@@ -123,6 +139,11 @@ struct SettingsData: Codable, Equatable {
         case theme, autoRefreshOnOpen, priceFeedURL, aiBaseURL, aiModel, aiUsesKey
         case staleAfterDays, dashboardOrder, hiddenDashboardCards, remindersEnabled
         case background, campaignNotificationsEnabled, campaignFeedURL
+        case googleClientID, microsoftClientID
+        case appleCalendarsEnabled, selectedAppleCalendarIDs
+        case googleCalendarsEnabled, selectedGoogleCalendarIDs
+        case outlookCalendarsEnabled, selectedOutlookCalendarIDs
+        case calendarLastSync, calendarSyncOnOpen
     }
 
     /// Tolerant decoding: settings saved by earlier app versions — or with one
@@ -144,6 +165,16 @@ struct SettingsData: Codable, Equatable {
         background = (try? c.decodeIfPresent(BackgroundPreference.self, forKey: .background)) ?? .default
         campaignNotificationsEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .campaignNotificationsEnabled)) ?? false
         campaignFeedURL = (try? c.decodeIfPresent(String.self, forKey: .campaignFeedURL)) ?? SettingsData.defaultCampaignFeedURL
+        googleClientID = (try? c.decodeIfPresent(String.self, forKey: .googleClientID)) ?? ""
+        microsoftClientID = (try? c.decodeIfPresent(String.self, forKey: .microsoftClientID)) ?? ""
+        appleCalendarsEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .appleCalendarsEnabled)) ?? false
+        selectedAppleCalendarIDs = (try? c.decodeIfPresent(Set<String>.self, forKey: .selectedAppleCalendarIDs)) ?? []
+        googleCalendarsEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .googleCalendarsEnabled)) ?? false
+        selectedGoogleCalendarIDs = (try? c.decodeIfPresent(Set<String>.self, forKey: .selectedGoogleCalendarIDs)) ?? []
+        outlookCalendarsEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .outlookCalendarsEnabled)) ?? false
+        selectedOutlookCalendarIDs = (try? c.decodeIfPresent(Set<String>.self, forKey: .selectedOutlookCalendarIDs)) ?? []
+        calendarLastSync = (try? c.decodeIfPresent([String: Date].self, forKey: .calendarLastSync)) ?? [:]
+        calendarSyncOnOpen = (try? c.decodeIfPresent(Bool.self, forKey: .calendarSyncOnOpen)) ?? true
     }
 
     init() {}
