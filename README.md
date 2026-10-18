@@ -121,10 +121,11 @@ tydlig varning visas — innehåll blir aldrig tyst inaktuellt. HTML-skrapning
 av telia.se görs aldrig; Halebops inloggningskrävande personliga erbjudanden
 ingår inte.
 
-## Designsystem (DS 2.0)
+## Designsystem (DS 2.0 + Gloss 2.2)
 
-`DesignSystem/Theme.swift` + `DesignSystem/ButtonStyles.swift` är appens
-enda källa till visuell sanning. 1.2 bygger om hela språket:
+`DesignSystem/Theme.swift`, `DesignSystem/ButtonStyles.swift` och
+`DesignSystem/Gloss.swift` är appens enda källa till visuell sanning.
+1.2 bygger om hela språket; 1.3 lägger glossy-skiktet ovanpå:
 
 - **Ytor:** varm off-white-canvas i ljust läge, kolgrå (#16161C → #201F28)
   i mörkt läge — adaptiva via UIKit-dynamiska färger.
@@ -139,9 +140,27 @@ enda källa till visuell sanning. 1.2 bygger om hela språket:
   (`PressableStyle`), `PrimaryButton`/`SecondaryButton`, subtila haptics.
 - **Tillgänglighet:** Reduce Motion respekteras överallt, kontrast via
   opaka kortytor, VoiceOver-etiketter på alla kontroller.
+- **Gloss (DS 2.2, 1.3):** `DesignSystem/Gloss.swift` — glasglans på kort:
+  statisk speglande ljusning (`GlossSheen`), ljusen kantlinje
+  (`GlossEdge`), långsam diagonal reflektionssvep (`GlossSweep`, endast
+  hero-kort, avstängd vid Reduce Motion), markeringsglöd
+  (`glossSelection`) och tryckfeedback (`GlossPressStyle`). Återhållsam
+  princip: `.animated` endast Dagens fokus + Kampanj-rubrik, `.subtle` på
+  utvalda kort — resten håller DS 2.0-kortet.
+- **Bakgrund (DS 2.2, 1.3):** delad renderare `BackgroundSurface` (app +
+  studio-preview använder EXAKT samma kod), tolerant per-fält-dekodning
+  (en korrupt rad nollställer aldrig hela inställningarna), NSCache för
+  foto (dekodas en gång, inte per navigering), Fit/Fill-läge + mjuk
+  mörkningsreglage för bilder, 14 kuraterade preset-gradienter.
 
 ## Versionshistorik
 
+- **1.3 (4) — Update 1.3 BETA**: bakgrundssystemet omgjort på rotorssak
+  (cached foto-dekodning, tolerant inställningsläsning, delad
+  förhandsgranskningsrenderare, Fit/Fill + mörkning), Bakgrundsstudio med
+  granska→Använd/Avbryt-flöde för egna bilder, 6 nya preset-gradienter,
+  kuraterade solid färger, glossy-designsystem (DS 2.2) på hero-kort och
+  utvalda kort, 113 kärntester gröna.
 - **1.2 (3) — Update 1.2 BETA**: komplett visuell omdesign (DS 2.0: off-white/kol,
   hero-kort, cirkulära kontroller, orange accenter), dashboard som säljens
   kommandocentral (Dagens fokus, Snabbåtgärder, Produktgenvägar), chat- och

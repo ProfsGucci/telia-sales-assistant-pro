@@ -125,23 +125,25 @@ struct SettingsData: Codable, Equatable {
         case background, campaignNotificationsEnabled, campaignFeedURL
     }
 
-    /// Tolerant decoding: settings saved by earlier app versions must keep
-    /// loading (with defaults for new fields) instead of being wiped.
+    /// Tolerant decoding: settings saved by earlier app versions — or with one
+    /// corrupt individual field — keep loading (defaults fill only the bad
+    /// fields) instead of the whole file being discarded. This is the root
+    /// cause fix for backgrounds/settings "randomly resetting".
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        theme = try c.decodeIfPresent(ThemePreference.self, forKey: .theme) ?? .system
-        autoRefreshOnOpen = try c.decodeIfPresent(Bool.self, forKey: .autoRefreshOnOpen) ?? true
-        priceFeedURL = try c.decodeIfPresent(String.self, forKey: .priceFeedURL) ?? ""
-        aiBaseURL = try c.decodeIfPresent(String.self, forKey: .aiBaseURL) ?? ""
-        aiModel = try c.decodeIfPresent(String.self, forKey: .aiModel) ?? "gpt-4o-mini"
-        aiUsesKey = try c.decodeIfPresent(Bool.self, forKey: .aiUsesKey) ?? false
-        staleAfterDays = try c.decodeIfPresent(Int.self, forKey: .staleAfterDays) ?? 7
-        dashboardOrder = try c.decodeIfPresent([String].self, forKey: .dashboardOrder) ?? DashboardCard.defaultOrder
-        hiddenDashboardCards = try c.decodeIfPresent(Set<String>.self, forKey: .hiddenDashboardCards) ?? []
-        remindersEnabled = try c.decodeIfPresent(Bool.self, forKey: .remindersEnabled) ?? false
-        background = try c.decodeIfPresent(BackgroundPreference.self, forKey: .background) ?? .default
-        campaignNotificationsEnabled = try c.decodeIfPresent(Bool.self, forKey: .campaignNotificationsEnabled) ?? false
-        campaignFeedURL = try c.decodeIfPresent(String.self, forKey: .campaignFeedURL) ?? SettingsData.defaultCampaignFeedURL
+        theme = (try? c.decodeIfPresent(ThemePreference.self, forKey: .theme)) ?? .system
+        autoRefreshOnOpen = (try? c.decodeIfPresent(Bool.self, forKey: .autoRefreshOnOpen)) ?? true
+        priceFeedURL = (try? c.decodeIfPresent(String.self, forKey: .priceFeedURL)) ?? ""
+        aiBaseURL = (try? c.decodeIfPresent(String.self, forKey: .aiBaseURL)) ?? ""
+        aiModel = (try? c.decodeIfPresent(String.self, forKey: .aiModel)) ?? "gpt-4o-mini"
+        aiUsesKey = (try? c.decodeIfPresent(Bool.self, forKey: .aiUsesKey)) ?? false
+        staleAfterDays = (try? c.decodeIfPresent(Int.self, forKey: .staleAfterDays)) ?? 7
+        dashboardOrder = (try? c.decodeIfPresent([String].self, forKey: .dashboardOrder)) ?? DashboardCard.defaultOrder
+        hiddenDashboardCards = (try? c.decodeIfPresent(Set<String>.self, forKey: .hiddenDashboardCards)) ?? []
+        remindersEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .remindersEnabled)) ?? false
+        background = (try? c.decodeIfPresent(BackgroundPreference.self, forKey: .background)) ?? .default
+        campaignNotificationsEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .campaignNotificationsEnabled)) ?? false
+        campaignFeedURL = (try? c.decodeIfPresent(String.self, forKey: .campaignFeedURL)) ?? SettingsData.defaultCampaignFeedURL
     }
 
     init() {}

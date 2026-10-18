@@ -466,7 +466,7 @@ private struct GoalsCard: View {
         let trainingProgress = progress.goals.dailyTrainingMinutes > 0
             ? min(1, Double(todayAnswers) / 10.0) : 0
 
-        SectionCard(title: "Dagens mål", symbol: "target") {
+        SectionCard(title: "Dagens mål", symbol: "target", glossy: true) {
             HStack(alignment: .top, spacing: DS.Space.m) {
                 RingGauge(progress: salesProgress, title: "Affärer", detail: "\(today.sales) av \(progress.goals.dailySales)")
                 RingGauge(progress: customersProgress, title: "Kunder", detail: "\(today.customers) av \(progress.goals.dailyCustomers)", color: .blue)
@@ -587,7 +587,7 @@ private struct FeaturedCampaignCard: View {
 
     var body: some View {
         if let product = featured {
-            SectionCard(title: "Utvald kampanj", symbol: "sparkles") {
+            SectionCard(title: "Utvald kampanj", symbol: "sparkles", glossy: true) {
                 HStack(alignment: .top, spacing: DS.Space.m) {
                     Image(systemName: product.kind.symbolName)
                         .font(.system(.title2, design: .rounded))

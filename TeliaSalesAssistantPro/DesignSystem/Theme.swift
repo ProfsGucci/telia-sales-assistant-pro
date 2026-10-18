@@ -170,8 +170,9 @@ struct CardBackground: ViewModifier {
     }
 }
 
-/// Premium hero surface: fixed dark charcoal→purple gradient with a warm
+/// Premium hero surface (DS 2.0): fixed dark charcoal→purple gradient with a warm
 /// orange corner glow. Content must use white/off-white text.
+/// DS 2.2: superseded by `HeroGlossBackground` (adds sheen + slow sweep).
 struct HeroBackground: ViewModifier {
     var padding: CGFloat = DS.Space.l
 
@@ -205,8 +206,10 @@ extension View {
     }
 
     /// Premium dark hero card — always pair with white foreground text.
+    /// DS 2.2: glossy — sheen, lit rim, orange accent edge and a slow
+    /// reflection sweep (disabled under Reduce Motion).
     func heroCard(padding: CGFloat = DS.Space.l) -> some View {
-        modifier(HeroBackground(padding: padding))
+        modifier(HeroGlossBackground(padding: padding))
     }
 }
 
@@ -564,6 +567,9 @@ struct SectionCard<Content: View>: View {
     let title: String
     var symbol: String?
     var gradient: Bool = false
+    /// DS 2.2: apply the subtle gloss treatment (static sheen + lit rim).
+    /// Only for select cards — restraint is part of the system.
+    var glossy: Bool = false
     @ViewBuilder var content: Content
 
     var body: some View {
@@ -572,6 +578,19 @@ struct SectionCard<Content: View>: View {
             content
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .card(gradient: gradient)
+        .surface(gradient: gradient, gloss: glossy ? .subtle : .none)
+    }
+}
+
+private extension View {
+    /// Card surface picker: plain DS 2.0 card, or the DS 2.2 gloss treatment.
+    @ViewBuilder
+    func surface(gradient: Bool, gloss: GlossLevel) -> some View {
+        switch gloss {
+        case .subtle, .animated:
+            self.gloss(gloss, tinted: gradient)
+        case .none:
+            self.card(gradient: gradient)
+        }
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 // MARK: - Background preference (Core, platform-independent)
 
 /// The user's chosen app background. Lives in Core so it is testable on
-/// Linux; the app layer renders it via `BackgroundLayer`.
+/// Linux; the app layer renders it via `BackgroundSurface`.
 public struct BackgroundPreference: Codable, Hashable, Sendable {
 
     public enum Kind: String, Codable, CaseIterable, Sendable {
@@ -15,6 +15,12 @@ public struct BackgroundPreference: Codable, Hashable, Sendable {
         case solid
         /// A photo imported from the user's own photo library (local only).
         case photo
+    }
+
+    /// How a photo is fitted to the screen.
+    public enum PhotoFit: String, Codable, CaseIterable, Sendable {
+        case fill
+        case fit
     }
 
     public var kind: Kind
@@ -30,6 +36,11 @@ public struct BackgroundPreference: Codable, Hashable, Sendable {
     /// Background intensity/opacity, 0...1 — lowers toward the default color
     /// to keep text readable.
     public var intensity: Double
+    /// Extra dark dimming overlay for photos, 0...1. Guarantees card and text
+    /// contrast on bright or busy wallpapers.
+    public var dimming: Double
+    /// Fill (crop to edges) or Fit (letterbox) for photo backgrounds.
+    public var photoFit: PhotoFit
 
     public init(
         kind: Kind = .systemDefault,
@@ -37,7 +48,9 @@ public struct BackgroundPreference: Codable, Hashable, Sendable {
         hex: String? = nil,
         fileName: String? = nil,
         blur: Double = 0,
-        intensity: Double = 1
+        intensity: Double = 1,
+        dimming: Double = 0.2,
+        photoFit: PhotoFit = .fill
     ) {
         self.kind = kind
         self.presetID = presetID
@@ -45,18 +58,39 @@ public struct BackgroundPreference: Codable, Hashable, Sendable {
         self.fileName = fileName
         self.blur = blur
         self.intensity = intensity
+        self.dimming = dimming
+        self.photoFit = photoFit
     }
 
-    /// Tolerant decoding: a preference written by an older version decodes
-    /// with defaults for any missing field.
+    private enum CodingKeys: String, CodingKey {
+        case kind, presetID, hex, fileName, blur, intensity, dimming, photoFit
+    }
+
+    /// Tolerant decoding: a preference written by an older version — or one
+    /// with a corrupt individual field — decodes with defaults for the bad
+    /// fields instead of failing (and wiping the user's choice) wholesale.
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        kind = try c.decodeIfPresent(Kind.self, forKey: .kind) ?? .systemDefault
-        presetID = try c.decodeIfPresent(String.self, forKey: .presetID)
-        hex = try c.decodeIfPresent(String.self, forKey: .hex)
-        fileName = try c.decodeIfPresent(String.self, forKey: .fileName)
-        blur = (try c.decodeIfPresent(Double.self, forKey: .blur) ?? 0).clampedToUnit()
-        intensity = (try c.decodeIfPresent(Double.self, forKey: .intensity) ?? 1).clampedToUnit()
+        kind = (try? c.decodeIfPresent(Kind.self, forKey: .kind)) ?? .systemDefault
+        presetID = (try? c.decodeIfPresent(String.self, forKey: .presetID))
+        hex = (try? c.decodeIfPresent(String.self, forKey: .hex))
+        fileName = (try? c.decodeIfPresent(String.self, forKey: .fileName))
+        blur = ((try? c.decodeIfPresent(Double.self, forKey: .blur)) ?? 0).clampedToUnit()
+        intensity = ((try? c.decodeIfPresent(Double.self, forKey: .intensity)) ?? 1).clampedToUnit()
+        dimming = ((try? c.decodeIfPresent(Double.self, forKey: .dimming)) ?? 0.2).clampedToUnit()
+        photoFit = (try? c.decodeIfPresent(PhotoFit.self, forKey: .photoFit)) ?? .fill
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(kind, forKey: .kind)
+        try c.encodeIfPresent(presetID, forKey: .presetID)
+        try c.encodeIfPresent(hex, forKey: .hex)
+        try c.encodeIfPresent(fileName, forKey: .fileName)
+        try c.encode(blur, forKey: .blur)
+        try c.encode(intensity, forKey: .intensity)
+        try c.encode(dimming, forKey: .dimming)
+        try c.encode(photoFit, forKey: .photoFit)
     }
 
     public static let `default` = BackgroundPreference()
@@ -92,6 +126,7 @@ public enum BackgroundPresets {
     }
 
     public static let all: [Preset] = [
+        // DS 2.0 originals
         Preset(id: "telia-purple", name: "Telia lila",
                colors: ["2D1B69", "6C38C4", "17123B"], dark: true),
         Preset(id: "deep-midnight", name: "Midnatt",
@@ -108,6 +143,19 @@ public enum BackgroundPresets {
                colors: ["F4F2F7", "EAE6F0", "FFFFFF"], dark: false),
         Preset(id: "dark-premium", name: "Mörk premium",
                colors: ["141019", "241A38", "0B0810"], dark: true),
+        // DS 2.2 (Update 1.3) — studio additions
+        Preset(id: "midnight-graphite", name: "Midnattsgrafit",
+               colors: ["16181D", "262B33", "0D0F13"], dark: true),
+        Preset(id: "deep-charcoal", name: "Djup kol",
+               colors: ["1A1A1E", "32323A", "101014"], dark: true),
+        Preset(id: "warm-neutral", name: "Varm neutral",
+               colors: ["F1EBE2", "E4DACB", "F8F5EF"], dark: false),
+        Preset(id: "soft-silver", name: "Mjukt silver",
+               colors: ["D9DDE3", "C3C9D2", "EDEFF3"], dark: false),
+        Preset(id: "telia-orange", name: "Telia orange",
+               colors: ["3A1F14", "8A4A24", "2A150D"], dark: true),
+        Preset(id: "elegant-fade", name: "Mörk till ljus",
+               colors: ["23222B", "6B6675", "E8E5EC"], dark: true),
     ]
 
     public static let ids: Set<String> = Set(all.map(\.id))
