@@ -51,8 +51,10 @@ jobs:
           # Lists (and auto-creates) schemes; shows destinations in the format:
           #   { platform:iOS Simulator, id:ABCD-1234..., OS:18.2, name:iPhone 16 }
           xcodebuild -project TeliaSalesAssistantPro.xcodeproj -list || true
-          LINE="$(xcodebuild -project TeliaSalesAssistantPro.xcodeproj -scheme TeliaSalesAssistantPro -showdestinations 2>/dev/null \
-            | grep -m1 'platform:iOS Simulator, id:')" || true
+          DESTS="$(xcodebuild -project TeliaSalesAssistantPro.xcodeproj -scheme TeliaSalesAssistantPro -showdestinations 2>/dev/null \
+            | grep 'platform:iOS Simulator, id:' | grep -v 'Placeholder' || true)"
+          LINE="$(printf '%s\n' "$DESTS" | grep -m1 'name:iPhone' || true)"
+          if [ -z "$LINE" ]; then LINE="$(printf '%s\n' "$DESTS" | head -n1)"; fi
           if [ -z "$LINE" ]; then
             echo "destination=generic/platform=iOS Simulator" >> "$GITHUB_OUTPUT"
             echo "has_sim=false" >> "$GITHUB_OUTPUT"
@@ -69,7 +71,7 @@ jobs:
           xcodebuild -project TeliaSalesAssistantPro.xcodeproj \
             -scheme TeliaSalesAssistantPro \
             -configuration Debug \
-            -destination '${{ steps.sim.outputs.destination }}' \
+            -destination 'generic/platform=iOS Simulator' \
             build
 
       - name: Unit tests (simulator)
