@@ -19,19 +19,24 @@ final class FollowUpStore: ObservableObject {
 
     // MARK: CRUD
 
+    /// Validation failure with a user-friendly Swedish message.
+    struct ValidationError: Error {
+        let message: String
+    }
+
     /// Validates the personnummer and adds the record. Returns a friendly
-    /// error string when validation fails. Never mutates digits silently.
-    func add(personnummer: String, name: String, reason: String, dueDate: Date) -> Result<FollowUpRecord, String> {
+    /// error when validation fails. Never mutates digits silently.
+    func add(personnummer: String, name: String, reason: String, dueDate: Date) -> Result<FollowUpRecord, ValidationError> {
         guard let normalized = Personnummer.validate(personnummer) else {
-            return .failure("Ogiltigt personnummer. Kontrollera siffrorna (ÅÅÅÅMMDD-XXXX).")
+            return .failure(ValidationError(message: "Ogiltigt personnummer. Kontrollera siffrorna (ÅÅÅÅMMDD-XXXX)."))
         }
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else {
-            return .failure("Namn måste fyllas i.")
+            return .failure(ValidationError(message: "Namn måste fyllas i."))
         }
         let trimmedReason = reason.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedReason.isEmpty else {
-            return .failure("Anledning måste fyllas i.")
+            return .failure(ValidationError(message: "Anledning måste fyllas i."))
         }
         let record = FollowUpRecord(
             personnummer: normalized.digits12,

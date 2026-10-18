@@ -34,7 +34,7 @@ enum GlossLevel {
 // MARK: Adaptive optics
 
 /// Contrast values tuned per color scheme so highlights are actually VISIBLE.
-private struct GlossOptics {
+struct GlossOptics {
     let sheenTop: Double
     let edgeTop: Double
     let sweepIntensity: Double

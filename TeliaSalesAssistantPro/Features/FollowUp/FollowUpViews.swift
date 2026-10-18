@@ -132,9 +132,9 @@ struct FollowUpQuickAddSheet: View {
         case .success:
             Haptics.tap()
             dismiss()
-        case .failure(let message):
+        case .failure(let error):
             withAnimation(.easeInOut(duration: DS.Motion.tap)) {
-                validationError = message
+                validationError = error.message
             }
         }
     }

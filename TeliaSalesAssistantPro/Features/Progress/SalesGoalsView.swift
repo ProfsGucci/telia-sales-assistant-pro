@@ -261,14 +261,6 @@ struct SalesGoalEditorSheet: View {
     @State private var error: String?
     @State private var existingID: UUID?
 
-    private let numberFormatter: NumberFormatter = {
-        let f = NumberFormatter()
-        f.numberStyle = .decimal
-        f.locale = Locale(identifier: "sv_SE")
-        f.isPartial = true
-        return f
-    }()
-
     init(existing: SalesGoal?) {
         if let g = existing {
             _title = State(initialValue: g.title)
