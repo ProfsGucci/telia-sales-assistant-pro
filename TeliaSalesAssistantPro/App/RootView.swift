@@ -32,12 +32,16 @@ struct SplashView: View {
     var body: some View {
         VStack(spacing: DS.Space.m) {
             ZStack {
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .fill(DS.heroGradient)
-                    .frame(width: 84, height: 84)
-                    .shadow(color: DS.Purple.base.opacity(0.4), radius: 16, y: 6)
+                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                    .fill(DS.Surface.heroGradient)
+                    .frame(width: 88, height: 88)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24, style: .continuous)
+                            .strokeBorder(Color.white.opacity(0.12), lineWidth: 1)
+                    )
+                    .shadow(color: DS.Purple.ink.opacity(0.5), radius: 18, y: 8)
                 Image(systemName: "bubble.left.and.text.bubble.right.fill")
-                    .font(.system(size: 36, weight: .semibold))
+                    .font(.system(size: 38, weight: .semibold))
                     .foregroundStyle(.white)
             }
             Text("Telia Sales Assistant Pro")
@@ -52,7 +56,7 @@ struct SplashView: View {
                 .padding(.top, DS.Space.s)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(.systemBackground))
+        .background(DS.Surface.canvas)
         .accessibilityHidden(true)
     }
 }

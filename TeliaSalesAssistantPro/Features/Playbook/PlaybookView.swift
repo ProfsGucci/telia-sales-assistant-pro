@@ -48,6 +48,7 @@ struct PlaybookView: View {
         .navigationDestination(for: String.self) { productID in
             ProductDetailView(productID: productID)
         }
+        .scrollContentBackground(.hidden)
         .navigationTitle("Säljmanus")
     }
 
@@ -132,7 +133,7 @@ struct PlaybookEntryView: View {
             }
             .padding(DS.Space.m)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle(entry.title)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showScriptEditor) {

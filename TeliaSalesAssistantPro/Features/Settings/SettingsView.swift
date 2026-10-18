@@ -332,19 +332,39 @@ struct SettingsView: View {
 
     private var aboutSection: some View {
         Section("Om appen") {
-            VStack(alignment: .leading, spacing: DS.Space.s) {
-                Text("Telia Sales Assistant Pro")
-                    .font(.system(.subheadline, design: .rounded).weight(.bold))
-                Text("Made by Kevork Khagadurian")
-                    .font(.system(.caption, design: .rounded).weight(.semibold))
-                    .foregroundStyle(DS.Purple.base)
-                Text("Personligt säljverktyg för egen utveckling. Inte en officiell Telia-produkt och inte kopplad till Telias system. Priser och kampanjer läses från offentliga sidor på telia.se – verifiera alltid mot källan.")
-                    .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(.secondary)
-                Text("Version 1.1 (2) · Update 1.1 BETA")
-                    .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(.tertiary)
+            VStack(alignment: .leading, spacing: DS.Space.l) {
+                HStack(spacing: DS.Space.m) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(DS.Surface.heroGradient)
+                            .frame(width: 52, height: 52)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .strokeBorder(Color.white.opacity(0.12), lineWidth: 1)
+                            )
+                        Image(systemName: "bubble.left.and.text.bubble.right.fill")
+                            .font(.system(.title3, design: .rounded))
+                            .foregroundStyle(.white)
+                    }
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("Telia Sales Assistant Pro")
+                            .font(.system(.headline, design: .rounded))
+                        Text("Version 1.2 (3) · Update 1.2 BETA")
+                            .font(.system(.caption, design: .rounded))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Made by Kevork Khagadurian")
+                        .font(.system(.subheadline, design: .rounded).weight(.bold))
+                        .foregroundStyle(DS.Purple.base)
+                    Text("Personligt säljverktyg för egen utveckling. Inte en officiell Telia-produkt och inte kopplad till Telias system. Priser och kampanjer läses från offentliga sidor på telia.se – verifiera alltid mot källan.")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
             }
+            .padding(.vertical, DS.Space.s)
         }
     }
 

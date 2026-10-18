@@ -40,13 +40,13 @@ struct BackgroundLayer: View {
 
     var body: some View {
         ZStack {
-            Color(.systemBackground)
+            DS.Surface.canvas
             content
                 .opacity(preference.intensity)
             // Light artwork needs a scrim in dark mode so pale areas don't
             // wash out; dark artwork needs one in light mode.
             if needsScrim {
-                Color(.systemBackground)
+                DS.Surface.canvas
                     .opacity(0.35)
             }
         }

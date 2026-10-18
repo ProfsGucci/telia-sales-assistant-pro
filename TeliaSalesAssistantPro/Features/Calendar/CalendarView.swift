@@ -153,7 +153,7 @@ struct CalendarView: View {
                             .frame(width: 52, height: 74)
                             .background(
                                 RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                                    .fill(isSelected ? AnyShapeStyle(DS.heroGradient) : AnyShapeStyle(Color(.secondarySystemGroupedBackground)))
+                                    .fill(isSelected ? AnyShapeStyle(DS.heroGradient) : AnyShapeStyle(DS.Surface.inset))
                             )
                             .foregroundStyle(isSelected ? .white : (isToday ? DS.Purple.base : Color.primary))
                         }
@@ -341,7 +341,7 @@ struct MonthGrid: View {
             .background(
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(isSelected ? AnyShapeStyle(DS.heroGradient)
-                          : AnyShapeStyle(inMonth ? Color(.secondarySystemGroupedBackground) : Color.clear))
+                          : AnyShapeStyle(inMonth ? DS.Surface.inset : Color.clear))
             )
             .foregroundStyle(isSelected ? .white : (inMonth ? Color.primary : Color.secondary.opacity(0.5)))
             .overlay(
@@ -399,7 +399,7 @@ struct EventRowContent: View {
         .padding(DS.Space.m)
         .background(
             RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                .fill(Color(.secondarySystemGroupedBackground))
+                .fill(DS.Surface.inset)
         )
     }
 }

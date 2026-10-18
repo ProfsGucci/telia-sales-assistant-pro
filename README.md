@@ -14,7 +14,7 @@ iPhone och iPad, allt lokalt på din enhet.**
 
 | Område | Funktioner |
 |---|---|
-| **Hem** | personlig dashboard: nästa pass, checklista, målringar, Kampanj Center-kort, kampanj-i-fokus, snabbsök, dagens tips, mini-quiz, senast visade produkter, prisfräschhet, anpassningsbar ordning |
+| **Hem** | säljens kommandocentral (DS 2.0): Dagens fokus-hero med pass/countdown/stats, Snabbåtgärder & Produktgenvägar (cirkulära kontroller), Kampanj Center-kort, checklistor, målringar, snabbsök, dagens tips, mini-quiz, senast visade, prisfräschhet — allt ordningsbart/döljbart |
 | **Kampanj Center** | kampanjer verifierade mot offentliga telia.se-sidor: kort med pris (månads-/engångspris hålls isär), ordinarie pris, besparing endast när jämförbart, bindningstid, villkor, källa + verifieringstid. Detaljvy, jämför upp till 3, sök/filter/sortering, favoriter, senast visade, "slutar snart"-hantering, utgångna visas aldrig som aktiva |
 | **Produkter** | verifierad pris-/produktkatalog med sök, filter, sortering, jämför upp till 3, total-/snittkostnad per bindningstid, kampanjpris & slutdatum |
 | **Räknare** | abonnemangstotalkostnad, enhet+abonnemang (kontant vs delbetalning), familjeräknare, kampanjutgång — allt mot inläst katalogdata |
@@ -121,8 +121,31 @@ tydlig varning visas — innehåll blir aldrig tyst inaktuellt. HTML-skrapning
 av telia.se görs aldrig; Halebops inloggningskrävande personliga erbjudanden
 ingår inte.
 
+## Designsystem (DS 2.0)
+
+`DesignSystem/Theme.swift` + `DesignSystem/ButtonStyles.swift` är appens
+enda källa till visuell sanning. 1.2 bygger om hela språket:
+
+- **Ytor:** varm off-white-canvas i ljust läge, kolgrå (#16161C → #201F28)
+  i mörkt läge — adaptiva via UIKit-dynamiska färger.
+- **Kort:** flytande ytor med 22 pt-radie, hårfin kantlinje och en mjuk
+  statisk skugga; hero-kort med fast kolgrå→lila-gradient + varm orange
+  hörnglow för vit text.
+- **Accenter:** återhållen Telia-lila + varm orange (`DS.Orange`) för
+  höjdpunkter, status och favoriter.
+- **Typografi:** stor rounded-display-typ (`DS.Typo`), alltid textstilar så
+  Dynamic Type skalas nativt.
+- **Kontroller:** cirkulära tryckbrickor med fjädrande feedback
+  (`PressableStyle`), `PrimaryButton`/`SecondaryButton`, subtila haptics.
+- **Tillgänglighet:** Reduce Motion respekteras överallt, kontrast via
+  opaka kortytor, VoiceOver-etiketter på alla kontroller.
+
 ## Versionshistorik
 
+- **1.2 (3) — Update 1.2 BETA**: komplett visuell omdesign (DS 2.0: off-white/kol,
+  hero-kort, cirkulära kontroller, orange accenter), dashboard som säljens
+  kommandocentral (Dagens fokus, Snabbåtgärder, Produktgenvägar), chat- och
+  kampanjpolering, konsekvent canvas i alla vyer, 107 kärntester gröna.
 - **1.1 (2) — Update 1.1 BETA**: Kampanj Center, egen bakgrund (gradienter,
   egen färg, egen bild — lokalt), AI-coach kampanjförankrad, skapare tillskriven
   ("Made by Kevork Khagadurian"), uppgraderingssäker inställningsläsning,

@@ -15,6 +15,7 @@ struct AcademyView: View {
             programSection
             trackSection
         }
+        .scrollContentBackground(.hidden)
         .navigationTitle("Akademin")
     }
 
@@ -167,7 +168,7 @@ struct LessonView: View {
             }
             .padding(DS.Space.m)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle(lesson.title)
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -351,7 +352,7 @@ struct FlashcardsView: View {
             }
             .padding(DS.Space.m)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle("Repetition")
         .navigationBarTitleDisplayMode(.inline)
     }

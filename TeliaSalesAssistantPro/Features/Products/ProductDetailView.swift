@@ -48,7 +48,7 @@ struct ProductDetailView: View {
             .padding(.horizontal, DS.Space.m)
             .padding(.bottom, DS.Space.xl)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
     }
 
     private func priceCard(_ product: ProductRecord) -> some View {
@@ -238,7 +238,7 @@ struct ProductDetailView: View {
                 .padding(.vertical, DS.Space.m)
                 .background(
                     RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                        .fill(Color(.secondarySystemGroupedBackground))
+                        .fill(DS.Surface.inset)
                 )
                 .foregroundStyle(library.isFavorite(product.id) ? .pink : Color.primary)
             }
@@ -260,7 +260,7 @@ struct ProductDetailView: View {
                 .padding(.vertical, DS.Space.m)
                 .background(
                     RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                        .fill(Color(.secondarySystemGroupedBackground))
+                        .fill(DS.Surface.inset)
                 )
             }
             .buttonStyle(PressableStyle())

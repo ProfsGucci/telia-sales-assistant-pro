@@ -67,7 +67,7 @@ struct BackgroundSettingsView: View {
             .padding(DS.Space.m)
             .background(
                 RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
-                    .fill(Color(.secondarySystemGroupedBackground))
+                    .fill(DS.Surface.inset)
             )
             Text("Made by Kevork Khagadurian")
                 .font(.system(.caption2, design: .rounded))

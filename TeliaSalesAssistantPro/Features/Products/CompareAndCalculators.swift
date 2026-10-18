@@ -25,7 +25,7 @@ struct CompareView: View {
             }
             .padding(DS.Space.m)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle("Jämför")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -170,7 +170,7 @@ struct PlanTotalCalculator: View {
             }
             .padding(DS.Space.m)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle("Abonnemang över tid")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -304,7 +304,7 @@ struct DeviceCalculator: View {
             }
             .padding(DS.Space.m)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle("Mobil + avbetalning")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -373,7 +373,7 @@ struct FamilyCalculator: View {
             }
             .padding(DS.Space.m)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle("Familjekalkyl")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -419,7 +419,7 @@ struct CampaignCalculator: View {
             }
             .padding(DS.Space.m)
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle("Pris efter kampanj")
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -100,14 +100,15 @@ struct CampaignCenterView: View {
     // MARK: Header
 
     private var statsHeader: some View {
-        VStack(alignment: .leading, spacing: DS.Space.s) {
-            HStack(alignment: .firstTextBaseline) {
-                VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: DS.Space.m) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text("\(campaigns.activeCampaigns.count) aktiva kampanjer")
-                        .font(.system(.title2, design: .rounded).weight(.bold))
+                        .font(DS.Typo.title)
+                        .foregroundStyle(.white)
                     Text("Verifierade mot telia.se \(campaigns.newestVerification.map { Format.dayMonth.string(from: $0) } ?? "–")")
                         .font(.system(.caption, design: .rounded))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.white.opacity(0.7))
                 }
                 Spacer()
                 Menu {
@@ -121,13 +122,15 @@ struct CampaignCenterView: View {
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle.fill")
                         .font(.system(size: 22))
-                        .foregroundStyle(DS.Purple.base)
+                        .foregroundStyle(.white)
+                        .frame(width: 40, height: 40)
+                        .background(Circle().fill(Color.white.opacity(0.12)))
+                        .overlay(Circle().strokeBorder(Color.white.opacity(0.16), lineWidth: 1))
                 }
                 .accessibilityLabel("Filter och sortering")
             }
         }
-        .padding(DS.Space.m)
-        .card(gradient: true)
+        .heroCard()
     }
 
     // MARK: Filters
@@ -151,7 +154,7 @@ struct CampaignCenterView: View {
                 }
             }
             .padding(DS.Space.s + 2)
-            .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .background(DS.Surface.inset, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: DS.Space.s) {
@@ -175,7 +178,7 @@ struct CampaignCenterView: View {
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
                 .background(
-                    active ? DS.Purple.base : Color(.secondarySystemGroupedBackground),
+                    active ? DS.Purple.base : DS.Surface.inset,
                     in: Capsule()
                 )
                 .foregroundStyle(active ? Color.white : Color.primary)
@@ -213,7 +216,7 @@ struct CampaignCenterView: View {
         }
         .frame(width: 180, alignment: .leading)
         .padding(DS.Space.s)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .background(DS.Surface.inset, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 
     private var campaignList: some View {

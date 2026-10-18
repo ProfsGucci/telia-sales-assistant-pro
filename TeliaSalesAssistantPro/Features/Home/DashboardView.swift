@@ -4,14 +4,16 @@ import TeliaCore
 // MARK: - Card registry
 
 enum DashboardCard: String, CaseIterable, Identifiable {
-    case shift, search, checklist, goals, campaigns, featured, coach, tip, quiz, recents, scripts, reminders, freshness, training
+    case shift, search, quickActions, productShortcuts, checklist, goals, campaigns, featured, coach, tip, quiz, recents, scripts, reminders, freshness, training
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .shift: return "Nästa pass"
+        case .shift: return "Dagens fokus"
         case .search: return "Snabb prisök"
+        case .quickActions: return "Snabbåtgärder"
+        case .productShortcuts: return "Produktgenvägar"
         case .checklist: return "Dagens förberedelser"
         case .goals: return "Dagens mål"
         case .campaigns: return "Kampanj Center"
@@ -127,6 +129,8 @@ struct DashboardView: View {
         switch card {
         case .shift: ShiftCard()
         case .search: QuickSearchCard()
+        case .quickActions: QuickActionsCard()
+        case .productShortcuts: ProductShortcutsCard()
         case .checklist: ChecklistCard()
         case .goals: GoalsCard()
         case .campaigns: CampaignsCard()
@@ -161,41 +165,192 @@ struct DashboardView: View {
 
 // MARK: - Cards
 
-private struct ShiftCard: View {
-    @EnvironmentObject private var schedule: ScheduleStore
+// MARK: - Circular quick-action tile (NavigationLink flavour)
+
+private struct QuickActionLink: View {
+    let destination: AppDestination
+    let icon: String
+    let label: String
+    var tint: Color = DS.Purple.base
 
     var body: some View {
-        SectionCard(title: "Nästa pass", symbol: "bag.fill") {
-            if let shift = CalendarEngine.nextShift(from: schedule.events, after: Date(), calendar: CalendarEngine.workCalendar()) {
-                VStack(alignment: .leading, spacing: DS.Space.s) {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(shift.title)
-                                .font(.system(.body, design: .rounded).weight(.semibold))
-                            Text("\(Format.dayMonth.string(from: shift.start)) · \(Format.time.string(from: shift.start))–\(Format.time.string(from: shift.end))")
-                                .font(.system(.subheadline, design: .rounded))
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        Chip(text: shift.recurrence == .none ? "Engångspass" : shift.recurrence.displayName, color: DS.Purple.base)
-                    }
-                    if !shift.location.isEmpty {
-                        Label(shift.location, systemImage: "mappin.and.ellipse")
-                            .font(.system(.caption, design: .rounded))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            } else {
-                EmptyStateView(
-                    symbol: "calendar.badge.plus",
-                    title: "Inget pass inplanerat",
-                    message: "Lägg till ditt nästa pass i kalendern så hjälper appen dig förbereda.",
-                    actionTitle: "Öppna kalendern",
-                    action: { }
-                )
-                .card(padding: 0)
+        NavigationLink(value: destination) {
+            VStack(spacing: DS.Space.s) {
+                Image(systemName: icon)
+                    .font(.system(.title3, design: .rounded).weight(.semibold))
+                    .foregroundStyle(tint)
+                    .frame(width: 54, height: 54)
+                    .background(Circle().fill(tint.opacity(0.13)))
+                    .overlay(Circle().strokeBorder(DS.Surface.hairline, lineWidth: 1))
+                Text(label)
+                    .font(.system(.caption2, design: .rounded).weight(.medium))
+                    .foregroundStyle(.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(PressableStyle(scale: 0.92))
+        .accessibilityLabel(label)
+    }
+}
+
+/// Quick Actions — the fastest paths through a busy shift.
+private struct QuickActionsCard: View {
+    var body: some View {
+        SectionCard(title: "Snabbåtgärder", symbol: "bolt.fill") {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 68), spacing: DS.Space.m)], spacing: DS.Space.l) {
+                QuickActionLink(destination: .products, icon: "cart.fill", label: "Produkter")
+                QuickActionLink(destination: .campaign, icon: "tag.fill", label: "Kampanjer", tint: DS.Orange.base)
+                QuickActionLink(destination: .coach, icon: "bubble.left.and.text.bubble.right.fill", label: "AI Coach")
+                QuickActionLink(destination: .calendar, icon: "calendar", label: "Kalender", tint: .blue)
+                QuickActionLink(destination: .roleplay, icon: "theatermasks.fill", label: "Rollspel", tint: DS.Orange.base)
+                QuickActionLink(destination: .library, icon: "bookmark.fill", label: "Bibliotek")
             }
         }
+    }
+}
+
+/// Product Shortcuts — jumps straight into the catalogue with a search seed.
+private struct ProductShortcutsCard: View {
+    @EnvironmentObject private var appState: AppState
+
+    private struct Shortcut {
+        let label: String
+        let icon: String
+        let seed: String
+        let tint: Color
+    }
+
+    private let shortcuts: [Shortcut] = [
+        Shortcut(label: "Mobil", icon: "antenna.radiowaves.left.and.right", seed: "mobil", tint: DS.Purple.base),
+        Shortcut(label: "Telefoner", icon: "iphone.gen3", seed: "iphone", tint: DS.Orange.base),
+        Shortcut(label: "Samsung", icon: "smartphone", seed: "samsung", tint: DS.Purple.base),
+        Shortcut(label: "Bredband", icon: "wifi.router", seed: "bredband", tint: .blue),
+        Shortcut(label: "TV", icon: "tv.fill", seed: "tv", tint: DS.Orange.base),
+        Shortcut(label: "Fiber", icon: "bolt.fill", seed: "fiber", tint: DS.Purple.base),
+    ]
+
+    var body: some View {
+        SectionCard(title: "Produktgenvägar", symbol: "square.grid.2x2.fill") {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 68), spacing: DS.Space.m)], spacing: DS.Space.l) {
+                ForEach(shortcuts, id: \.label) { shortcut in
+                    Button {
+                        Haptics.tap()
+                        appState.productSearchSeed = shortcut.seed
+                        appState.selectedTab = .products
+                    } label: {
+                        VStack(spacing: DS.Space.s) {
+                            Image(systemName: shortcut.icon)
+                                .font(.system(.title3, design: .rounded).weight(.semibold))
+                                .foregroundStyle(shortcut.tint)
+                                .frame(width: 54, height: 54)
+                                .background(Circle().fill(shortcut.tint.opacity(0.13)))
+                                .overlay(Circle().strokeBorder(DS.Surface.hairline, lineWidth: 1))
+                            Text(shortcut.label)
+                                .font(.system(.caption2, design: .rounded).weight(.medium))
+                                .foregroundStyle(.primary)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(PressableStyle(scale: 0.92))
+                    .accessibilityLabel("Sök \(shortcut.label)")
+                }
+            }
+        }
+    }
+}
+
+/// DS 2.0 hero card: the day at a glance on a dark premium surface.
+private struct ShiftCard: View {
+    @EnvironmentObject private var schedule: ScheduleStore
+    @EnvironmentObject private var library: LibraryStore
+    @EnvironmentObject private var progress: ProgressStore
+
+    private var nextShift: ScheduleEvent? {
+        CalendarEngine.nextShift(from: schedule.events, after: Date(), calendar: CalendarEngine.workCalendar())
+    }
+
+    private var checklistCount: Int { library.data.checklistItems.count }
+    private var doneCount: Int { library.completedTodayCount() }
+
+    private var todaySales: Int {
+        ProgressEngine.aggregate(entries: progress.entries, on: Date(), calendar: Calendar.current).sales
+    }
+
+    /// Short human countdown to the shift, e.g. "3 h" or "2 d".
+    private var countdown: String {
+        guard let shift = nextShift else { return "–" }
+        let seconds = shift.start.timeIntervalSinceNow
+        guard seconds > 0 else { return "nu" }
+        let hours = seconds / 3600
+        if hours < 1 { return "<1 h" }
+        if hours < 48 { return "\(Int(hours.rounded())) h" }
+        return "\(Int((hours / 24).rounded())) d"
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: DS.Space.l) {
+            HStack(alignment: .top, spacing: DS.Space.m) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("DAGENS FOKUS")
+                        .font(.system(.caption2, design: .rounded).weight(.bold))
+                        .kerning(1.4)
+                        .foregroundStyle(DS.Orange.light)
+                    if let shift = nextShift {
+                        Text(shift.title)
+                            .font(DS.Typo.title)
+                            .foregroundStyle(.white)
+                            .lineLimit(2)
+                        Text("\(Format.dayMonth.string(from: shift.start)) · \(Format.time.string(from: shift.start))–\(Format.time.string(from: shift.end))")
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundStyle(Color.white.opacity(0.75))
+                    } else {
+                        Text("Inget pass inplanerat")
+                            .font(DS.Typo.title)
+                            .foregroundStyle(.white)
+                        Text("Lägg till ditt nästa pass i kalendern så hjälper appen dig förbereda.")
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundStyle(Color.white.opacity(0.75))
+                    }
+                }
+                Spacer(minLength: DS.Space.s)
+                Image(systemName: "bag.fill")
+                    .font(.system(.title3, design: .rounded))
+                    .foregroundStyle(Color.white.opacity(0.9))
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Color.white.opacity(0.10)))
+                    .overlay(Circle().strokeBorder(Color.white.opacity(0.14), lineWidth: 1))
+            }
+
+            HStack(spacing: DS.Space.m) {
+                HeroStat(value: "\(doneCount)/\(checklistCount)", label: "Checklista", symbol: "checklist")
+                HeroStat(value: "\(todaySales)", label: "Affärer idag", symbol: "target", tint: DS.Purple.light)
+                HeroStat(value: countdown, label: "Till passet", symbol: "clock")
+            }
+
+            HStack {
+                if let shift = nextShift, !shift.location.isEmpty {
+                    Label(shift.location, systemImage: "mappin.and.ellipse")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundStyle(Color.white.opacity(0.7))
+                }
+                Spacer()
+                NavigationLink(value: AppDestination.calendar) {
+                    Text(nextShift == nil ? "Planera pass" : "Öppna kalendern")
+                        .font(.system(.footnote, design: .rounded).weight(.semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, DS.Space.l)
+                        .padding(.vertical, DS.Space.s + 2)
+                        .background(Capsule().fill(Color.white.opacity(0.14)))
+                        .overlay(Capsule().strokeBorder(Color.white.opacity(0.18), lineWidth: 1))
+                }
+                .buttonStyle(PressableStyle())
+            }
+        }
+        .heroCard()
     }
 }
 
@@ -215,7 +370,11 @@ private struct QuickSearchCard: View {
                 .padding(DS.Space.m)
                 .background(
                     RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                        .fill(Color(.tertiarySystemFill))
+                        .fill(DS.Surface.inset)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
+                        .strokeBorder(DS.Surface.hairline, lineWidth: 1)
                 )
                 .autocorrectionDisabled()
             if !query.isEmpty {
@@ -331,34 +490,87 @@ private struct CampaignsCard: View {
         }
     }
 
+    private func endsInDays(_ campaign: CampaignRecord) -> Int? {
+        if case .expiresSoon(let days) = CampaignEngine.status(campaign) { return days }
+        return nil
+    }
+
     var body: some View {
         SectionCard(title: "Kampanj Center", symbol: "tag.fill") {
-            VStack(alignment: .leading, spacing: DS.Space.s) {
+            VStack(alignment: .leading, spacing: DS.Space.m) {
                 HStack(alignment: .firstTextBaseline) {
-                    Text("\(campaigns.activeCampaigns.count) aktiva kampanjer")
-                        .font(.system(.body, design: .rounded).weight(.semibold))
+                    Text("\(campaigns.activeCampaigns.count)")
+                        .font(DS.Typo.title)
+                        .foregroundStyle(DS.Purple.base)
+                    Text("aktiva kampanjer")
+                        .font(.system(.subheadline, design: .rounded).weight(.medium))
+                        .foregroundStyle(.secondary)
                     Spacer()
                     Text("verifierade \(campaigns.newestVerification.map { Format.dayMonth.string(from: $0) } ?? "–")")
                         .font(.system(.caption2, design: .rounded))
                         .foregroundStyle(.secondary)
                 }
+
                 if let endingSoon {
-                    Label(endingSoon.title, systemImage: "hourglass")
-                        .font(.system(.caption, design: .rounded))
-                        .foregroundStyle(DS.warning)
-                        .lineLimit(1)
+                    campaignRow(
+                        icon: "hourglass",
+                        tint: DS.Orange.base,
+                        title: endingSoon.title,
+                        detail: (endsInDays(endingSoon) ?? 1) <= 1 ? "Slutar idag" : "Slutar om \(endsInDays(endingSoon) ?? 0) dagar"
+                    )
                 } else if let top {
-                    Label(top.title, systemImage: "sparkles")
-                        .font(.system(.caption, design: .rounded))
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
+                    campaignRow(
+                        icon: "sparkles",
+                        tint: DS.Purple.base,
+                        title: top.title,
+                        detail: top.priceKind == .monthly
+                            ? "\(Format.sekPlain(top.campaignPriceSEK)) kr/mån"
+                            : "\(Format.sekPlain(top.campaignPriceSEK)) kr engångspris"
+                    )
                 }
+
                 NavigationLink(value: AppDestination.campaign) {
-                    Text("Öppna Kampanj Center")
-                        .font(.system(.footnote, design: .rounded).weight(.semibold))
+                    HStack {
+                        Text("Öppna Kampanj Center")
+                            .font(.system(.subheadline, design: .rounded).weight(.semibold))
+                        Spacer()
+                        Image(systemName: "arrow.right.circle.fill")
+                            .font(.system(.body))
+                    }
+                    .foregroundStyle(DS.Purple.base)
+                    .padding(.vertical, DS.Space.s + 2)
                 }
+                .buttonStyle(PressableStyle(scale: 0.98))
             }
         }
+    }
+
+    private func campaignRow(icon: String, tint: Color, title: String, detail: String) -> some View {
+        HStack(spacing: DS.Space.m) {
+            Image(systemName: icon)
+                .font(.system(.subheadline, design: .rounded).weight(.semibold))
+                .foregroundStyle(tint)
+                .frame(width: 34, height: 34)
+                .background(Circle().fill(tint.opacity(0.13)))
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(.subheadline, design: .rounded).weight(.medium))
+                    .lineLimit(1)
+                Text(detail)
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(DS.Space.m)
+        .background(
+            RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
+                .fill(DS.Surface.inset)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
+                .strokeBorder(DS.Surface.hairline, lineWidth: 1)
+        )
     }
 }
 
@@ -449,9 +661,18 @@ private struct TipCard: View {
     var body: some View {
         if let tip = tip {
             SectionCard(title: "Dagens säljtips", symbol: "lightbulb.fill") {
-                Text(tip.text)
-                    .font(.system(.subheadline, design: .rounded))
-                Chip(text: tip.category, color: DS.Purple.base)
+                HStack(alignment: .top, spacing: DS.Space.m) {
+                    Image(systemName: "lightbulb.fill")
+                        .font(.system(.title3, design: .rounded))
+                        .foregroundStyle(DS.Orange.base)
+                        .frame(width: 40, height: 40)
+                        .background(Circle().fill(DS.Orange.base.opacity(0.13)))
+                    VStack(alignment: .leading, spacing: DS.Space.s) {
+                        Text(tip.text)
+                            .font(.system(.subheadline, design: .rounded))
+                        Chip(text: tip.category, color: DS.Orange.base)
+                    }
+                }
             }
         }
     }
@@ -549,10 +770,10 @@ private struct MiniQuizCard: View {
     }
 
     private func optionBackground(isCorrect: Bool, isSelected: Bool) -> Color {
-        guard selected != nil else { return Color(.tertiarySystemFill) }
+        guard selected != nil else { return DS.Surface.inset }
         if isCorrect { return DS.Purple.base.opacity(0.14) }
         if isSelected { return Color.red.opacity(0.1) }
-        return Color(.tertiarySystemFill)
+        return DS.Surface.inset
     }
 
     private func borderColor(isCorrect: Bool, isSelected: Bool) -> Color {
@@ -730,7 +951,11 @@ private struct TrainingCard: View {
             .padding(DS.Space.m)
             .background(
                 RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                    .fill(Color(.tertiarySystemFill))
+                    .fill(DS.Surface.inset)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
+                    .strokeBorder(DS.Surface.hairline, lineWidth: 1)
             )
         }
         .buttonStyle(PressableStyle(scale: 0.97))

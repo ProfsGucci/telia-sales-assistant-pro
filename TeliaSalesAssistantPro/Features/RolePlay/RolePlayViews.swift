@@ -65,6 +65,7 @@ struct RolePlayHomeView: View {
                 Text("Scenarier (\(scenarios.count))")
             }
         }
+        .scrollContentBackground(.hidden)
         .navigationTitle("Rollspel")
     }
 }
@@ -90,7 +91,7 @@ struct RolePlaySessionView: View {
                 }
             }
         }
-        .background(Color(.systemGroupedBackground))
+        // Transparent so the app-wide premium canvas shows through.
         .navigationTitle(scenario.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -133,7 +134,7 @@ struct RolePlaySessionView: View {
                                     .background(
                                         RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
                                             .fill(turn.isCustomer
-                                                  ? AnyShapeStyle(Color(.secondarySystemGroupedBackground))
+                                                  ? AnyShapeStyle(DS.Surface.inset)
                                                   : AnyShapeStyle(DS.heroGradient))
                                     )
                                     .foregroundStyle(turn.isCustomer ? Color.primary : Color.white)
@@ -181,7 +182,7 @@ struct RolePlaySessionView: View {
                 .padding(DS.Space.m)
                 .background(
                     RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                        .fill(Color(.secondarySystemGroupedBackground))
+                        .fill(DS.Surface.inset)
                 )
                 .onSubmit(send)
             Button(action: send) {
@@ -269,7 +270,7 @@ struct RolePlayResultView: View {
                 }
                 .padding(DS.Space.m)
             }
-            .background(Color(.systemGroupedBackground))
+            // Transparent so the app-wide premium canvas shows through.
             .navigationTitle("Utvärdering")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {

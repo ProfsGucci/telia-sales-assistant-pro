@@ -294,30 +294,22 @@ struct CampaignDetailView: View {
                     .buttonStyle(BorderedProminentButtonStyle())
                     .tint(DS.Purple.base)
                 }
-                Button {
+                SecondaryButton(
+                    title: copied ? "Kopierat!" : "Kopiera kundförklaring",
+                    symbol: copied ? "checkmark" : "doc.on.doc"
+                ) {
                     copyExplanation()
-                } label: {
-                    Label(copied ? "Kopierat!" : "Kopiera kundförklaring", systemImage: copied ? "checkmark" : "doc.on.doc")
-                        .font(.system(.subheadline, design: .rounded).weight(.semibold))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
                 }
-                .buttonStyle(BorderedButtonStyle())
-                .tint(DS.Purple.base)
-                Button {
+                SecondaryButton(
+                    title: "Jämför med andra kampanjer",
+                    symbol: "square.split.2x1"
+                ) {
                     compareIDs = [campaign.id]
                     for other in campaigns.favoriteCampaigns where other.id != campaign.id && compareIDs.count < 3 {
                         compareIDs.append(other.id)
                     }
                     showCompare = true
-                } label: {
-                    Label("Jämför med andra kampanjer", systemImage: "square.split.2x1")
-                        .font(.system(.subheadline, design: .rounded).weight(.semibold))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
                 }
-                .buttonStyle(BorderedButtonStyle())
-                .tint(DS.Purple.base)
             }
         }
         .padding(DS.Space.m)

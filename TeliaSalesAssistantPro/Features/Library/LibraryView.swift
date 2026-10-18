@@ -36,6 +36,7 @@ struct LibraryView: View {
                 content
             }
         }
+        .scrollContentBackground(.hidden)
         .navigationTitle("Bibliotek")
         .sheet(item: $scriptEditor) { payload in
             ScriptEditorView(script: payload.script)

@@ -129,7 +129,11 @@ struct ChatView: View {
                             .padding(DS.Space.m)
                             .background(
                                 RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                                    .fill(Color(.secondarySystemGroupedBackground))
+                                    .fill(DS.Surface.inset)
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
+                                    .strokeBorder(DS.Surface.hairline, lineWidth: 1)
                             )
                     }
                     .buttonStyle(PressableStyle(scale: 0.98))
@@ -158,11 +162,11 @@ struct ChatView: View {
                 .padding(DS.Space.m)
                 .background(
                     RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                        .fill(Color(.secondarySystemGroupedBackground))
+                        .fill(DS.Surface.card)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
-                        .strokeBorder(Color.primary.opacity(0.08), lineWidth: 1)
+                        .strokeBorder(DS.Surface.hairline, lineWidth: 1)
                 )
                 .onSubmit(send)
 
@@ -216,11 +220,16 @@ struct MessageBubble: View {
                         .foregroundStyle(message.role == .user ? Color.white : Color.primary)
                         .padding(DS.Space.m)
                         .background(
-                            RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
+                            RoundedRectangle(cornerRadius: 18, style: .continuous)
                                 .fill(message.role == .user
                                       ? AnyShapeStyle(DS.heroGradient)
-                                      : AnyShapeStyle(Color(.secondarySystemGroupedBackground)))
+                                      : AnyShapeStyle(DS.Surface.card))
                         )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                .strokeBorder(message.role == .user ? Color.clear : DS.Surface.hairline, lineWidth: 1)
+                        )
+                        .shadow(color: Color.black.opacity(0.04), radius: 8, y: 3)
                     if message.role == .assistant && !message.citations.isEmpty {
                         citationsToggle
                         if showCitations {
@@ -335,7 +344,7 @@ struct TypingIndicator: View {
         .padding(DS.Space.m)
         .background(
             RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
-                .fill(Color(.secondarySystemGroupedBackground))
+                .fill(DS.Surface.inset)
         )
         .onAppear { phase = true }
         .accessibilityLabel("Coachen skriver")

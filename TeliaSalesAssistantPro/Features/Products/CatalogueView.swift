@@ -236,7 +236,7 @@ struct ProductGridCell: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
-                .fill(Color(.secondarySystemGroupedBackground))
+                .fill(DS.Surface.inset)
         )
         .overlay(
             RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
