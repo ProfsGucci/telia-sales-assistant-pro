@@ -184,16 +184,24 @@ final class ScheduleProgressTests: XCTestCase {
     }
 
     func testSeedCatalogJSONDecodes() throws {
-        // Locate SeedCatalog.json relative to the repository root.
-        let urls = [
-            URL(fileURLWithPath: "TeliaSalesAssistantPro/Resources/SeedCatalog.json"),
-            URL(fileURLWithPath: "../TeliaSalesAssistantPro/Resources/SeedCatalog.json"),
-        ]
+        // Locate SeedCatalog.json. On Apple platforms the file is bundled in
+        // the host app (Bundle.main); on Linux (SwiftPM) it sits in the repo.
         var data: Data?
-        for url in urls {
-            if FileManager.default.fileExists(atPath: url.path) {
-                data = try Data(contentsOf: url)
-                break
+        #if canImport(Foundation) && !os(Linux)
+        if let url = Bundle.main.url(forResource: "SeedCatalog", withExtension: "json") {
+            data = try? Data(contentsOf: url)
+        }
+        #endif
+        if data == nil {
+            let urls = [
+                URL(fileURLWithPath: "TeliaSalesAssistantPro/Resources/SeedCatalog.json"),
+                URL(fileURLWithPath: "../TeliaSalesAssistantPro/Resources/SeedCatalog.json"),
+            ]
+            for url in urls {
+                if FileManager.default.fileExists(atPath: url.path) {
+                    data = try Data(contentsOf: url)
+                    break
+                }
             }
         }
         let seed = try XCTUnwrap(data, "SeedCatalog.json not found")
