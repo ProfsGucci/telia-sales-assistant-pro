@@ -49,19 +49,35 @@ jobs:
         run: |
           set -euo pipefail
           # Lists (and auto-creates) schemes; shows destinations in the format:
-          #   { platform:iOS Simulator, id:ABCD-1234..., OS:18.2, name:iPhone 16 }
+          #   { platform:iOS Simulator, arch:arm64, id:ABCD-1234..., OS:18.2, name:iPhone 16 }
+          # Freshly booted runners can return an empty list on the first call — retry.
           xcodebuild -project TeliaSalesAssistantPro.xcodeproj -list || true
-          DESTS="$(xcodebuild -project TeliaSalesAssistantPro.xcodeproj -scheme TeliaSalesAssistantPro -showdestinations 2>/dev/null \
-            | grep 'platform:iOS Simulator' | grep -v 'Placeholder' || true)"
-          LINE="$(printf '%s\n' "$DESTS" | grep -m1 'name:iPhone' || true)"
-          if [ -z "$LINE" ]; then LINE="$(printf '%s\n' "$DESTS" | head -n1)"; fi
-          if [ -z "$LINE" ]; then
-            echo "destination=generic/platform=iOS Simulator" >> "$GITHUB_OUTPUT"
-            echo "has_sim=false" >> "$GITHUB_OUTPUT"
-          else
-            DEST_ID="$(printf '%s' "$LINE" | sed -n 's/.*id:\([-A-Za-z0-9]*\).*/\1/p')"
+          DEST_ID=""
+          for attempt in 1 2 3 4 5; do
+            LINE="$(xcodebuild -project TeliaSalesAssistantPro.xcodeproj -scheme TeliaSalesAssistantPro -showdestinations 2>/dev/null \
+              | grep 'platform:iOS Simulator' | grep -v 'Placeholder' | grep -m1 'name:iPhone' || true)"
+            if [ -z "$LINE" ]; then
+              LINE="$(xcodebuild -project TeliaSalesAssistantPro.xcodeproj -scheme TeliaSalesAssistantPro -showdestinations 2>/dev/null \
+                | grep 'platform:iOS Simulator' | grep -v 'Placeholder' | head -n1 || true)"
+            fi
+            if [ -n "$LINE" ]; then
+              DEST_ID="$(printf '%s' "$LINE" | sed -n 's/.*id:\([-A-F0-9a-f]*\).*/\1/p')"
+            fi
+            if [ -n "$DEST_ID" ]; then break; fi
+            echo "attempt $attempt: no simulator destination yet, retrying in 10s..."
+            sleep 10
+          done
+          if [ -z "$DEST_ID" ]; then
+            # Fallback: any available simulator device via simctl.
+            DEST_ID="$(xcrun simctl list devices available 2>/dev/null \
+              | grep -m1 -oE '[A-F0-9]{8}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{12}' || true)"
+          fi
+          if [ -n "$DEST_ID" ]; then
             echo "destination=platform=iOS Simulator,id=$DEST_ID" >> "$GITHUB_OUTPUT"
             echo "has_sim=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "destination=generic/platform=iOS Simulator" >> "$GITHUB_OUTPUT"
+            echo "has_sim=false" >> "$GITHUB_OUTPUT"
           fi
           cat "$GITHUB_OUTPUT"
 
