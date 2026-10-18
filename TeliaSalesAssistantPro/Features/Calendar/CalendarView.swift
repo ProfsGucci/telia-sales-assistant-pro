@@ -64,7 +64,7 @@ struct CalendarView: View {
                     Text("Idag")
                 }
                 Button {
-                    Task { await calendarSync.syncAll(force: true) }
+                    Task { await calendarSync.syncAll() }
                 } label: {
                     Image(systemName: calendarSync.syncing.isEmpty
                           ? "arrow.clockwise" : "arrow.triangle.2.circlepath")
@@ -108,7 +108,7 @@ struct CalendarView: View {
             ImportedEventDetailSheet(record: record)
         }
         .refreshable {
-            await calendarSync.syncAll(force: true)
+            await calendarSync.syncAll()
         }
     }
 
@@ -752,7 +752,7 @@ struct ImportedEventDetailSheet: View {
                         row("Tid", "Heldag")
                     } else {
                         row("Tid", "\(Format.time.string(from: record.start))–\(Format.time.string(from: record.end))")
-                        row("Datum", record.start.formatted(date: .long, time: .omitted, locale: Locale(identifier: "sv_SE")))
+                        row("Datum", record.start.formatted(Date.FormatStyle(date: .long, time: .omitted, locale: Locale(identifier: "sv_SE"))))
                     }
                     if !record.location.isEmpty {
                         row("Plats", record.location)

@@ -40,7 +40,7 @@ struct CalendarProvidersView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    Task { await calendarSync.syncAll(force: true) }
+                    Task { await calendarSync.syncAll() }
                 } label: {
                     Image(systemName: "arrow.clockwise")
                 }

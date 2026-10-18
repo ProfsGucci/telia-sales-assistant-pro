@@ -265,9 +265,12 @@ enum ASWebAuthenticationSessionWrapper {
 
     static func run(url: URL, scheme: String) async throws -> URL {
         try await withCheckedThrowingContinuation { continuation in
+            // One OAuth flow at a time: releasing ALL retained state from the
+            // handler avoids capturing `session` inside its own declaration.
             let session = ASWebAuthenticationSession(url: url, callbackURLScheme: scheme) { callbackURL, error in
                 Task { @MainActor in
-                    release(session)
+                    retainedSessions.removeAll()
+                    retainedAnchors.removeAll()
                     if let callbackURL {
                         continuation.resume(returning: callbackURL)
                     } else {
@@ -281,16 +284,10 @@ enum ASWebAuthenticationSessionWrapper {
             retainedSessions.append(session)
             retainedAnchors.append(anchor)
             if !session.start() {
-                release(session)
+                retainedSessions.removeAll()
+                retainedAnchors.removeAll()
                 continuation.resume(throwing: OAuthError.cancelled)
             }
-        }
-    }
-
-    private static func release(_ session: ASWebAuthenticationSession) {
-        retainedSessions.removeAll { $0 === session }
-        if retainedSessions.isEmpty {
-            retainedAnchors.removeAll()
         }
     }
 }
