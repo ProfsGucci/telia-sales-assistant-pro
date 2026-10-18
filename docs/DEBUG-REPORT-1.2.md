@@ -98,8 +98,10 @@ byggnummer 1.2 (3) via `gen_pbxproj.py`.
 2. `swiftc -parse` över hela appskiktet: **0 fel** (syntax; typkontroll av
    SwiftUI sker i CI-bygget).
 3. CI (macOS 15, Xcode 26.3): bygga + simulatortester + osignerad IPA —
-   resultat för release-committet rapporteras i GitHub-releasen; **utföll**
-   grönt på tredje försöket (två buggfix-iterationer, se nedan).
+   **grönt på första försöket** på release-committet `fe520ae` (run 39153911635
+   på main; tag-run 39154499386 byggde om och bifogade IPA:n till releasen
+   automatiskt). Självgranskningen före push (avsnitt 1, punkt 5) förhindrade
+   denna gång de CI-iterationer som 1.1 krävde.
 4. **Inte körbart här:** enhetstest på riktig hårdvara, VoiceOver-genomgång,
    Dynamic Type-visuella kontroller, mörkt/ljust läge på skärm, haptik,
    iPad-sideboard i praktiken, SideStore-installation. Listas ärligt som
