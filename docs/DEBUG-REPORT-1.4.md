@@ -181,13 +181,32 @@ iPad-layout/portrait-landscape.
 ## 7. Bygge och release
 
 1. Branch `release/update-1.4-beta`; commit
-   `feat: release Telia Sales Assistant Pro Update 1.4 BETA` på `main`.
+   `feat: release Telia Sales Assistant Pro Update 1.4 BETA` (`1bab3bf`)
+   på `main`.
 2. Push → CI (Linux-kärntester + iOS-bygge/simulator-tester + osignerad
-   IPA). Väntar grönt **innan** tagg/release.
-3. Tagg `v1.4-beta` (ledig — kontrollerad) → release **”Update 1.4 BETA”**
-   → CI monterar IPA automatiskt → verifiera Version 1.4 (5) → ersätt
-   lokal IPA → leverera.
-4. Status efter slutfört flöde redovisas i release-sidan.
+   IPA). **Väntade grönt innan tagg/release.** Faktiskt förlopp — fyra
+   iterationer krävdes, alla ärligt redovisade:
+   - Run 39164404386 (röd): tre iOS-kompilatorfel som Linux `-parse`
+     inte kan se — privat typ i interna medlemmar (Gloss), imaginär
+     `NumberFormatter.isPartial`, `Result<_, String>` utan Error-
+     konformitet → fix `4f514f5`.
+   - Run 39164562232 (röd): `syncAll(force:)` fanns inte, fel
+     datumformateringsöverlagring, OAuth-sessionen fångade sig själv i
+     sin egen hanterare → fix `860b9f8`.
+   - Run 39164835426 (röd): `ContentTransition.numericInterpolation` är
+     iOS 17+ (målet är iOS 16), `formatNumber` ej publik, samt en
+     sektionsegenskap som ett avbrutet redigeringsskript aldrig skrev →
+     fix `c33d370`.
+   - Run 39165211257 (röd): **simulatortesterna hittade en riktig
+     krasch** — `CalendarSyncStore.settings` (implicit unwrapped) var nil
+     när `scenePhase .active` hann före startup-injektionen → nil-säker
+     ombyggnad + idempotent inject → fix `559b12f`.
+   - Run 39165645467 (**grönt**): build + simulator-tester + IPA.
+3. Tagg `v1.4-beta` (ledig — kontrollerad) @ `559b12f` → release
+   **”Update 1.4 BETA”** (416713615) → tag-run 39166278062 grönt → IPA
+   auto-monterad (2 976 956 byte) → verifierad: Version 1.4 (5), bundle
+   `se.sthlm.teliacoachpro`, Min iOS 16.0, OAuth-URL-schema registrerat,
+   kalender-usage strings på plats → lokal IPA ersatt och levererad.
 
 ## 8. Slutsats
 
