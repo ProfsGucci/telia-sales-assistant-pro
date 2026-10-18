@@ -1,0 +1,454 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-18T00:00:00+02:00",
+  "sourceNote": "Priser lästa manuellt från telia.se den 18 oktober 2026 (mobilabonnemang, bredband, erbjudanden, om/priser). Kampanjer förändras ofta – kontrollera alltid källsidan innan du citerar priser till kunder.",
+  "products": [
+    {
+      "id": "mobil-roerlig-0-2", "name": "Mobil Rörlig 0,2 GB", "kind": "mobilePlan", "category": "Rörlig",
+      "monthlyPriceSEK": 129, "bindingMonths": 0, "dataGB": 0.2, "speedMbit": 100,
+      "includedServices": ["Fria sms och mms", "Samtal enligt prislista", "Säkerhetstjänster"],
+      "highlights": ["Betala efter användning", "0,2 GB surf", "Upp till 100 Mbit/s"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/telia-mobil-roerlig-0-2", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "billigast", "roerlig", "kontant"]
+    },
+    {
+      "id": "mobil-10-gb", "name": "Mobil 10 GB", "kind": "mobilePlan", "category": "Surf",
+      "monthlyPriceSEK": 299, "bindingMonths": 0, "dataGB": 10, "speedMbit": 100,
+      "includedServices": ["Fria samtal och sms/mms", "Surfpott (max 50 GB sparad)", "Säkerhetstjänster", "5G"],
+      "highlights": ["Online Deal", "10 GB surf", "EU/EES: 10 GB"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-10-gb", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "surf", "10gb", "online deal"]
+    },
+    {
+      "id": "mobil-20-gb", "name": "Mobil 20 GB", "kind": "mobilePlan", "category": "Surf",
+      "monthlyPriceSEK": 399, "bindingMonths": 0, "dataGB": 20, "speedMbit": 100, "campaignMonths": 12,
+      "includedServices": ["Fria samtal och sms/mms", "Surfpott (max 50 GB sparad)", "Säkerhetstjänster", "5G"],
+      "highlights": ["Just nu: dubbel surf – 40 GB i ett helt år", "EU/EES: 20 GB"],
+      "campaignStart": "2026-10-01T00:00:00+02:00",
+      "eligibilityNotes": "Kampanjen Dubbel surf ger 40 GB/mån i 12 månader.",
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-20-gb", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "surf", "20gb", "dubbel surf", "40gb"]
+    },
+    {
+      "id": "mobil-obegraensad", "name": "Obegränsad", "kind": "mobilePlan", "category": "Obegränsad",
+      "monthlyPriceSEK": 499, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 100,
+      "includedServices": ["Fria samtal och sms/mms", "Obegränsad surf (100 Mbit/s)", "Säkerhetstjänster", "5G", "Berättigad till samlingsrabatt"],
+      "highlights": ["Obegränsad surf", "EU/EES: 100 GB", "Samlingsrabatt med bredband: 100 kr/mån"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "obegraensad", "surf", "obegränsad"]
+    },
+    {
+      "id": "mobil-obegraensad-plus", "name": "Obegränsad Plus", "kind": "mobilePlan", "category": "Obegränsad Plus",
+      "monthlyPriceSEK": 569, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Fria samtal och sms/mms", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud obegränsad lagring", "Huvudabonnemang för familj", "Säkerhetstjänster", "5G", "Berättigad till samlingsrabatt"],
+      "highlights": ["Kan bli huvudabonnemang med extra användare", "Streaming kan köpas till", "EU/EES: 100 GB"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "obegraensad", "plus", "cloud", "familj", "huvudabonnemang"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-netflix", "name": "Obegränsad Plus Netflix", "kind": "mobilePlan", "category": "Obegränsad Plus",
+      "monthlyPriceSEK": 629, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Netflix Standard", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Huvudabonnemang för familj", "Säkerhetstjänster", "Berättigad till samlingsrabatt"],
+      "highlights": ["Streaming ingår: Netflix Standard"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-netflix", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "netflix", "streaming", "obegraensad"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-max", "name": "Obegränsad Plus HBO Max", "kind": "mobilePlan", "category": "Obegränsad Plus",
+      "monthlyPriceSEK": 609, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["HBO Max Basic med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Huvudabonnemang för familj", "Säkerhetstjänster", "Berättigad till samlingsrabatt"],
+      "highlights": ["Streaming ingår: HBO Max Basic med reklam"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-max", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "hbo", "max", "streaming", "obegraensad"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-tv4-play", "name": "Obegränsad Plus TV4 Play", "kind": "mobilePlan", "category": "Obegränsad Plus",
+      "monthlyPriceSEK": 599, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["TV4 Play Plus med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Huvudabonnemang för familj", "Säkerhetstjänster", "Berättigad till samlingsrabatt"],
+      "highlights": ["Streaming ingår: TV4 Play Plus med reklam"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-tv4-play", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "tv4", "streaming", "obegraensad"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-prime", "name": "Obegränsad Plus Amazon Prime", "kind": "mobilePlan", "category": "Obegränsad Plus",
+      "monthlyPriceSEK": 599, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Amazon Prime med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Huvudabonnemang för familj", "Säkerhetstjänster", "Berättigad till samlingsrabatt"],
+      "highlights": ["Streaming ingår: Amazon Prime med reklam"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-prime", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "prime", "amazon", "streaming", "obegraensad"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-disney", "name": "Obegränsad Plus Disney+", "kind": "mobilePlan", "category": "Obegränsad Plus",
+      "monthlyPriceSEK": 599, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Disney+ Standard med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Huvudabonnemang för familj", "Säkerhetstjänster", "Berättigad till samlingsrabatt"],
+      "highlights": ["Streaming ingår: Disney+ Standard med reklam"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-disney", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "disney", "streaming", "obegraensad"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-viaplay", "name": "Obegränsad Plus Viaplay", "kind": "mobilePlan", "category": "Obegränsad Plus",
+      "monthlyPriceSEK": 599, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Viaplay Film & Serier med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Huvudabonnemang för familj", "Säkerhetstjänster", "Berättigad till samlingsrabatt"],
+      "highlights": ["Streaming ingår: Viaplay Film & Serier med reklam"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-viaplay", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "viaplay", "streaming", "obegraensad"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-netflix-max-disney", "name": "Obegränsad Plus Netflix, HBO Max och Disney+", "kind": "mobilePlan", "category": "Obegränsad Plus",
+      "monthlyPriceSEK": 599, "ordinaryMonthlyPriceSEK": 699, "bindingMonths": 24, "campaignMonths": 12,
+      "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Netflix Standard", "HBO Max Basic med reklam", "Disney+ Standard med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Huvudabonnemang för familj", "Berättigad till samlingsrabatt"],
+      "highlights": ["Tre streamingtjänster ingår", "599 kr/mån i 12 månader, därefter 699 kr/mån", "24 mån bindningstid"],
+      "eligibilityNotes": "Rabatten gäller i 12 månader. 24 mån bindningstid. Skillnad mot köp utan bindning: obundna streaming-abonnemang kostar 599–629 kr/mån med en tjänst.",
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-netflix-max-disney", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "netflix", "hbo", "disney", "streaming", "kampanj", "bindning"]
+    },
+    {
+      "id": "telia-mobil-extra-anvandare", "name": "Extra användare (familj)", "kind": "familyAddOn", "category": "Familj",
+      "monthlyPriceSEK": 175, "ordinaryMonthlyPriceSEK": 239, "bindingMonths": 0, "campaignMonths": 12, "unlimitedData": true,
+      "includedServices": ["Eget nummer (befintligt eller nytt)", "Samma surfmängd som huvudabonnemanget", "Alla på samma faktura"],
+      "highlights": ["Familjeveckor: 175 kr/mån i 12 månader", "Därefter 239 kr/mån", "Upp till 9 extra användare"],
+      "eligibilityNotes": "Kräver att du har eller köper ett abonnemang med Obegränsad Plus. Senaste lägsta pris: 199 kr/mån.",
+      "sourceURL": "https://www.telia.se/mobilabonnemang/telia-mobil-extra-anvandare", "sourceName": "telia.se/erbjudanden (Familjeveckor)",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["familj", "extra anvandare", "kampanj", "familjeveckor"]
+    },
+    {
+      "id": "mobil-obegraensad-ungdom", "name": "Obegränsad Ungdom", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 449, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 100,
+      "includedServices": ["Obegränsad surf", "Fria samtal och sms/mms", "Säkerhetstjänster", "Berättigad till samlingsrabatt"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt", "Krav: under 28 år"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "student", "obegraensad"]
+    },
+    {
+      "id": "mobil-20-gb-ungdom", "name": "Mobil 20 GB Ungdom", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 349, "bindingMonths": 0, "dataGB": 20, "speedMbit": 100,
+      "includedServices": ["20 GB surf", "Fria samtal och sms/mms", "Surfpott", "Säkerhetstjänster"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt", "Krav: under 28 år"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-20-gb-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "student", "20gb"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-ungdom", "name": "Obegränsad Plus Ungdom", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 519, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Huvudabonnemang för familj", "Säkerhetstjänster"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt", "Streaming kan köpas till"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "obegraensad", "plus"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-netflix-ungdom", "name": "Obegränsad Plus Ungdom Netflix", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 579, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Netflix Standard", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Säkerhetstjänster"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-netflix-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "netflix", "streaming"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-max-ungdom", "name": "Obegränsad Plus Ungdom HBO Max", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 559, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["HBO Max Basic med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Säkerhetstjänster"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-max-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "hbo", "streaming"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-tv4-play-ungdom", "name": "Obegränsad Plus Ungdom TV4 Play", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 549, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["TV4 Play Plus med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Säkerhetstjänster"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-tv4-play-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "tv4", "streaming"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-prime-ungdom", "name": "Obegränsad Plus Ungdom Amazon Prime", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 549, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Amazon Prime med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Säkerhetstjänster"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-prime-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "prime", "streaming"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-disney-ungdom", "name": "Obegränsad Plus Ungdom Disney+", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 549, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Disney+ Standard med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Säkerhetstjänster"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-disney-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "disney", "streaming"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-viaplay-ungdom", "name": "Obegränsad Plus Ungdom Viaplay", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 549, "bindingMonths": 0, "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Viaplay Film & Serier med reklam", "Obegränsad surf (1000 Mbit/s)", "Telia Cloud", "Säkerhetstjänster"],
+      "highlights": ["Ungdomspris: 50 kr/mån rabatt"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-viaplay-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "viaplay", "streaming"]
+    },
+    {
+      "id": "mobil-obegraensad-plus-netflix-max-disney-ungdom", "name": "Obegränsad Plus Ungdom Netflix, HBO Max och Disney+", "kind": "mobilePlan", "category": "Ungdom (under 28)",
+      "monthlyPriceSEK": 549, "ordinaryMonthlyPriceSEK": 649, "bindingMonths": 24, "campaignMonths": 12,
+      "unlimitedData": true, "speedMbit": 1000,
+      "includedServices": ["Netflix Standard", "HBO Max Basic med reklam", "Disney+ Standard med reklam", "Obegränsad surf", "Telia Cloud"],
+      "highlights": ["549 kr/mån i 12 månader, därefter 649 kr/mån", "24 mån bindningstid"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang/mobil-obegraensad-plus-netflix-max-disney-ungdom", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobil", "ungdom", "streaming", "kampanj"]
+    },
+    {
+      "id": "bredband-150-fiber", "name": "Bredband 150/150 via fiber", "kind": "broadband", "category": "Fiber",
+      "monthlyPriceSEK": 379, "ordinaryMonthlyPriceSEK": 599, "bindingMonths": 12, "speedMbit": 150,
+      "includedServices": ["Trygghetspaketet Bas ingår", "Surfa i 75–150 Mbit/s", "Över- och nedladdning 150/150"],
+      "highlights": ["Kampanjpris för nya bredbandskunder", "Ordinarie pris 599 kr/mån", "12 mån bindningstid"],
+      "eligibilityNotes": "Erbjudandet gäller endast nya bredbandskunder. Priset kan variera med adress/stadsnät.",
+      "sourceURL": "https://www.telia.se/bredband/fiber/bredband-150", "sourceName": "telia.se/bredband/fiber",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["bredband", "fiber", "150", "kampanj"]
+    },
+    {
+      "id": "fiber-more-speeds", "name": "Fiber – fler hastigheter (100–1000 Mbit/s)", "kind": "broadband", "category": "Fiber",
+      "bindingMonths": 0, "speedMbit": 1000,
+      "includedServices": ["Trygghetspaketet Bas ingår", "Hastigheter: 100, 150, 250, 300, 500, 600, 1000 Mbit/s"],
+      "highlights": ["Priset beror på adress och aktuella kampanjer"],
+      "eligibilityNotes": "Priset presenteras per adress i bredbandssöken på telia.se. Verifiera alltid kundens adress innan du citerar pris.",
+      "sourceURL": "https://www.telia.se/bredband/fiber", "sourceName": "telia.se/bredband/fiber",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "unverified",
+      "tags": ["bredband", "fiber", "hastighet"]
+    },
+    {
+      "id": "bredband-5g-hemma", "name": "Bredband via 5G", "kind": "broadband", "category": "5G-bredband",
+      "monthlyPriceSEK": 249, "ordinaryMonthlyPriceSEK": 399, "bindingMonths": 24, "campaignMonths": 24, "speedMbit": 1000,
+      "includedServices": ["Router ingår i bostaden", "Trygghetspaketet Bas ingår", "Nöjdhetsgaranti – prova i 30 dagar"],
+      "highlights": ["Från 249 kr/mån i 24 månader", "Ordinarie pris 399 kr/mån", "24 mån bindningstid"],
+      "eligibilityNotes": "Erbjudandet gäller endast nya bredbandskunder. Kräver god 5G-täckning på adressen.",
+      "sourceURL": "https://www.telia.se/bredband/bredband-via-5g/hemma", "sourceName": "telia.se/bredband/bredband-via-5g",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["bredband", "5g", "kampanj", "router"]
+    },
+    {
+      "id": "bredband-5g-tv-mini", "name": "Bredband via 5G + Tv Mini", "kind": "tvPackage", "category": "5G-bredband + TV",
+      "monthlyPriceSEK": 299, "ordinaryMonthlyPriceSEK": 648, "bindingMonths": 24, "campaignMonths": 24, "speedMbit": 1000,
+      "includedServices": ["19 tv-kanaler", "TV4 Play Plus", "Router ingår", "Trygghetspaketet Bas"],
+      "highlights": ["Från 299 kr/mån i 24 månader", "Ordinarie pris 648 kr/mån"],
+      "eligibilityNotes": "Erbjudandet gäller endast nya bredbands- och tv-kunder.",
+      "sourceURL": "https://www.telia.se/bredband/bredband-via-5g/hemma-med-tv?pid=tv-paket-mini", "sourceName": "telia.se/bredband/bredband-via-5g",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["bredband", "5g", "tv", "paket", "kampanj"]
+    },
+    {
+      "id": "bredband-5g-tv-mellan", "name": "Bredband via 5G + Tv Mellan", "kind": "tvPackage", "category": "5G-bredband + TV",
+      "monthlyPriceSEK": 349, "ordinaryMonthlyPriceSEK": 798, "bindingMonths": 24, "campaignMonths": 24, "speedMbit": 1000,
+      "includedServices": ["36 tv-kanaler", "TV4 Play Plus", "Britbox", "Router ingår", "Trygghetspaketet Bas"],
+      "highlights": ["Från 349 kr/mån i 24 månader", "Ordinarie pris 798 kr/mån"],
+      "eligibilityNotes": "Erbjudandet gäller endast nya bredbands- och tv-kunder.",
+      "sourceURL": "https://www.telia.se/bredband/bredband-via-5g/hemma-med-tv?pid=tv-paket-mellan", "sourceName": "telia.se/bredband/bredband-via-5g",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["bredband", "5g", "tv", "paket", "kampanj"]
+    },
+    {
+      "id": "bredband-5g-tv-mycket", "name": "Bredband via 5G + Tv Mycket", "kind": "tvPackage", "category": "5G-bredband + TV",
+      "monthlyPriceSEK": 449, "ordinaryMonthlyPriceSEK": 948, "bindingMonths": 24, "campaignMonths": 24, "speedMbit": 1000,
+      "includedServices": ["57 tv-kanaler", "TV4 Play Plus", "Viaplay", "Max", "Sky Showtime", "Britbox", "Nordisk Film+", "Router ingår"],
+      "highlights": ["Från 449 kr/mån i 24 månader", "Ordinarie pris 948 kr/mån"],
+      "eligibilityNotes": "Erbjudandet gäller endast nya bredbands- och tv-kunder.",
+      "sourceURL": "https://www.telia.se/bredband/bredband-via-5g/hemma-med-tv?pid=tv-paket-mycket", "sourceName": "telia.se/bredband/bredband-via-5g",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["bredband", "5g", "tv", "paket", "kampanj", "streaming"]
+    },
+    {
+      "id": "bredband-tv-mini-paket", "name": "Bredband 150 + Tv Mini (fiber)", "kind": "tvPackage", "category": "Fiber + TV",
+      "monthlyPriceSEK": 399, "ordinaryMonthlyPriceSEK": 848, "bindingMonths": 12, "speedMbit": 150,
+      "includedServices": ["Bredband 150/150 via fiber", "Tv Mini med 19 kanaler", "TV4 Play Plus", "Trygghetspaketet Bas"],
+      "highlights": ["Från 399 kr/mån", "Ordinarie pris 848 kr/mån", "Bättre pris än att köpa separat"],
+      "eligibilityNotes": "Erbjudandet gäller endast nya bredbands- och tv-kunder.",
+      "sourceURL": "https://www.telia.se/bredband/fiber/bredband-via-fiber-med-tv?pid=bredband-150&pid=tv-paket-mini", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["bredband", "fiber", "tv", "paket", "kampanj"]
+    },
+    {
+      "id": "mobilt-bredband-huawei-e6888", "name": "Mobilt bredband + router Huawei E6888", "kind": "mobileBroadband", "category": "Mobilt bredband",
+      "monthlyPriceSEK": 349, "ordinaryMonthlyPriceSEK": 529, "bindingMonths": 0, "unlimitedData": true,
+      "includedServices": ["Obegränsad surf", "Router Huawei E6888 ingår (värde 2 895 kr)"],
+      "highlights": ["349 kr/mån (ord. 529)", "Routern ingår på köpet"],
+      "eligibilityNotes": "Kampanj via telia.se/erbjudanden. Kontrollera bindningstid på produktsidan innan du citerar villkoren.",
+      "sourceURL": "https://www.telia.se/bredband/routrar/huawei-e6888", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["mobilt bredband", "router", "kampanj"]
+    },
+    {
+      "id": "tv4-play-sport-hockey", "name": "TV4 Play Sport Hockey", "kind": "tvPackage", "category": "Sport",
+      "monthlyPriceSEK": 499, "ordinaryMonthlyPriceSEK": 549, "bindingMonths": 0,
+      "includedServices": ["SHL", "HockeyAllsvenskan", "TV4 Play"],
+      "highlights": ["Höstkampanj: 499 kr/mån", "Ordinarie pris 549 kr/mån", "Ingen bindningstid"],
+      "eligibilityNotes": "Erbjudandet gäller endast nya tv-kunder.",
+      "sourceURL": "https://www.telia.se/tv/sport/tv4-play-sport-hockey", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["tv", "sport", "hockey", "shl", "kampanj"]
+    },
+    {
+      "id": "stora-sportpaketet", "name": "Stora sportpaketet", "kind": "tvPackage", "category": "Sport",
+      "monthlyPriceSEK": 699, "ordinaryMonthlyPriceSEK": 799, "bindingMonths": 0,
+      "includedServices": ["Premier League", "Fler ligor på köpet", "Viaplay", "Amazon Prime"],
+      "highlights": ["Höstkampanj: 699 kr/mån", "Ordinarie pris 799 kr/mån"],
+      "eligibilityNotes": "Erbjudandet gäller endast nya tv-kunder.",
+      "sourceURL": "https://www.telia.se/tv/sport/stora-sportpaketet", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["tv", "sport", "fotboll", "premier league", "kampanj"]
+    },
+    {
+      "id": "apple-iphone-18-pro", "name": "Apple iPhone 18 Pro 256GB", "kind": "device", "category": "Telefon",
+      "brand": "Apple", "monthlyPriceSEK": 649, "ordinaryMonthlyPriceSEK": 749, "bindingMonths": 24, "campaignMonths": 12, "cashPriceSEK": 16495,
+      "includedServices": ["Avbetalning med abonnemang: 649 kr/mån i 12 mån, därefter 749 kr/mån"],
+      "highlights": ["Kontantpris: 16 495 kr", "Med 24 mån abonnemang: bättre pris", "Färger: Bourgogne, Glaciär, Svart, Silver"],
+      "eligibilityNotes": "Priset per månad gäller vid köp med abonnemang och 24 mån bindningstid. Bättre enhetspris med större abonnemang; kontantpris (cash deal) vid full betalning.",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/apple/apple-iphone-18-pro", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["telefon", "iphone", "apple", "nyhet"]
+    },
+    {
+      "id": "apple-iphone-18-pro-max", "name": "Apple iPhone 18 Pro Max 256GB", "kind": "device", "category": "Telefon",
+      "brand": "Apple", "monthlyPriceSEK": 699, "ordinaryMonthlyPriceSEK": 799, "bindingMonths": 24, "campaignMonths": 12, "cashPriceSEK": 18495,
+      "includedServices": ["Avbetalning med abonnemang: 699 kr/mån i 12 mån, därefter 799 kr/mån"],
+      "highlights": ["Kontantpris: 18 495 kr", "Färger: Bourgogne, Svart, Silver, Glaciär"],
+      "eligibilityNotes": "Priset per månad gäller vid köp med abonnemang och 24 mån bindningstid.",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/apple/apple-iphone-18-pro-max", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["telefon", "iphone", "apple", "nyhet"]
+    },
+    {
+      "id": "apple-iphone-duo", "name": "Apple iPhone Duo 256GB", "kind": "device", "category": "Telefon",
+      "brand": "Apple", "monthlyPriceSEK": 899, "ordinaryMonthlyPriceSEK": 999, "bindingMonths": 24, "campaignMonths": 12, "cashPriceSEK": 26995,
+      "includedServices": ["Avbetalning med abonnemang: 899 kr/mån i 12 mån, därefter 999 kr/mån"],
+      "highlights": ["Kontantpris: 26 995 kr", "Förköpskampanj: 999 kr/mån med obegränsad surf (ord. 1 099)"],
+      "eligibilityNotes": "Månadspriset gäller med abonnemang och 24 mån bindningstid.",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/apple/apple-iphone-duo", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["telefon", "iphone", "apple", "nyhet", "duo"]
+    },
+    {
+      "id": "apple-iphone-17", "name": "Apple iPhone 17", "kind": "device", "category": "Telefon",
+      "brand": "Apple", "monthlyPriceSEK": 699, "ordinaryMonthlyPriceSEK": 859, "bindingMonths": 24,
+      "includedServices": ["Obegränsad surf och Netflix på köpet"],
+      "highlights": ["699 kr/mån med obegränsad surf + Netflix", "Ordinarie pris från 859 kr/mån"],
+      "eligibilityNotes": "Kampanjpris med abonnemang och 24 mån bindningstid. Kontrollera lagervarianter på produktsidan.",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/apple/apple-iphone-17", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["telefon", "iphone", "apple", "kampanj"]
+    },
+    {
+      "id": "samsung-galaxy-s26", "name": "Samsung Galaxy S26", "kind": "device", "category": "Telefon",
+      "brand": "Samsung", "monthlyPriceSEK": 649, "ordinaryMonthlyPriceSEK": 809, "bindingMonths": 24,
+      "includedServices": ["Obegränsad surf och Netflix på köpet"],
+      "highlights": ["649 kr/mån med obegränsad surf + Netflix", "Ordinarie pris 809 kr/mån"],
+      "eligibilityNotes": "Kampanjpris med abonnemang och 24 mån bindningstid.",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/samsung/samsung-galaxy-s26", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["telefon", "samsung", "galaxy", "kampanj"]
+    },
+    {
+      "id": "samsung-galaxy-s26plus", "name": "Samsung Galaxy S26+", "kind": "device", "category": "Telefon",
+      "brand": "Samsung", "monthlyPriceSEK": 769, "ordinaryMonthlyPriceSEK": 929, "bindingMonths": 24,
+      "includedServices": ["Netflix ingår", "Galaxy Watch7 ingår"],
+      "highlights": ["769 kr/mån med obegränsad surf, Netflix och Galaxy Watch7 på köpet", "Ordinarie pris 929 kr/mån"],
+      "eligibilityNotes": "Kampanjpris med abonnemang och 24 mån bindningstid.",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/samsung/samsung-galaxy-s26plus", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["telefon", "samsung", "galaxy", "klocka", "kampanj"]
+    },
+    {
+      "id": "samsung-galaxy-s26-fe", "name": "Samsung Galaxy S26 FE", "kind": "device", "category": "Telefon",
+      "brand": "Samsung", "monthlyPriceSEK": 549, "ordinaryMonthlyPriceSEK": 709, "bindingMonths": 24,
+      "includedServices": ["Obegränsad surf", "Buds3 Pro på köpet", "Netflix på köpet"],
+      "highlights": ["549 kr/mån med obegränsad surf, Buds3 Pro och Netflix", "Ordinarie pris 709 kr/mån"],
+      "eligibilityNotes": "Kampanjpris med abonnemang och 24 mån bindningstid.",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/samsung/samsung-galaxy-s26-fe", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["telefon", "samsung", "galaxy", "buds", "kampanj"]
+    },
+    {
+      "id": "google-pixel-11-pro", "name": "Google Pixel 11 Pro", "kind": "device", "category": "Telefon",
+      "brand": "Google", "monthlyPriceSEK": 549, "ordinaryMonthlyPriceSEK": 709, "bindingMonths": 24,
+      "includedServices": ["Obegränsad surf", "SHL-ring med favoritlag", "Netflix på köpet"],
+      "highlights": ["549 kr/mån – du sparar 13 535 kr", "Ordinarie pris 709 kr/mån"],
+      "eligibilityNotes": "Kampanjpris med abonnemang och 24 mån bindningstid.",
+      "sourceURL": "https://www.telia.se/mobiltelefoner/google/google-pixel-11-pro", "sourceName": "telia.se/erbjudanden",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["telefon", "google", "pixel", "kampanj"]
+    },
+    {
+      "id": "samlingsrabatt", "name": "Samlingsrabatt (obegränsad mobil + bredband)", "kind": "service", "category": "Rabatt",
+      "monthlyPriceSEK": -100, "bindingMonths": 0,
+      "includedServices": ["100 kr/mån rabatt"],
+      "highlights": ["Samla obegränsat mobilabonnemang och bredband: 100 kr/mån rabatt", "Gäller Obegränsad, Obegränsad Plus och streaming-varianter"],
+      "eligibilityNotes": "Rabatten kräver både bredband och ett obegränsat mobilabonnemang hos Telia.",
+      "sourceURL": "https://www.telia.se/erbjudanden/samlingsrabatt", "sourceName": "telia.se/erbjudanden/samlingsrabatt",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["rabatt", "samla", "kampanj"]
+    },
+    {
+      "id": "ungdomsrabatt", "name": "Ungdomsrabatt (under 28)", "kind": "service", "category": "Rabatt",
+      "monthlyPriceSEK": -50, "bindingMonths": 0,
+      "includedServices": ["50 kr/mån rabatt"],
+      "highlights": ["50 kr/mån rabatt på nästan alla abonnemang", "Gäller abonnemang med 20 GB surf eller mer"],
+      "eligibilityNotes": "Krav: under 28 år. Exklusive abonnemanget 10 GB.",
+      "sourceURL": "https://www.telia.se/mobilabonnemang/student", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["rabatt", "ungdom", "student"]
+    },
+    {
+      "id": "avgift-startavgift-online", "name": "Startavgift (online)", "kind": "fee", "category": "Avgifter",
+      "monthlyPriceSEK": 0, "bindingMonths": 0,
+      "highlights": ["Fri startavgift vid köp online"],
+      "sourceURL": "https://www.telia.se/mobilabonnemang", "sourceName": "telia.se/mobilabonnemang",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["avgift", "startavgift"]
+    },
+    {
+      "id": "avgift-faktura", "name": "Fakturaavgift", "kind": "fee", "category": "Avgifter",
+      "monthlyPriceSEK": 0, "bindingMonths": 0,
+      "mandatoryCharges": [
+        { "name": "E-faktura och autogiro", "amountSEK": 0, "recurring": true },
+        { "name": "Pappersfaktura och faktura via Kivra", "amountSEK": 59, "recurring": true }
+      ],
+      "highlights": ["E-faktura/autogiro: 0 kr", "Pappersfaktura/Kivra: 59 kr per faktura"],
+      "sourceURL": "https://www.telia.se/om/priser", "sourceName": "telia.se/om/priser",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["avgift", "faktura"]
+    },
+    {
+      "id": "avgift-tjanster", "name": "Övriga serviceavgifter", "kind": "fee", "category": "Avgifter",
+      "monthlyPriceSEK": 0, "bindingMonths": 0,
+      "mandatoryCharges": [
+        { "name": "Öppning efter stängning", "amountSEK": 195, "recurring": false },
+        { "name": "Förtursöppning efter stängning", "amountSEK": 390, "recurring": false },
+        { "name": "Överlåtelse", "amountSEK": 500, "recurring": false },
+        { "name": "Registerutdrag", "amountSEK": 250, "recurring": false }
+      ],
+      "highlights": ["Öppning efter stängning: 195 kr", "Förtursöppning: 390 kr", "Överlåtelse: 500 kr", "Registerutdrag: 250 kr"],
+      "sourceURL": "https://www.telia.se/om/priser", "sourceName": "telia.se/om/priser",
+      "verifiedAt": "2026-10-18T00:00:00+02:00", "verification": "verified",
+      "tags": ["avgift", "service"]
+    }
+  ]
+}

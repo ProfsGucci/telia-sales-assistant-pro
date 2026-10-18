@@ -1,0 +1,180 @@
+{
+  "entries": [
+    {
+      "id": "disc-baseline", "section": "discovery", "title": "Tre frågor som kartlägger allt",
+      "summary": "Surf, nöjdhet och vardag – grundfrågorna som räcker långt.",
+      "guidance": [
+        "1) 'Hur använder du mobilen under en vanlig dag?' – avslöjar surfbehov, streaming och samtal.",
+        "2) 'Vad fungerar bra och vad stör dig med dagens lösning?' – avslöjar smärtpunkter och konkurrentkopplingar.",
+        "3) 'Vad skulle göra vardagen enklare?' – öppnar för familj, bredband och streaming.",
+        "Följ upp med siffror: 'Kolla gärna din surfmängd i appen – det tar tio sekunder.' Verkliga GB slår gissningar."
+      ],
+      "relatedProductIds": []
+    },
+    {
+      "id": "disc-family", "section": "discovery", "title": "Tecken på familjebehov",
+      "summary": "Signalerna att lyssna efter och hur du följer upp dem.",
+      "guidance": [
+        "Signal: 'vi har flera abonnemang', 'fyra fakturor', 'barnen streamar'.",
+        "Uppföljning: 'Hur många är ni i hushållet? Vet ni ungefär vad ni betalar totalt per månad?'",
+        "Räkna sedan högt: huvudabonnemang + extra användare, per person och totalt, jämfört med deras nuvarande.",
+        "Tänk på: inte alla familjer vinner på att samla – jämför ärligt med deras nuvarande kostnad."
+      ],
+      "relatedProductIds": ["telia-mobil-extra-anvandare", "mobil-obegraensad-plus"]
+    },
+    {
+      "id": "disc-broadband", "section": "discovery", "title": "Kartlägga bostadens uppkoppling",
+      "summary": "Frågor som avgör fiber, 5G eller mobilt bredband.",
+      "guidance": [
+        "'Hur fungerar wifi:t hemma?' – buffrar filmen, räcker det till distansjobb?",
+        "'Vet du om det finns fiber draget till fastigheten?' – annars: bredbandssök på adressen.",
+        "'Hur många enheter kopplar upp sig samtidigt?' – spelar, streamar, jobbar?",
+        "Med 5G: nämn 30 dagars nöjdhetsgaranti – det sänker tröskeln att prova."
+      ],
+      "relatedProductIds": ["bredband-5g-hemma", "bredband-150-fiber"]
+    },
+    {
+      "id": "needs-usage", "section": "needs", "title": "Matcha surfmängd till kund",
+      "summary": "Från GB-användning till rätt abonnemang.",
+      "guidance": [
+        "0–3 GB och ringer mest: mindre abonnemang räcker; överväg Rörlig bara vid mycket låg användning.",
+        "5–15 GB: surfabonnemang (10–20 GB). Glöm inte surfpotten.",
+        "15–30 GB och slut varje månad: prata obegränsat – trygghet istället för att hålla koll.",
+        "30 GB+ eller streaming i mobilt nät: Obegränsad eller Obegränsad Plus (1000 Mbit/s, Cloud, familj).",
+        "Betalar separat för streaming: streamingvarianten av Obegränsad Plus slår ofta ihop kostnaderna."
+      ],
+      "relatedProductIds": ["mobil-10-gb", "mobil-20-gb", "mobil-obegraensad", "mobil-obegraensad-plus"]
+    },
+    {
+      "id": "needs-device", "section": "needs", "title": "Rekommendera telefon rätt",
+      "summary": "Kontant eller avbetalning, och varför bindning sänker priset.",
+      "guidance": [
+        "Fråga: 'Föredrar du att betala hela telefonen på en gång eller per månad?'",
+        "Med abonnemang + bindning: lägre enhetspris. Ju större abonnemang, desto mer rabatt.",
+        "Cash deal: betala allt på en gång tillsammans med abonnemang = lägre pris på mobilen.",
+        "Visa alltid totalkostnaden över 24 månader + vad som gäller efter kampanjperioden."
+      ],
+      "relatedProductIds": ["apple-iphone-18-pro", "samsung-galaxy-s26-fe", "google-pixel-11-pro"]
+    },
+    {
+      "id": "prod-plus", "section": "products", "title": "Förklara Obegränsad Plus på 30 sekunder",
+      "summary": "Pitch som utgår från kundens behov, inte funktionslistan.",
+      "guidance": [
+        "'Obegränsad Plus är för dig som inte vill tänka på surf – hastigheten räcker till allt, även Filmer i hög kvalitet.'",
+        "Tre bärande värden: obegränsad surf i 1000 Mbit/s, obegränsad lagring i Telia Cloud, och hela familjen kan samlas med eget nummer.",
+        "Har kunden bredband? 'Då får du dessutom 100 kr/mån i samlingsrabatt.'",
+        "Streamingvarianten: 'Betalar du idag för Netflix kan den kunden ingå i abonnemanget istället – en faktura mindre.'"
+      ],
+      "relatedProductIds": ["mobil-obegraensad-plus", "mobil-obegraensad-plus-netflix", "samlingsrabatt"]
+    },
+    {
+      "id": "prod-bredband", "section": "products", "title": "Fiber vs 5G-bredband",
+      "summary": "När du rekommenderar vad – och hur du pratar om pris per adress.",
+      "guidance": [
+        "Fiber: bäst för tung användning och många enheter; hastighet 100–1000 Mbit/s; priset varierar med adress och kampanj.",
+        "5G-bredband: bästa alternativet till fiber; enkel installation; 30 dagars nöjdhetsgaranti; kräver bra täckning.",
+        "Alltid: kolla adressen i bredbandssöken innan du citerar fiberpris – priset beror på stadsnät.",
+        "Paket med TV: Tv Mini (grundutbud), Mellan (familj) och Mycket (störst, med streamingtjänster)."
+      ],
+      "relatedProductIds": ["bredband-150-fiber", "bredband-5g-hemma", "bredband-5g-tv-mycket"]
+    },
+    {
+      "id": "obj-expensive", "section": "objections", "title": "\"Telia är för dyrt\"",
+      "summary": "Den vanligaste invändningen – hantera med nyfikenhet, inte försvar.",
+      "objection": {
+        "whatTheyMean": "Oftast en månadskostandsjämförelse mot ett kampanjpris eller en billigare operatör – sällan en faktisk bedömning av vad som ingår.",
+        "clarifyingQuestion": "Vad jämför du med? Är det månadskostnaden eller vad du får för pengarna som känns viktigast?",
+        "empatheticResponse": "Jag förstår – priset spelar roll och du ska självklart få valuta för pengarna. Låt oss titta på vad du faktiskt använder, då hittar vi rätt nivå tillsammans.",
+        "nextStep": "Räkna högt: vad kunden betalar idag totalt (inklusive separat streaming, extra surf-köp) vs. vad som ingår hos Telia. Presentera ett billigare alternativ om det passar bättre – förtroende slår en engångsaffär.",
+        "commonMistakes": [
+          "Försvara priset innan du förstår jämförelsen.",
+          "Nedvärdera konkurrenten.",
+          "Dölj vad som inte ingår i det billigare alternativet.",
+          "Glöm samlingsrabatten (100 kr/mån) när kunden har bredband."
+        ]
+      },
+      "relatedProductIds": ["mobil-10-gb", "mobil-20-gb", "samlingsrabatt"]
+    },
+    {
+      "id": "obj-binding", "section": "objections", "title": "\"Jag vill inte binda mig\"",
+      "summary": "Bindningsskräck efter tidigare dåliga upplevelser.",
+      "objection": {
+        "whatTheyMean": "Rädsla för att fastna i fel avtal eller missa bättre erbjudanden – sällan motstånd mot produkten.",
+        "clarifyingQuestion": "Vad är det med bindningstiden som oroar dig – flexibiliteten eller kostnaden om du skulle vilja byta?",
+        "empatheticResponse": "Väldigt rimligt att tänka så – många har blivit brunna tidigare. Det goda svaret är att de flesta av våra abonnemang inte har någon bindningstid alls.",
+        "nextStep": "Visa obundna alternativ först. Förklara var bindning finns: den följer ett mervärde (lägre enhetspris eller kampanjpris under 24 månader). Låt kunden välja – och berätta exakt vad som gäller efter perioden.",
+        "commonMistakes": [
+          "Dölja eller förringa bindningstiden.",
+          "Pressa kunden mot bindning trots skepsis.",
+          "Glömma att nämna att abonnemanget efter bindningstiden löper vidare som obundet."
+        ]
+      },
+      "relatedProductIds": ["mobil-obegraensad", "mobil-10-gb"]
+    },
+    {
+      "id": "obj-competitor", "section": "competitors", "title": "\"Telenor/Tele2 är billigare\"",
+      "summary": "Konkurrentjämförelse utan att bli smutsig.",
+      "objection": {
+        "whatTheyMean": "Kunden har gjort research och vill veta om skillnaden är värd pengarna – en chans att skapa förtroende, inte en attack.",
+        "clarifyingQuestion": "Bra att du jämför! Vad är det du värdesätter hos dem – priset, täckningen eller något annat?",
+        "empatheticResponse": "Det finns billigare alternativ – det är helt sant. Skillnaden handlar om vad som ingår: nätets täckning och utbyggnad, säkerhetstjänsterna som är inbyggda, och att du kan samla allt och få rabatt.",
+        "nextStep": "Om pris per GB är det enda som spelar roll: var ärlig med att ett billigare abonnemang kan passa bättre. Har kunden däremot behov av täckning (landställe, resor, arbete) visa vad nätet betyder i praktiken.",
+        "commonMistakes": [
+          "Påstå saker om konkurrentens nät eller priser utan verifiering.",
+          "Bli defensiv eller irriterad.",
+          " glömma fråga vad kunden värdesätter."
+        ]
+      },
+      "relatedProductIds": []
+    },
+    {
+      "id": "obj-streaming", "section": "objections", "title": "\"Jag har redan Netflix\"",
+      "summary": "Streaminginvändningen – ofta en möjlighet, inte ett hinder.",
+      "objection": {
+        "whatTheyMean": "Kunden ser inte värdet av att 'betala för något de redan har' – de har inte räknat på sammanlagd kostnad.",
+        "clarifyingQuestion": "Betalar du Netflix separat idag? Vet du vad du betalar för surf och streaming sammanlagt per månad?",
+        "empatheticResponse": "Det är precis därför den här varianten finns – streamingen ingår i abonnemanget istället för som en separat faktura.",
+        "nextStep": "Räkna högt: kundens nuvarande abonnemang + separat Netflix vs. streamingvarianten av Obegränsad Plus. Ofta är skillnanden liten eller till kundens fördel – visa siffrorna och låt kunden dra slutsatsen.",
+        "commonMistakes": [
+          "Inte räkna på totalkostnaden.",
+          "Pressa när kunden är nöjd med sitt nuvarande upplägg.",
+          "Glömma nämna vilken streamingnivå som ingår (t.ex. 'med reklam')."
+        ]
+      },
+      "relatedProductIds": ["mobil-obegraensad-plus-netflix", "mobil-obegraensad-plus-disney"]
+    },
+    {
+      "id": "close-ask", "section": "closing", "title": "Be om affären",
+      "summary": "Tre mjuka avslutsfrågor som fungerar.",
+      "guidance": [
+        "'Ska vi göra så?' – enklast och starkast.",
+        "'Vill du att jag fixar det här direkt så är du klar?'",
+        "'Baserat på det du berättat – hur känns det här alternativet?'",
+        "Tvekan = fråga, inte press: 'Vad är det som känns osäkert?'"
+      ],
+      "relatedProductIds": []
+    },
+    {
+      "id": "close-summary", "section": "closing", "title": "Avsluta med genomgång",
+      "summary": "Sista minuterna avgör om kunden kommer tillbaka.",
+      "guidance": [
+        "Sammanfatta: vad kunden tecknat, månadskostnad, vad som gäller efter kampanjperioden.",
+        "Berätta hur kunden når support och var de hittar sina villkor (Mitt Telia).",
+        "Vid nej: tacka, var hjälpsam ändå. En bra upplevelse utan affär är en framtida affär.",
+        "Följ upp vid nästa besök: 'Hur fungerar det – allt som det ska?'"
+      ],
+      "relatedProductIds": []
+    },
+    {
+      "id": "svc-support", "section": "service", "title": "Serviceärenden utan säljblick",
+      "summary": "När kunden har ett problem – lös det först, sälj sedan (kanske).",
+      "guidance": [
+        "Lös problemet först: fakturafråga, täckning, inställningar. Förtroende byggs i service.",
+        "Nämn bara en tjänst om den löser något kunden nämner under ärendet.",
+        "Kolla avgifterna: e-faktura 0 kr, pappersfaktura 59 kr – en enkel besparing många uppskattar.",
+        "Trevlig service är den starkaste 'reklamen' – kunden berättar det för andra."
+      ],
+      "relatedProductIds": ["avgift-faktura"]
+    }
+  ]
+}

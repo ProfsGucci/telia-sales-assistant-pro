@@ -1,0 +1,23 @@
+# SwiftPM / Linux test builds
+.build/
+Package.resolved
+
+# Xcode
+DerivedData/
+dd/
+build/
+xcuserdata/
+*.xcuserstate
+.swiftpm/
+
+# Unsigned IPA packaging output
+Payload/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/

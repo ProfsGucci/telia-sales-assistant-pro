@@ -1,0 +1,353 @@
+{
+  "lessons": [
+    {
+      "id": "intro-telia-mobil", "track": "product-knowledge", "title": "Mobilabonnemang – produktöverblick",
+      "summary": "Produktstrukturen: Rörlig, surfabonnemang, Obegränsad, Obegränsad Plus och streaming-varianterna.",
+      "pages": [
+        "Telias mobilutbud har fyra nivåer: Mobil Rörlig 0,2 GB (betala per användning), surfabonnemang med fast mängd (10 GB och 20 GB), Obegränsad (obegränsad surf i 100 Mbit/s) och Obegränsad Plus (1000 Mbit/s, Telia Cloud, möjlighet till familj och streaming).",
+        "Streaming-varianterna bygger på Obegränsad Plus och har en tjänst ingår: Netflix Standard, HBO Max Basic med reklam, TV4 Play Plus med reklam, Amazon Prime med reklam, Disney+ Standard med reklam eller Viaplay Film & Serier med reklam. Priset per månad skiljer sig bara lite mellan tjänsterna – värdet för kunden är valet, inte priset.",
+        "Ungdomspris: under 28 år ger 50 kr/mån rabatt på abonnemang med 20 GB surf eller mer. Exempel: Obegränsad Ungdom och Obegränsad Plus Ungdom finns som egna produkter.",
+        "Alla abonnemang har fria samtal och sms/mms (utom Rörlig där samtal betalas per minut), 5G och säkerhetstjänster: samtalsskydd (wangiri, spoofing), sms-filter och uppkopplingsskydd."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Mobilabonnemang", "prompt": "Vad skiljer Obegränsad från Obegränsad Plus?",
+          "options": ["Surfmängden – Plus har mer surf", "Hastigheten och extratjänster – Plus har 1000 Mbit/s, Telia Cloud och familjemöjlighet", "Bindningstiden – Plus är alltid bundet", "Priset är samma, namnet skiljer bara"],
+          "correctIndex": 1,
+          "explanation": "Båda har obegränsad surf. Plus har högre hastighet (1000 vs 100 Mbit/s), Telia Cloud obegränsad lagring och kan vara huvudabonnemang för extra användare."
+        },
+        {
+          "id": "q2", "topic": "Mobilabonnemang", "prompt": "Vilken streamingtjänst ingår INTE som variant av Obegränsad Plus?",
+          "options": ["Netflix Standard", "HBO Max Basic med reklam", "Spotify Premium", "TV4 Play Plus med reklam"],
+          "correctIndex": 2,
+          "explanation": "Spotify ingår inte. Varianterna är Netflix, HBO Max, TV4 Play, Amazon Prime, Disney+ och Viaplay."
+        },
+        {
+          "id": "q3", "topic": "Mobilabonnemang", "prompt": "Vad gäller för ungdomsrabatten?",
+          "options": ["30 % rabatt för alla under 30", "50 kr/mån rabatt under 28 år på abonnemang med 20 GB eller mer", "Rabatten gäller bara 10 GB-abonnemanget", "Endast för studenter med Mecenatkort"],
+          "correctIndex": 1,
+          "explanation": "Under 28 år: 50 kr/mån rabatt på abonnemang med minst 20 GB surf (ej 10 GB)."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Mobilabonnemang", "front": "Vad ingår i Obegränsad Plus?", "back": "Obegränsad surf 1000 Mbit/s, Telia Cloud obegränsad lagring, huvudabonnemang för familj (extra användare), säkerhetstjänster, berättigad till samlingsrabatt." },
+        { "id": "f2", "topic": "Mobilabonnemang", "front": "Vad är Mobil Rörlig?", "back": "Miniabonnemang utan fast kostnad utöver 129 kr/mån: 0,2 GB surf, fria sms/mms, samtal betalas per prislista." },
+        { "id": "f3", "topic": "Mobilabonnemang", "front": "Vilka säkerhetstjänster ingår alltid?", "back": "Samtalsskydd (wangiri-, spoofing-, nummerkontroll), sms-filter mot bluff-sms, uppkopplingsskydd (överbelastningsskydd, internetfilter)." }
+      ],
+      "minutes": 6, "programDay": 1
+    },
+    {
+      "id": "familj", "track": "product-knowledge", "title": "Familjeabonnemang & extra användare",
+      "summary": "Hur huvudabonnemang och extra användare fungerar – och hur du räknar på det.",
+      "pages": [
+        "Ett familjeabonnemang byggs med ett Obegränsad Plus-abonnemang som huvudabonnemang. Därutöver kan familjen lägga till upp till 9 extra användare.",
+        "Varje extra användare får ett eget nummer (befintligt eller nytt) med obegränsad surf – samma surfmängd som huvudabonnemanget – och allt samlas på samma faktura.",
+        "Räkna alltid på totalkostnaden per person och jämför med kundens nuvarande separata abonnemang. Visa gärna båda siffrorna: månadskostnad totalt och per person.",
+        "Kom ihåg: kampanjer på extra användare är tidsbegränsade – säg alltid vad som gäller efter kampanjperioden."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Familj", "prompt": "Vad krävs för att lägga till extra användare?",
+          "options": ["Vilket abonnemang som helst", "Ett abonnemang med Obegränsad Plus som huvudabonnemang", "Ett bredbandsabonnemang", "Ingenting – det är en fristående tjänst"],
+          "correctIndex": 1,
+          "explanation": "Extra användare kopplas till ett huvudabonnemang, vilket måste vara ett Obegränsad Plus-abonnemang."
+        },
+        {
+          "id": "q2", "topic": "Familj", "prompt": "Vad får en extra användare?",
+          "options": ["Eget nummer och samma surfmängd som huvudabonnemanget", "Eget separat abonnemang med egen faktura", "Endast samtal och sms", "10 GB delad surf"],
+          "correctIndex": 0,
+          "explanation": "Eget nummer (befintligt eller nytt) och obegränsad surf eftersom huvudabonnemanget är obegränsat – allt på samma faktura."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Familj", "front": "Hur många extra användare kan ett familjeabonnemang ha?", "back": "Upp till 9 extra användare utöver huvudabonnemanget." },
+        { "id": "f2", "topic": "Familj", "front": "Vad är det starkaste vardagsvärdet med familjeabonnemang?", "back": "Alla får obegränsad surf med eget nummer, en faktura, och ofta lägre kostnad per person än separata abonnemang." }
+      ],
+      "minutes": 5, "programDay": 3
+    },
+    {
+      "id": "bredband", "track": "product-knowledge", "title": "Bredband: fiber och 5G",
+      "summary": "Skillnaden mellan fiber och 5G-bredband, hastighetssteget och samlingsrabatten.",
+      "pages": [
+        "Fiber är den tryggaste lösningen för tung användning: hastigheter från 100 upp till 1000 Mbit/s, priset varierar med adress och stadsnät. Bredband via fiber ingår Trygghetspaketet Bas (barnskydd, skydd mot falska länkar, antivirus, säkra bankärenden).",
+        "Bredband via 5G är det bästa alternativet till fiber där fiber saknas: fast uppkoppling med router i bostaden, upp till 1000 Mbit/s, enkel installation och nöjdhetsgaranti i 30 dagar.",
+        "Samla och spara: har kunden både ett obegränsat mobilabonnemang och bredband hos Telia ges samlingsrabatt med 100 kr/mån. Det är ofta det enklaste argumentet för att samla allt hos er.",
+        "Bredband + TV-paket: Tv Mini, Mellan och Mycket ger kanaler plus streamingtjänster till lägre pris än att köpa separat. Kom ihåg att paketpriserna ofta gäller nya kunder under en kampanjperiod."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Bredband", "prompt": "Vad ingår i Trygghetspaketet Bas?",
+          "options": ["Endast antivirus", "Barnskydd, skydd mot falska länkar, antivirus och säkra bankärenden", "Försäkring för enheter", "Prioriterad support"],
+          "correctIndex": 1,
+          "explanation": "Trygghetspaketet Bas innehåller barnskydd, skydd mot falska länkar, antivirus och säkra bankärenden."
+        },
+        {
+          "id": "q2", "topic": "Bredband", "prompt": "Hur stor är samlingsrabatten när kunden har obegränsat mobilabonnemang + bredband?",
+          "options": ["50 kr/mån", "100 kr/mån", "150 kr/mån", "10 % av totalen"],
+          "correctIndex": 1,
+          "explanation": "Samlingsrabatten är 100 kr/mån när kunden samlar obegränsat mobilabonnemang och bredband."
+        },
+        {
+          "id": "q3", "topic": "Bredband", "prompt": "När passar 5G-bredband bäst?",
+          "options": ["När kunden streamar mycket film i 8K", "När fiber saknas eller installation måste vara enkel, och täckningen är bra", "Bara till fritidshuset", "Aldrig – fiber är alltid bättre"],
+          "correctIndex": 1,
+          "explanation": "5G-bredband är det bästa alternativet till fiber: enkelt att installera, kräver bra täckning, och har 30 dagars nöjdhetsgaranti."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Bredband", "front": "Vilka fibervhastigheter erbjuder Telia?", "back": "100, 150, 250, 300, 500, 600 och 1000 Mbit/s. Priset beror på adress och kampanj." },
+        { "id": "f2", "topic": "Bredband", "front": "Vad är nöjdhetsgarantin på 5G-bredband?", "back": "Kunden kan prova i 30 dagar." }
+      ],
+      "minutes": 6, "programDay": 5
+    },
+    {
+      "id": "mobil-med-abonnemang", "track": "cost-transparency", "title": "Mobil + abonnemang: prissättningen",
+      "summary": "Hur enhetspriset påverkas av abonnemang, bindningstid och kontant betalning.",
+      "pages": [
+        "Köper kunden en mobil med abonnemang och bindningstid får de ett bättre pris på enheten. Ju större abonnemang, desto mer rabatt på mobilen.",
+        "Två ärliga vägar att visa: (1) Avbetalning – fast månadskostnad under bindningstiden; kom ihåg att vissa kampanjpriser stiger efter 12 månader, säg det tydligt. (2) Cash deal – betala hela mobilen på en gång tillsammans med abonnemang och få lägre pris.",
+        "Räkna alltid totalkostnaden över bindningstiden, inte bara månadskostnaden. Visa gärna båda: '649 kr/mån första 12 månaderna, sedan 749 – totalt 16 776 kr under 24 månader'.",
+        "Var noga med att förklara skillnaden mellan kampanjpris och ordinarie pris, och när rabatten upphör."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Priser", "prompt": "Varför blir mobilen billigare med abonnemang och bindningstid?",
+          "options": ["Den är en äldre modell", "Bindningstiden gör att Telia subventionerar enhetspriset", "Kunden betalar mer för abonnemanget", "Det är en lagkrav"],
+          "correctIndex": 1,
+          "explanation": "Med 24 mån bindningstid och ett abonnemang kan enhetspriset sänkas – bindningen gör affären trygg för operatören."
+        },
+        {
+          "id": "q2", "topic": "Priser", "prompt": "En kund frågar vad ett telefonköp kostar totalt under 24 månader. Vad gör du?",
+          "options": ["Citerar bara månadskostnaden", "Räknar fram totalkostnaden inklusive vad som gäller efter kampanjperioden och visar beräkningen", "Säger att det beror på mycket", "Rekommenderar dyraste alternativet"],
+          "correctIndex": 1,
+          "explanation": "Transparens: visa månadskostnad per period och totalsumman. Det bygger förtroende och är ofta avgörande."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Priser", "front": "Vad är en cash deal?", "back": "Betala hela mobilen på en gång samtidigt som du tecknar abonnemang – ger lägre pris på mobilen." },
+        { "id": "f2", "topic": "Priser", "front": "Vad ska du alltid säga om kampanjpriser på mobil + abonnemang?", "back": "Hur länge kampanjpriset gäller och vad kostnaden blir efteråt." }
+      ],
+      "minutes": 5, "programDay": 7
+    },
+    {
+      "id": "kartlaggning", "track": "discovery", "title": "Kartläggning: frågor som öppnar samtalet",
+      "summary": "Öppna frågor som avslöjar behov utan att kännas som ett förhör.",
+      "pages": [
+        "Bra kartläggning följer kundens vardag, inte produktkatalogen. Tre grundfrågor räcker långt: Hur använder du mobilen idag? Vad fungerar och vad stör dig? Vad skulle göra vardagen enklare?",
+        "Fråga efter surfmängd: 'Vet du hur mycket surf du använder i månaden? Kolla gärna i din nuvarande app – det tar tio sekunder.' Verkliga siffror slår gissningar.",
+        "Lyssna efter signaler: 'surfen tar slut' = behov av mer data eller obegränsat; 'betalar för Netflix separat' = streamingvariant; 'wifi hemma är dåligt' = bredbandsämne; 'fyra fakturor' = familjeabonnemang.",
+        "Sammanfatta innan du föreslår: 'Så om jag förstår dig rätt – du vill ha koll på kostnaden, obegränsad surf till barnen och allt på en faktura. Stämmer det?' Då landar förslaget som en lösning, inte som en försäljning."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Kartläggning", "prompt": "Vilken är en bra öppen kartläggningsfråga?",
+          "options": ["Vill du ha obegränsad surf?", "Hur använder du mobilen under en vanlig dag?", "Ska vi teckna direkt?", "Vet du att vi har kampanj just nu?"],
+          "correctIndex": 1,
+          "explanation": "Öppna frågor (vad/hur/berätta) ger kunden utrymme att beskriva behovet – ja/nej-frågor styr samtalet mot en färdig lösning."
+        },
+        {
+          "id": "q2", "topic": "Kartläggning", "prompt": "Kunden säger 'surfen tar slut varje månad'. Vad är nästa steg?",
+          "options": ["Sälj direkt det dyraste obegränsade abonnemanget", "Fråga hur mycket surf de använder idag och vad de gör när den tar slut", "Föreslå att de använder wifi mer", "Ignorera och prata om mobiler"],
+          "correctIndex": 1,
+          "explanation": "Kvantifiera behovet först – sedan kan du jämföra större surfmängd mot obegränsat och låta kunden välja med hull och hår."
+        },
+        {
+          "id": "q3", "topic": "Kartläggning", "prompt": "Varför sammanfatta kundens behov innan du föreslår?",
+          "options": ["Det låter proffsigt", "Kunden känner sig hörd och förslaget blir kopplat till deras verklighet", "Det ger dig tid att tänka", "Alla säljare gör det"],
+          "correctIndex": 1,
+          "explanation": "Sammanfattningen bekräftar att du lyssnat – och gör förslaget relevant istället för generiskt."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Kartläggning", "front": "Vilka tre grundfrågor täcker de flesta behov?", "back": "1) Hur använder du mobilen idag? 2) Vad fungerar och vad stör dig? 3) Vad skulle göra vardagen enklare?" },
+        { "id": "f2", "topic": "Kartläggning", "front": "Ge ett exempel på att fånga surfbehov med siffra.", "back": "'Kolla gärna i din nuvarande app hur många GB du använder – det tar tio sekunder.' Verkliga data slår gissningar." }
+      ],
+      "minutes": 5, "programDay": 2
+    },
+    {
+      "id": "invandningar", "track": "objection-handling", "title": "Invändningar: pris, bindning, konkurrent",
+      "summary": "Tre klassiska invändningar och hur du bemöter dem med struktur.",
+      "pages": [
+        "Pris: 'Det är dyrt.' Utforska först – dyrt jämfört med vad? Många jämför månadskostnad mot kampanjpris hos konkurrent, eller glömmer vad som ingår. Visa vad som ingår och räkna på totalkostnad hos kundens nuvarande upplägg.",
+        "Bindningstid: 'Jag vill inte binda mig.' Faktaplatser: de flesta mobilabonnemang är obundna. Bindning följer oftast ett mervärde (lägre enhetspris eller längre kampanjpris). Erbjud alltid det obundna alternativet först när kunden är tveksam.",
+        "Konkurrent: 'X är billigare.' Uppgradera istället för att diss: 'Bra att du jämför – vad är det du värdesätter hos dem?' Skillnader som är ärliga: täckning och nätets utbyggnad, säkerhetstjänster som ingår, möjlighet att samla och få rabatt. Om pris per GB är kundens enda mål – var ärlig med att det finns billigare alternativ.",
+        "Gemensamt mönster: bekräfta känslan → klargör vad invändningen handlar om → svara med fakta → låt kunden välja nästa steg. Press och överdrivna påståenden är alltid fel."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Invändningar", "prompt": "Kunden säger 'Telia är dyrt'. Vad är bästa första steget?",
+          "options": ["Sänk priset direkt", "Fråga vad kunden jämför med och visa vad som ingår", "Påpeka att konkurrenterna är sämre", "Gå vidare till nästa kund"],
+          "correctIndex": 1,
+          "explanation": "Först förstå vad jämförelsen grundar sig i – sedan kan du prata om värde och totalkostnad på riktigt."
+        },
+        {
+          "id": "q2", "topic": "Invändningar", "prompt": "Vad gör du när kunden är skeptisk till bindningstid?",
+          "options": ["Övertyga om att bindning är bra", "Visa obundna alternativ och förklara varför vissa erbjudanden har bindning", "Säg att alla har bindning", "Dölj bindningstiden"],
+          "correctIndex": 1,
+          "explanation": "Transparens vinner: visa obundna alternativ, förklara mervärdet bakom bindning, låt kunden välja."
+        },
+        {
+          "id": "q3", "topic": "Invändningar", "prompt": "En konkurrent erbjuder 10 GB för 199 kr. Hur hanterar du det rent?",
+          "options": ["Säg att konkurrenten ljuger", "Fråga vad kunden värdesätter och berätta ärligt för dina skillnader", "Matcha priset direkt", "Påstå att deras nät är värdelöst"],
+          "correctIndex": 1,
+          "explanation": "Aldrig diss på konkurrenten. Utforska vad kunden värdesätter och var ärlig med var Telia skiljer sig – och när ett billigare alternativ kan passa bättre."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Invändningar", "front": "Vilka fyra steg hanterar en invändning strukturerat?", "back": "1) Bekräfta känslan. 2) Klargör vad invändningen gäller. 3) Svara med fakta. 4) Låt kunden välja nästa steg." },
+        { "id": "f2", "topic": "Invändningar", "front": "Vad ska du ALDRIG göra i en konkurrentdiskussion?", "back": "Nedvärdera konkurrenten eller citera deras priser utan att ha verifierat dem själv." }
+      ],
+      "minutes": 6, "programDay": 4
+    },
+    {
+      "id": "behovsbaserat", "track": "needs-based-selling", "title": "Behovsbaserade rekommendationer",
+      "summary": "Matcha kunden till rätt produkt – även när det är billigare än de tänkt.",
+      "pages": [
+        "Behovsbaserat sälj betyder att rekommendationen följer det kartlagda behovet: surfmängd, streamingvanor, familjesituation, bostadens uppkoppling och budget.",
+        "Exempel: pensionär som mest ringer och läser nyheter behöver sällan obegränsat – ett mindre abonnemang med fria samtal räcker och sparar pengar. En familj som streamar i mobilt nät och har fyra fakturor vinner på Obegränsad Plus + extra användare.",
+        "Sälj aldrig upp bara för att kunna. En kund som känner att du sparade deras pengar kommer tillbaka – och tar med sig familjen. Förtroende är den bästa återkomstkällan.",
+        "När du presenterar: koppla varje egenskap till kundens egna ord. 'Du sa att surfen tar slut – här är obegränsat, så det slutar hända.'"
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Behovsbaserat sälj", "prompt": "En pensionär använder 3 GB/mån och ringer mycket. Vad föreslår du?",
+          "options": ["Obegränsad Plus med Netflix", "Ett rimligt mindre abonnemang med fria samtal som matchar användningen", "Det dyraste abonnemanget för trygghet", "Ett bredbandspaket"],
+          "correctIndex": 1,
+          "explanation": "Behovet styr: fria samtal och lagom surf. Att sälja upp utan behov skadar förtroendet."
+        },
+        {
+          "id": "q2", "topic": "Behovsbaserat sälj", "prompt": "Vad är det bästa sättet att presentera en rekommendation?",
+          "options": ["Räkna upp alla funktioner", "Koppla varje egenskap till det kunden själva berättade", "Visa billigast först alltid", "Jämför med konkurrentens fel"],
+          "correctIndex": 1,
+          "explanation": "Kundens egna ord gör förslaget relevant: 'Du sa att surfen tar slut – här är lösningen.'"
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Behovsbaserat sälj", "front": "Vad är etiska regeln för cross-sell?", "back": "Föreslå endast tillbehör och tjänster som löser ett verkligt behov kunden nämnt – bekvämlighet, inte push." },
+        { "id": "f2", "topic": "Behovsbaserat sälj", "front": "Vad vinner du på att sälja 'nedåt' när det passar?", "back": "Förtroende, återkomstkunder och rekommendationer – den bästa långsiktiga försäljningen." }
+      ],
+      "minutes": 5, "programDay": 6
+    },
+    {
+      "id": "etik", "track": "cost-transparency", "title": "Transparens: avgifter, villkor och vad du får säga",
+      "summary": "Vad du alltid måste berätta – och vad du aldrig får göra.",
+      "pages": [
+        "Alltid redovisa: månadskostnad, kampanjperiodens längd, pris efter kampanjen, bindningstid och fakturavgift (e-faktura 0 kr, pappersfaktura 59 kr). Dolda avgifter är inte bara dåligt sälj – det strider mot konsumentskydd.",
+        "Citera bara priser du har verifierat. Har du osäkerhet: 'Låt mig dubbelkolla exakt pris i systemet så du får rätt siffra.' Att gissa sig till ett pris skapar problem för kunden, dig och Telia.",
+        "Låtsas aldrig om att en kampanj är tidsbegränsad om den inte är det, och påstå aldrig att ett erbjudande 'snart tar slut' utan fakta. Press är inte sälj.",
+        "Respektera nej. En kund som tackar nej men känner sig väl bemött kommer tillbaka – och berättar det för andra."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Priser", "prompt": "Vilket påstående är OK i samtalet?",
+          "options": ["'Detta erbjudande gäller bara idag' (utan att det stämmer)", "'Priset är 599 kr/mån de första 12 månaderna, därefter 699 – och e-faktura är gratis'", "'Fakturaavgift finns inte'", "'Bindningstiden spelar ingen roll'"],
+          "correctIndex": 1,
+          "explanation": "Fullständig transparens om prisperioder och avgifter är ett krav – och ett säljargument."
+        },
+        {
+          "id": "q2", "topic": "Priser", "prompt": "Du är osäker på ett pris. Vad gör du?",
+          "options": ["Citerar det pris du minns", "Säger 'låt mig dubbelkolla så du får rätt siffra' och verifierar", "Rundar av till närmaste hundring", "Låter kunden gissa"],
+          "correctIndex": 1,
+          "explanation": "Rätt siffra väntar på. Att dubbelkolla upplevs som omsorg, inte osäkerhet."
+        },
+        {
+          "id": "q3", "topic": "Priser", "prompt": "Hur mycket kostar pappersfaktura?",
+          "options": ["0 kr", "29 kr", "59 kr", "99 kr"],
+          "correctIndex": 2,
+          "explanation": "Pappersfaktura och faktura via Kivra kostar 59 kr. E-faktura och autogiro är gratis."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Priser", "front": "Vad kostar e-faktura respektive pappersfaktura?", "back": "E-faktura/autogiro: 0 kr. Pappersfaktura/Kivra: 59 kr per faktura." },
+        { "id": "f2", "topic": "Priser", "front": "Vad ska du göra när kunden tackar nej?", "back": "Respektera det, tacka för samtalet och se till att kunden känner sig väl bemött." }
+      ],
+      "minutes": 5, "programDay": 8
+    },
+    {
+      "id": "avslut", "track": "needs-based-selling", "title": "Avslut och uppföljning",
+      "summary": "Be om affären utan press – och skapa återkomstkunder.",
+      "pages": [
+        "När behovet är kartlagt och förslaget presenterat: våga fråga. 'Ska vi göra så?' eller 'Vill du att jag fixar det här direkt?' Många affärer förloras bara för att säljaren aldrig frågade.",
+        "Hantera tvekan med en fråga, inte ett påtryck: 'Vad är det som känns osäkert?' Ofta handlar det om pris, timing eller något du kan lösa direkt.",
+        "Efter affären: sammanfatta vad kunden fått, vad som gäller efter eventuella kampanjperioder, och hur de når support. Fem minuters genomgång sparar frågor senare.",
+        "Följ upp i efterhand när det passar butikens rutiner – en enkel 'hur fungerar det?'-fråga vid nästa besök bygger relationer som ger återförsäljning."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Avslut", "prompt": "Kunden är tveksam i slutet. Bästa reaktionen?",
+          "options": ["Påpeka att erbjudandet snart upphör", "Fråga vad som känns osäkert", "Presentera ett dyrare alternativ", "Börja prata med någon annan"],
+          "correctIndex": 1,
+          "explanation": "En fråga öppnar för det verkliga motivet – ofta något du kan lösa direkt utan press."
+        },
+        {
+          "id": "q2", "topic": "Avslut", "prompt": "Vad är en bra avslutsfråga?",
+          "options": ["'Ska vi göra så?'", "'Du fattar väl att detta är chansen?'", "'Vill du inte spara pengar?'", "'Kan du bestämma dig nu tack?'"],
+          "correctIndex": 0,
+          "explanation": "Enkelt, respektfullt och direkt – be om affären utan att trycka."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Avslut", "front": "Vad bör ett bra avslut innehålla?", "back": "En tydlig fråga om beslut, en sammanfattning av vad kunden fått och vad som gäller efter kampanjer." }
+      ],
+      "minutes": 4, "programDay": 10
+    },
+    {
+      "id": "tillbehor", "track": "needs-based-selling", "title": "Tillbehör och etisk cross-sell",
+      "summary": "När tillbehör är service och när det är push.",
+      "pages": [
+        "Tillbehör säljs bäst som bekvämlighet: kunden som köper en telefon för 15 000+ kr har nästan alltid nytta av skydd, skärmskydd eller en extra laddare.",
+        "Regeln: föreslå baserat på kundens situation, inte på din egen target. Har kunden barn som lånar telefonen? Tålligt skydd. Reser kunden mycket? Powerbank och laddare.",
+        "Ett förslag räcker. 'Vill du ha skärmskydd på – det brukar kännas dumt att ångra sig efter första rampan?' Om svaret är nej: acceptera direkt.",
+        "Presentkort och accessories som 'på köpet' i kampanjer (som buds eller klockor i enhetskampanjer) är starka argument – använd dem, men berätta tydligt vad som ingår."
+      ],
+      "quiz": [
+        {
+          "id": "q1", "topic": "Tillbehör", "prompt": "När är det rätt att föreslå tillbehör?",
+          "options": ["Alltid till varje kund", "När kundens situation gör tillbehöret användbart", "Bara vid dyra köp", "Aldrig – det är push"],
+          "correctIndex": 1,
+          "explanation": "Behovet styr: skydd, laddning eller bekvämlighet kopplat till kundens vardag."
+        },
+        {
+          "id": "q2", "topic": "Tillbehör", "prompt": "Kunden tackar nej till tillbehör. Vad gör du?",
+          "options": ["Frågar en gång till", "Accepterar direkt och går vidare", "Förklarar att de kommer ångra sig", "Tar bort rabatten"],
+          "correctIndex": 1,
+          "explanation": "Ett förslag är service. Två är press."
+        }
+      ],
+      "flashcards": [
+        { "id": "f1", "topic": "Tillbehör", "front": "Vad kallas principen för tillbehörsförsäljning här?", "back": "Bekvämlighetsval: föreslå utifrån kundens situation, ett förslag, acceptera svaret." }
+      ],
+      "minutes": 4, "programDay": 12
+    }
+  ],
+  "glossary": [
+    { "term": "Bindningstid", "definition": "Den period kunden är bunden till abonnemanget. Efter perioden löper abonnemanget vidare som obundet." },
+    { "term": "Uppsägningstid", "definition": "Tid efter att kunden sagt upp tjänsten innan den avslutas. Kontrollera aktuella villkor i källan." },
+    { "term": "Samlingsrabatt", "definition": "Rabatt när kunden samlar flera tjänster, t.ex. obegränsat mobilabonnemang + bredband: 100 kr/mån." },
+    { "term": "Huvudabonnemang", "definition": "Abonnemanget som familjens extra användare kopplas till. Måste vara Obegränsad Plus." },
+    { "term": "Extra användare", "definition": "Familjemedlem med eget nummer och samma surfmängd som huvudabonnemanget, på samma faktura." },
+    { "term": "Surfpott", "definition": "Outnyttjad surf som sparas till nästa månad (upp till 50 GB på surfabonnemang)." },
+    { "term": "Kampanjpris", "definition": "Tillfälligt lägre pris under en begränsad period. Berätta alltid hur länge det gäller och vad som gäller efteråt." },
+    { "term": "Startavgift", "definition": "Engångsavgift vid tecknande. Online är startavgiften 0 kr hos Telia." },
+    { "term": "E-sim", "definition": "Inbyggt SIM-kort – abonnemanget lagras i enheten istället för på ett fysiskt kort." },
+    { "term": "Surfgaranti", "definition": "Telia säkrar uppkopplingen om bredbandet krånglar, t.ex. via mobilt bredband eller påfyllning av familjens surf." },
+    { "term": "Trygghetspaketet Bas", "definition": "Säkerhetstjänst som ingår i bredband: barnskydd, skydd mot falska länkar, antivirus, säkra bankärenden." },
+    { "term": "MNP / nummerportering", "definition": "Att flytta befintligt telefonnummer från en annan operatör. Väljs i beställningsflödet." },
+    { "term": "Avbetalning", "definition": "Att betala enheten delvis per månad under bindningstiden i stället för hela beloppet på en gång." },
+    { "term": "Cash deal", "definition": "Att betala hela enheten på en gång vid tecknande av abonnemang – ger lägre pris på mobilen." }
+  ],
+  "tips": [
+    { "text": "Börja varje kundmöte med att fråga hur dagen ser ut – avslappnade kunder avslöjar behov bättre.", "category": "Öppning" },
+    { "text": "Använd kundens egna ord när du presenterar lösningen: 'Du sa att surfen tar slut…'", "category": "Presentation" },
+    { "text": "Räkna alltid totalkostnaden högt för kunden – månadsvy och totalvy i samma mening.", "category": "Pris" },
+    { "text": "Nämn samlingsrabatten (100 kr/mån) till alla obegränsade kunder utan bredband.", "category": "Cross-sell" },
+    { "text": "När en kund jämför priser: fråga vad de värdesätter – täckning, surf eller pris per GB.", "category": "Invändning" },
+    { "text": "En tveksam kund behöver en fråga, inte en påminnelse om kampanj.", "category": "Avslut" },
+    { "text": "Säg alltid hur länge kampanjpriset gäller – innan kunden behöver fråga.", "category": "Transparens" },
+    { "text": "Kolla kundens surfmängd i deras app – verkliga siffror slår alla gissningar.", "category": "Kartläggning" },
+    { "text": "Pensionärer behöver sällan obegränsat – matcha behovet, inte priset.", "category": "Etik" },
+    { "text": "Avsluta varje möte med att sammanfatta vad kunden fått och vad som händer näst.", "category": "Avslut" },
+    { "text": "Ett nej är ett nej. Tacka och se till att kunden lämnar butiken nöjd ändå.", "category": "Etik" },
+    { "text": "Öppna med att lyssna i minst en minut innan du föreslår något.", "category": "Kartläggning" }
+  ]
+}
