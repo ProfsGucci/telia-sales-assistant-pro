@@ -19,31 +19,51 @@ struct PlaybookView: View {
         return filtered
     }
 
+    private struct PlaybookGroup: Identifiable {
+        let section: PlaybookSection
+        let entries: [PlaybookEntry]
+        var id: String { section.rawValue }
+    }
+
+    private var grouped: [PlaybookGroup] {
+        PlaybookSection.allCases.compactMap { section in
+            let matching = entries.filter { $0.section == section }
+            return matching.isEmpty ? nil : PlaybookGroup(section: section, entries: matching)
+        }
+    }
+
     var body: some View {
         List {
-            ForEach(PlaybookSection.allCases.filter { s in entries.contains { $0.section == s } }) { s in
+            ForEach(grouped) { group in
                 Section {
-                    ForEach(entries.filter { $0.section == s }) { entry in
-                        NavigationLink {
-                            PlaybookEntryView(entry: entry)
-                        } label: {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text(entry.title)
-                                    .font(.system(.subheadline, design: .rounded).weight(.semibold))
-                                Text(entry.summary)
-                                    .font(.system(.caption, design: .rounded))
-                                    .foregroundStyle(.secondary)
-                                    .lineLimit(2)
-                            }
-                        }
+                    ForEach(group.entries) { entry in
+                        playbookRow(entry)
                     }
                 } header: {
-                    Label(s.displayName, systemImage: s.symbolName)
+                    Label(group.section.displayName, systemImage: group.section.symbolName)
                 }
             }
         }
         .searchable(text: $query, prompt: "Sök i säljmanus")
+        .navigationDestination(for: String.self) { productID in
+            ProductDetailView(productID: productID)
+        }
         .navigationTitle("Säljmanus")
+    }
+
+    private func playbookRow(_ entry: PlaybookEntry) -> some View {
+        NavigationLink {
+            PlaybookEntryView(entry: entry)
+        } label: {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(entry.title)
+                    .font(.system(.subheadline, design: .rounded).weight(.semibold))
+                Text(entry.summary)
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+            }
+        }
     }
 }
 

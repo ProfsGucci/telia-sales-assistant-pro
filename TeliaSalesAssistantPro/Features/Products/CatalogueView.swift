@@ -312,7 +312,7 @@ struct FilterSheet: View {
                     }
 
                     SectionCard(title: "Maxpris", symbol: "arrow.down.to.line") {
-                        Picker("Maxpris", selection: $maxPriceBinding) {
+                        Picker("Maxpris", selection: maxPriceBinding) {
                             Text("Valfritt").tag(0)
                             Text("300 kr").tag(300)
                             Text("500 kr").tag(500)

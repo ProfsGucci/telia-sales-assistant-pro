@@ -230,7 +230,7 @@ struct RolePlayResultView: View {
             ScrollView {
                 VStack(spacing: DS.Space.m) {
                     totalCard
-                    ForEach(result.scores) { score in
+                    ForEach(result.scores, id: \.dimension) { score in
                         scoreCard(score)
                     }
                     if !result.redFlags.isEmpty {
