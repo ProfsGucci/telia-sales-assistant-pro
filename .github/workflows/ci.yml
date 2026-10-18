@@ -33,6 +33,9 @@ jobs:
     name: iOS build, tests & unsigned IPA
     runs-on: macos-15
     timeout-minutes: 60
+    # Required for the release step (softprops) to attach the IPA on v* tags.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
