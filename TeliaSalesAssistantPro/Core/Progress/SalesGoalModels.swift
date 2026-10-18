@@ -228,7 +228,7 @@ public enum SalesGoalEngine {
         return count
     }
 
-    static func formatNumber(_ value: Double, whole: Bool) -> String {
+    public static func formatNumber(_ value: Double, whole: Bool) -> String {
         if whole {
             return "\(Int(value.rounded()))"
         }

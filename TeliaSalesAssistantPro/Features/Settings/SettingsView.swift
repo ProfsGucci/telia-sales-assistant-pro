@@ -112,6 +112,16 @@ struct SettingsView: View {
         }
     }
 
+    private var calendarsSection: some View {
+        Section("Kalendrar") {
+            NavigationLink {
+                CalendarProvidersView()
+            } label: {
+                Label("Anslutna kalendrar", systemImage: "calendar.badge.plus")
+            }
+        }
+    }
+
     private var priceSection: some View {
         Section {
             Toggle("Uppdatera automatiskt vid öppning", isOn: Binding(

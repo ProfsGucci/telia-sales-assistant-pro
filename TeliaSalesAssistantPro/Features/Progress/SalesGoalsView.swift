@@ -167,7 +167,6 @@ private struct SalesGoalCard: View {
             VStack(alignment: .trailing, spacing: 2) {
                 Text("\(Int(goal.actualProgress))/\(Int(goal.totalTarget))")
                     .font(.system(.title3, design: .rounded).weight(.bold))
-                    .contentTransition(.numericInterpolation())
                     .animation(.spring(response: 0.4, dampingFraction: 0.85), value: goal.actualProgress)
                 Text("klart")
                     .font(.system(.caption2, design: .rounded))
@@ -214,7 +213,6 @@ private struct SalesGoalCard: View {
             Text(value)
                 .font(.system(.title2, design: .rounded).weight(.bold))
                 .foregroundStyle(tint)
-                .contentTransition(.numericInterpolation())
                 .animation(.spring(response: 0.4, dampingFraction: 0.85), value: value)
             Text(label)
                 .font(.system(.caption2, design: .rounded))
