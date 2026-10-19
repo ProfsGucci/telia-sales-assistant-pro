@@ -271,7 +271,10 @@ struct ProductDetailView: View {
             // the user sends it — nothing is auto-transmitted).
             Button {
                 Haptics.tap()
-                appState.coachSeed = "Förklara \(product.name) på ett kundvänligt sätt: vad är värdet för kunden, vad kostar det (\(Int(product.monthlyPriceSEK)) kr/mån) och vilka bra följdfrågor kan jag ställa?"
+                // Verified price only — if the catalog row has no monthly
+                // price the seed simply doesn't quote one (no invention).
+                let pricePhrase = product.monthlyPriceSEK.map { " (\(Int($0)) kr/mån)" } ?? ""
+                appState.coachSeed = "Förklara \(product.name) på ett kundvänligt sätt: vad är värdet för kunden, vad kostar det\(pricePhrase) och vilka bra följdfrågor kan jag ställa?"
                 appState.selectedTab = .coach
             } label: {
                 VStack(spacing: 6) {
