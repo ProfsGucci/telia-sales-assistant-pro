@@ -120,6 +120,12 @@ private struct SalesGoalCard: View {
                     .foregroundStyle(statusColor)
             } else {
                 numbersGrid
+                if snapshot.pace == .behind, let expected = snapshot.expectedProgress {
+                    Label("För att ligga i fas borde du vara vid \(Int(expected.rounded())) av \(Int(goal.totalTarget)) just nu.",
+                          systemImage: "hare.fill")
+                        .font(.system(.caption2, design: .rounded))
+                        .foregroundStyle(DS.negative)
+                }
             }
 
             HStack(spacing: DS.Space.s) {
@@ -158,6 +164,12 @@ private struct SalesGoalCard: View {
                 HStack(spacing: 6) {
                     Chip(text: goal.category.displayName, color: DS.Purple.base)
                     Chip(text: goal.dayBasis.displayName, color: .blue)
+                    if snapshot.pace != .notApplicable {
+                        Chip(
+                            text: snapshot.pace.displayName,
+                            color: snapshot.pace == .behind ? DS.negative : snapshot.pace == .ahead ? .green : DS.Purple.base
+                        )
+                    }
                     Text("\(snapshot.progressPercent)%")
                         .font(.system(.caption2, design: .rounded).weight(.bold))
                         .foregroundStyle(DS.Purple.base)
@@ -258,6 +270,8 @@ struct SalesGoalEditorSheet: View {
     @State private var targetDate = Calendar.current.date(byAdding: .month, value: 1, to: Date()) ?? Date()
     @State private var error: String?
     @State private var existingID: UUID?
+    /// Prevents double-taps from saving twice.
+    @State private var isSaving = false
 
     init(existing: SalesGoal?) {
         if let g = existing {
@@ -339,24 +353,29 @@ struct SalesGoalEditorSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Spara") { save() }
                         .font(.system(.subheadline, design: .rounded).weight(.bold))
-                        .disabled(title.isEmpty || totalText.isEmpty)
+                        .disabled(title.isEmpty || totalText.isEmpty || isSaving)
                 }
             }
         }
     }
 
     private func save() {
+        guard !isSaving else { return }
+        isSaving = true
         let total = Double(totalText.replacingOccurrences(of: ",", with: ".")) ?? Double(totalText) ?? -1
         let done = Double(progressText.replacingOccurrences(of: ",", with: ".")) ?? Double(progressText) ?? 0
         guard total > 0 else {
+            isSaving = false
             error = "Totalt mål måste vara större än noll."
             return
         }
         guard done >= 0 else {
+            isSaving = false
             error = "Uppnått kan inte vara negativt."
             return
         }
         guard targetDate > startDate else {
+            isSaving = false
             error = "Måldatum måste ligga efter startdatum."
             return
         }
@@ -370,6 +389,11 @@ struct SalesGoalEditorSheet: View {
             targetDate: targetDate,
             dayBasis: dayBasis
         )
+        guard SalesGoalEngine.isValid(goal: goal) else {
+            isSaving = false
+            error = "Kontrollera målets datum och storlek."
+            return
+        }
         goals.upsert(goal)
         Haptics.tap()
         dismiss()

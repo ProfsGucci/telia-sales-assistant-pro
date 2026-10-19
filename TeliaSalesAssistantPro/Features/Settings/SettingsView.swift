@@ -11,6 +11,7 @@ struct SettingsView: View {
     @EnvironmentObject private var progress: ProgressStore
     @EnvironmentObject private var learning: LearningStore
     @EnvironmentObject private var schedule: ScheduleStore
+    @EnvironmentObject private var followUps: FollowUpStore
 
     @State private var apiKey = ""
     @State private var testingConnection = false
@@ -90,6 +91,8 @@ struct SettingsView: View {
         var id: String { url.absoluteString }
     }
     @State private var exportPayload: ExportPayload?
+
+    @State private var showDeleteFollowUpsConfirm = false
 
     // MARK: Sections
 
@@ -265,10 +268,33 @@ struct SettingsView: View {
                     }
                 }
             ))
+            Toggle("Påminnelser för kunduppföljningar", isOn: Binding(
+                get: { settings.data.followUpRemindersEnabled },
+                set: { enabled in
+                    guard enabled != settings.data.followUpRemindersEnabled else { return }
+                    if enabled {
+                        Task {
+                            let granted = await NotificationService.shared.requestPermission()
+                            await MainActor.run {
+                                settings.data.followUpRemindersEnabled = granted
+                                // Idempotent full reschedule — never duplicates.
+                                FollowUpNotificationService.shared.reschedule(
+                                    records: followUps.records,
+                                    enabled: granted
+                                )
+                            }
+                        }
+                    } else {
+                        settings.data.followUpRemindersEnabled = false
+                        // Cancels all pending follow-up reminders.
+                        FollowUpNotificationService.shared.reschedule(records: [], enabled: false)
+                    }
+                }
+            ))
         } header: {
             Text("Notiser")
         } footer: {
-            Text("Lokala notiser 30 minuter före pass, om iOS tillåter. Kampanjpåminnelser skickas tre dagar innan en stjärnmärkt kampanjs verifierade slutdatum – bara sådana är meningsfulla. Inga push-notiser skickas från någon server.")
+            Text("Lokala notiser 30 minuter före pass, om iOS tillåter. Kampanjpåminnelser skickas tre dagar innan en stjärnmärkt kampanjs verifierade slutdatum – bara sådana är meningsfulla. Uppföljningspåminnelser skickas kl 09:00 och visar bara antalet – aldrig namn eller personnummer. Inga push-notiser skickas från någon server.")
         }
     }
 
@@ -303,6 +329,27 @@ struct SettingsView: View {
 
     private var dataSection: some View {
         Section {
+            Button(role: .destructive) {
+                showDeleteFollowUpsConfirm = true
+            } label: {
+                Label(
+                    "Radera kunduppföljningar (\(followUps.records.count))",
+                    systemImage: "person.badge.minus"
+                )
+            }
+            .confirmationDialog(
+                "Radera alla kunduppföljningar?",
+                isPresented: $showDeleteFollowUpsConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Radera \(followUps.records.count) uppföljningar", role: .destructive) {
+                    followUps.deleteAll()
+                    Haptics.tap()
+                }
+                Button("Avbryt", role: .cancel) {}
+            } message: {
+                Text("Raderar alla \(followUps.records.count) sparade kunduppföljningar permanent. Detta kan inte ångras.")
+            }
             Button {
                 if let data = DataStore.exportAll() {
                     let url = FileManager.default.temporaryDirectory

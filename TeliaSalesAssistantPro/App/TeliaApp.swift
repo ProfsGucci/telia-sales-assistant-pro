@@ -36,6 +36,8 @@ struct TeliaSalesAssistantApp: App {
                 .tint(DS.Purple.base)
                 .task {
                     calendarSync.inject(settings: settings)
+                    followUps.inject(settings: settings)
+                    FollowUpNotificationService.shared.refreshAuthorizationStatus()
                     // Brief branded splash on cold start only; never blocks interaction
                     // longer than the content needs to be ready.
                     try? await Task.sleep(nanoseconds: 650_000_000)
@@ -97,6 +99,10 @@ final class AppState: ObservableObject {
     /// Cross-tab navigation requests, e.g. "open product search" from the dashboard.
     /// Seed text for the product search field, set when navigating from the dashboard.
     @Published var productSearchSeed: String?
+    /// Seed text for the AI Coach input, set by "ask the coach" actions
+    /// from products and campaigns. Consumed once on ChatView appear —
+    /// never auto-sent, the user stays in control.
+    @Published var coachSeed: String?
 
     var settingsStore: SettingsStore?
     var libraryStore: LibraryStore?

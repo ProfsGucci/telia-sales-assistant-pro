@@ -130,6 +130,8 @@ struct SettingsData: Codable, Equatable {
     var calendarLastSync: [String: Date] = [:]
     /// Refresh imported calendars when the app becomes active (throttled).
     var calendarSyncOnOpen: Bool = true
+    /// Opt-in local reminders for customer follow-ups (privacy-safe text).
+    var followUpRemindersEnabled: Bool = false
 
     /// Raw GitHub URL of the bundled seed in the public repository.
     static let defaultCampaignFeedURL =
@@ -143,7 +145,7 @@ struct SettingsData: Codable, Equatable {
         case appleCalendarsEnabled, selectedAppleCalendarIDs
         case googleCalendarsEnabled, selectedGoogleCalendarIDs
         case outlookCalendarsEnabled, selectedOutlookCalendarIDs
-        case calendarLastSync, calendarSyncOnOpen
+        case calendarLastSync, calendarSyncOnOpen, followUpRemindersEnabled
     }
 
     /// Tolerant decoding: settings saved by earlier app versions — or with one
@@ -175,6 +177,7 @@ struct SettingsData: Codable, Equatable {
         selectedOutlookCalendarIDs = (try? c.decodeIfPresent(Set<String>.self, forKey: .selectedOutlookCalendarIDs)) ?? []
         calendarLastSync = (try? c.decodeIfPresent([String: Date].self, forKey: .calendarLastSync)) ?? [:]
         calendarSyncOnOpen = (try? c.decodeIfPresent(Bool.self, forKey: .calendarSyncOnOpen)) ?? true
+        followUpRemindersEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .followUpRemindersEnabled)) ?? false
     }
 
     init() {}

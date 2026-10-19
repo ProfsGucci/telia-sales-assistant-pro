@@ -13,6 +13,7 @@ import TeliaCore
 
 struct FollowUpQuickAddSheet: View {
     @EnvironmentObject private var followUps: FollowUpStore
+    @EnvironmentObject private var settings: SettingsStore
     @Environment(\.dismiss) private var dismiss
 
     @State private var personnummer = ""
@@ -21,6 +22,8 @@ struct FollowUpQuickAddSheet: View {
     @State private var dueDate = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
     @State private var validationError: String?
     @State private var showDuplicateConfirm = false
+    /// Prevents double-taps from saving twice.
+    @State private var isSaving = false
     @FocusState private var focusedField: Field?
 
     enum Field: Hashable {
@@ -89,7 +92,7 @@ struct FollowUpQuickAddSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Spara") { save() }
                         .font(.system(.subheadline, design: .rounded).weight(.bold))
-                        .disabled(personnummer.isEmpty || name.isEmpty || reason.isEmpty)
+                        .disabled(personnummer.isEmpty || name.isEmpty || reason.isEmpty || isSaving)
                 }
             }
             .alert("Möjlig dubblett", isPresented: $showDuplicateConfirm) {
@@ -122,6 +125,8 @@ struct FollowUpQuickAddSheet: View {
     }
 
     private func commitSave() {
+        guard !isSaving else { return }
+        isSaving = true
         let result = followUps.add(
             personnummer: personnummer,
             name: name,
@@ -131,8 +136,13 @@ struct FollowUpQuickAddSheet: View {
         switch result {
         case .success:
             Haptics.tap()
+            FollowUpNotificationService.shared.reschedule(
+                records: followUps.records,
+                enabled: settings.data.followUpRemindersEnabled
+            )
             dismiss()
         case .failure(let error):
+            isSaving = false
             withAnimation(.easeInOut(duration: DS.Motion.tap)) {
                 validationError = error.message
             }
@@ -148,6 +158,7 @@ struct FollowUpListView: View {
 
     @State private var searchText = ""
     @State private var filter: Filter = .open
+    @State private var dateFilter: DateFilter = .all
     @State private var showAdd = false
     @State private var editing: FollowUpRecord?
     @State private var rescheduling: FollowUpRecord?
@@ -160,7 +171,35 @@ struct FollowUpListView: View {
         var id: String { rawValue }
     }
 
+    /// Date window filter on top of the status filter.
+    enum DateFilter: String, CaseIterable, Identifiable {
+        case all = "Alla datum"
+        case today = "Idag"
+        case sevenDays = "7 dagar"
+        case thirtyDays = "30 dagar"
+        case overdue = "Försenade"
+        var id: String { rawValue }
+    }
+
     private var cal: Calendar { CalendarEngine.workCalendar() }
+
+    /// Applies the date window to a record list.
+    private func dateFiltered(_ records: [FollowUpRecord]) -> [FollowUpRecord] {
+        switch dateFilter {
+        case .all:
+            return records
+        case .today:
+            return records.filter { cal.isDateInToday($0.dueDate) }
+        case .sevenDays:
+            let horizon = cal.date(byAdding: .day, value: 7, to: Date()) ?? Date()
+            return records.filter { $0.dueDate < horizon }
+        case .thirtyDays:
+            let horizon = cal.date(byAdding: .day, value: 30, to: Date()) ?? Date()
+            return records.filter { $0.dueDate < horizon }
+        case .overdue:
+            return records.filter { $0.dueDate < cal.startOfDay(for: Date()) && !$0.isCompleted }
+        }
+    }
 
     var body: some View {
         List {
@@ -175,7 +214,7 @@ struct FollowUpListView: View {
             }
 
             let groups = FollowUpEngine.group(
-                FollowUpEngine.search(followUps.records, query: searchText),
+                dateFiltered(FollowUpEngine.search(followUps.records, query: searchText)),
                 calendar: cal
             )
 
@@ -202,6 +241,24 @@ struct FollowUpListView: View {
         .navigationTitle("Kolla senare")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    ForEach(DateFilter.allCases) { f in
+                        Button {
+                            withAnimation(.easeInOut(duration: DS.Motion.content)) { dateFilter = f }
+                        } label: {
+                            if dateFilter == f {
+                                Label(f.rawValue, systemImage: "checkmark")
+                            } else {
+                                Text(f.rawValue)
+                            }
+                        }
+                    }
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
+                }
+                .accessibilityLabel("Datumfilter")
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     showAdd = true
@@ -341,6 +398,16 @@ private struct FollowUpRow: View {
                 }
             }
             .padding(.vertical, 4)
+            .overlay(alignment: .leading) {
+                // Urgent: overdue follow-ups get an unmistakable red bar.
+                if status == .overdue && !record.isCompleted {
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(DS.negative)
+                        .frame(width: 4)
+                        .padding(.vertical, 6)
+                        .accessibilityHidden(true)
+                }
+            }
         }
         .buttonStyle(.plain)
     }

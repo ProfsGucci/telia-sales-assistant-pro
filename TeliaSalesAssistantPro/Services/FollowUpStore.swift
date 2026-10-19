@@ -10,7 +10,25 @@ import TeliaCore
 @MainActor
 final class FollowUpStore: ObservableObject {
     @Published var records: [FollowUpRecord] {
-        didSet { DataStore.save(records) }
+        didSet {
+            DataStore.save(records)
+            // Keep local reminders in sync with the data (idempotent full
+            // reschedule — never duplicates). No-op when reminders are off.
+            FollowUpNotificationService.shared.reschedule(
+                records: records,
+                enabled: remindersEnabled
+            )
+        }
+    }
+
+    /// Injected at app startup; nil-safe so the store works in previews.
+    private var settingsStore: SettingsStore?
+    private var remindersEnabled: Bool {
+        settingsStore?.data.followUpRemindersEnabled ?? false
+    }
+
+    func inject(settings: SettingsStore) {
+        self.settingsStore = settings
     }
 
     init() {

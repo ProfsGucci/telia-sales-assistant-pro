@@ -124,4 +124,19 @@ public enum FollowUpEngine {
             !$0.isCompleted && $0.personnummer == normalized.digits12
         }
     }
+
+    // MARK: Local reminders (privacy-safe)
+
+    /// Notification title — deliberately generic.
+    public static let reminderTitle = "Kunduppföljning"
+
+    /// Notification body text for a due date. NEVER includes names or
+    /// personnummer — lock-screen previews must not leak customer data.
+    public static func reminderBody(count: Int) -> String {
+        switch count {
+        case 0: return "Du har inga kunduppföljningar idag."
+        case 1: return "Du har en kunduppföljning idag."
+        default: return "Du har \(count) kunduppföljningar idag."
+        }
+    }
 }

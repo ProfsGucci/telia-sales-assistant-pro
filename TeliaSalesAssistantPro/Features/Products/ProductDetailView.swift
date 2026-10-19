@@ -6,6 +6,7 @@ struct ProductDetailView: View {
 
     @EnvironmentObject private var catalog: CatalogStore
     @EnvironmentObject private var library: LibraryStore
+    @EnvironmentObject private var appState: AppState
     @Environment(\.openURL) private var openURL
 
     private var product: ProductRecord? {
@@ -264,6 +265,32 @@ struct ProductDetailView: View {
                 )
             }
             .buttonStyle(PressableStyle())
+
+            // Contextual coaching: prefills the AI Coach with a question
+            // about THIS product (verified price travels with the question;
+            // the user sends it — nothing is auto-transmitted).
+            Button {
+                Haptics.tap()
+                appState.coachSeed = "Förklara \(product.name) på ett kundvänligt sätt: vad är värdet för kunden, vad kostar det (\(Int(product.monthlyPriceSEK)) kr/mån) och vilka bra följdfrågor kan jag ställa?"
+                appState.selectedTab = .coach
+            } label: {
+                VStack(spacing: 6) {
+                    Image(systemName: "bubble.left.and.text.bubble.right.fill")
+                        .font(.system(.body, design: .rounded))
+                        .foregroundStyle(DS.Orange.base)
+                    Text("Fråga coachen")
+                        .font(.system(.caption2, design: .rounded))
+                        .foregroundStyle(.primary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DS.Space.m)
+                .background(
+                    RoundedRectangle(cornerRadius: DS.Radius.tile, style: .continuous)
+                        .fill(DS.Surface.inset)
+                )
+            }
+            .buttonStyle(PressableStyle())
+            .accessibilityLabel("Fråga AI-coachen om \(product.name)")
         }
     }
 }

@@ -6,6 +6,7 @@ struct ChatView: View {
     @EnvironmentObject private var catalog: CatalogStore
     @EnvironmentObject private var campaigns: CampaignStore
     @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var appState: AppState
 
     @State private var draft = ""
     @State private var atBottom = true
@@ -21,6 +22,15 @@ struct ChatView: View {
         }
         // Transparent so the app-wide custom background shows through.
         .navigationTitle("AI Coach")
+        .onAppear {
+            // Contextual seed from product/campaign "ask the coach" actions:
+            // prefills the draft — never auto-sends, so the user's work and
+            // intent are preserved.
+            if let seed = appState.coachSeed {
+                draft = seed
+                appState.coachSeed = nil
+            }
+        }
         .navigationDestination(for: AppDestination.self) { destination in
             DestinationDetail(destination: destination)
         }

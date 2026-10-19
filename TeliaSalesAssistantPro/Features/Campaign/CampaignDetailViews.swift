@@ -14,6 +14,7 @@ struct CampaignDetailView: View {
     @EnvironmentObject private var campaigns: CampaignStore
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var catalog: CatalogStore
+    @EnvironmentObject private var appState: AppState
 
     let campaign: CampaignRecord
 
@@ -309,6 +310,16 @@ struct CampaignDetailView: View {
                         compareIDs.append(other.id)
                     }
                     showCompare = true
+                }
+                SecondaryButton(
+                    title: "Öva med AI-coachen",
+                    symbol: "bubble.left.and.text.bubble.right.fill"
+                ) {
+                    // Verified campaign facts travel with the question —
+                    // the coach never invents terms. The user sends it.
+                    Haptics.tap()
+                    appState.coachSeed = "Hjälp mig förklara kampanjen \"\(campaign.title)\" för en kund: kampanjpris \(Int(campaign.campaignPriceSEK)) kr\(campaign.ordinaryPriceSEK != nil ? ", ordinarie \(Int(campaign.ordinaryPriceSEK!)) kr" : "")\(campaign.bindingMonths != nil ? ", bindningstid \(campaign.bindingMonths!) mån" : ""). Ge mig en kort kundförklaring, vanliga invändningar och svar, samt en rimlig följdfråga. Använd bara verifierade villkor — påtala om något är oklart."
+                    appState.selectedTab = .coach
                 }
             }
         }

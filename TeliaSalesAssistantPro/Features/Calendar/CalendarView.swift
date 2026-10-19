@@ -13,6 +13,7 @@ import TeliaCore
 struct CalendarView: View {
     @EnvironmentObject private var schedule: ScheduleStore
     @EnvironmentObject private var calendarSync: CalendarSyncStore
+    @EnvironmentObject private var followUps: FollowUpStore
 
     @State private var mode: CalMode = .month
     @State private var selectedDate = Date()
@@ -311,6 +312,7 @@ struct CalendarView: View {
                         }
                     }
                     taskSection(tasks: tasks)
+                    followUpSection(on: selectedDate)
                     Button {
                         editorEvent = nil
                         showEditor = true
@@ -320,6 +322,45 @@ struct CalendarView: View {
                             .foregroundStyle(DS.Purple.base)
                     }
                     .buttonStyle(PressableStyle())
+                }
+            }
+        }
+    }
+
+    /// Follow-ups due the selected day — read-only mirror of FollowUpStore.
+    /// Shows names (masked personnummer never) and links to the Follow-ups
+    /// tab for actions. Creates NO calendar records, so nothing is duplicated.
+    private func followUpSection(on date: Date) -> some View {
+        let due = FollowUpEngine.group(followUps.records, calendar: cal)
+            .open
+            .filter { cal.isDate($0.dueDate, inSameDayAs: date) }
+        return Group {
+            if !due.isEmpty {
+                Divider()
+                ForEach(due) { record in
+                    HStack(spacing: DS.Space.s) {
+                        Image(systemName: record.dueDate < cal.startOfDay(for: Date()) ? "exclamationmark.circle.fill" : "person.crop.circle.badge.clock")
+                            .foregroundStyle(record.dueDate < cal.startOfDay(for: Date()) ? DS.negative : DS.Orange.base)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(record.name)
+                                .font(.system(.subheadline, design: .rounded).weight(.semibold))
+                            Text(record.reason)
+                                .font(.system(.caption, design: .rounded))
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                        }
+                        Spacer()
+                        Text("Uppföljning")
+                            .font(.system(.caption2, design: .rounded))
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(
+                                Capsule().fill(DS.Surface.inset)
+                            )
+                    }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Kunduppföljning: \(record.name), \(record.reason)")
                 }
             }
         }

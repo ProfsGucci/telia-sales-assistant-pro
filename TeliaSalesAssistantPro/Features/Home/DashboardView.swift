@@ -4,12 +4,13 @@ import TeliaCore
 // MARK: - Card registry
 
 enum DashboardCard: String, CaseIterable, Identifiable {
-    case shift, search, quickActions, productShortcuts, checklist, goals, campaigns, featured, coach, tip, quiz, recents, scripts, reminders, freshness, training
+    case today, shift, search, quickActions, productShortcuts, checklist, goals, campaigns, featured, coach, tip, quiz, recents, scripts, reminders, freshness, training
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
+        case .today: return "Dagens prioriteringar"
         case .shift: return "Dagens fokus"
         case .search: return "Snabb prisök"
         case .quickActions: return "Snabbåtgärder"
@@ -127,6 +128,7 @@ struct DashboardView: View {
     @ViewBuilder
     private func cardView(_ card: DashboardCard) -> some View {
         switch card {
+        case .today: TodayCard()
         case .shift: ShiftCard()
         case .search: QuickSearchCard()
         case .quickActions: QuickActionsCard()

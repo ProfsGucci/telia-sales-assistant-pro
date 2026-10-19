@@ -92,6 +92,29 @@ public struct SalesGoal: Codable, Hashable, Identifiable, Sendable {
     }
 }
 
+/// Pace assessment for unfinished goals: is actual progress keeping up
+/// with the elapsed share of the selling days? Derived ONLY from the
+/// user's own numbers — no invented trends.
+public enum SalesGoalPace: String, Codable, Sendable {
+    /// Actual progress is ahead of the elapsed-time expectation.
+    case ahead
+    /// Within ±5 % of the expected progress for the elapsed period.
+    case onTrack
+    /// More than 5 % behind the expected progress for the elapsed period.
+    case behind
+    /// Pace is not meaningful yet (goal not started, done or expired).
+    case notApplicable
+
+    public var displayName: String {
+        switch self {
+        case .ahead: return "Före schemat"
+        case .onTrack: return "I fas"
+        case .behind: return "Efter schemat"
+        case .notApplicable: return "—"
+        }
+    }
+}
+
 public enum SalesGoalStatus: String, Codable, Sendable {
     case notStarted, inProgress, completed, exceeded, noDaysRemaining, overdue
 
@@ -119,6 +142,10 @@ public struct SalesGoalSnapshot: Hashable, Sendable {
     public let roundedUpPerDay: Int
     public let progressFraction: Double
     public let status: SalesGoalStatus
+    /// Where the user "should" be by now, in goal units, based on elapsed
+    /// selling days. nil when pace is not applicable.
+    public let expectedProgress: Double?
+    public let pace: SalesGoalPace
     /// Short human message for edge cases (overdue, no days, done…).
     public let message: String?
 
@@ -154,6 +181,8 @@ public enum SalesGoalEngine {
                 roundedUpPerDay: 0,
                 progressFraction: 1,
                 status: exceeded ? .exceeded : .completed,
+                expectedProgress: nil,
+                pace: .notApplicable,
                 message: exceeded
                     ? "Målet är passerat med \(formatNumber(goal.actualProgress - goal.totalTarget, whole: goal.category.isWholeUnit)) — starkt jobbat!"
                     : "Målet är uppnått. Snyggt!"
@@ -178,6 +207,7 @@ public enum SalesGoalEngine {
                 goal: goal, remaining: remaining, remainingDays: 0,
                 requiredPerDay: 0, roundedUpPerDay: 0,
                 progressFraction: fraction, status: .overdue,
+                expectedProgress: nil, pace: .notApplicable,
                 message: "Måldatum har passerat. Förläng datumet eller justera målet — \(formatNumber(remaining, whole: goal.category.isWholeUnit)) återstår."
             )
         }
@@ -186,6 +216,7 @@ public enum SalesGoalEngine {
                 goal: goal, remaining: remaining, remainingDays: 0,
                 requiredPerDay: 0, roundedUpPerDay: 0,
                 progressFraction: fraction, status: .noDaysRemaining,
+                expectedProgress: nil, pace: .notApplicable,
                 message: goal.dayBasis == .shiftDays
                     ? "Inga planerade pass kvar till måldatum — lägg till pass i Schema eller välj annan dagsbas."
                     : "Inga säljdagar kvar till måldatum — förläng datumet eller välj annan dagsbas."
@@ -193,6 +224,44 @@ public enum SalesGoalEngine {
         }
 
         let perDay = remaining / Double(days)
+
+        // Pace: elapsed selling days vs total selling days in the goal's
+        // own day basis. "Elapsed" excludes today (today is a remaining
+        // selling day — it is already counted in `days` above).
+        let start = calendar.startOfDay(for: goal.startDate)
+        let elapsed: Int
+        switch goal.dayBasis {
+        case .calendarDays:
+            // Days strictly before today, on/after the start date.
+            elapsed = max(0, countCalendarDays(from: start, to: today, calendar: calendar) - 1)
+        case .workingDays:
+            let throughToday = countWorkingDays(from: min(start, today), to: today, calendar: calendar)
+            elapsed = max(0, throughToday - (isWorkingDay(today, calendar: calendar) ? 1 : 0))
+        case .shiftDays:
+            let shifts = (plannedShiftDates ?? []).map { calendar.startOfDay(for: $0) }
+            elapsed = Set(shifts).filter { $0 >= start && $0 < today }.count
+        }
+        let totalSellingDays = elapsed + days
+        var expected: Double? = nil
+        var pace: SalesGoalPace = .notApplicable
+        if elapsed <= 0 {
+            // Not started yet (future start date or first selling day today):
+            // any progress at all is ahead; otherwise pace is meaningless.
+            expected = 0
+            pace = goal.actualProgress > 0 ? .ahead : .notApplicable
+        } else if totalSellingDays > 0 {
+            let fractionElapsed = Double(elapsed) / Double(totalSellingDays)
+            let e = fractionElapsed * goal.totalTarget
+            expected = e
+            if goal.actualProgress >= e * 1.05 {
+                pace = .ahead
+            } else if goal.actualProgress >= e * 0.95 {
+                pace = .onTrack
+            } else {
+                pace = .behind
+            }
+        }
+
         return SalesGoalSnapshot(
             goal: goal,
             remaining: remaining,
@@ -201,8 +270,15 @@ public enum SalesGoalEngine {
             roundedUpPerDay: goal.category.isWholeUnit ? Int(ceil(perDay)) : 0,
             progressFraction: fraction,
             status: goal.actualProgress <= 0 ? .notStarted : .inProgress,
+            expectedProgress: expected,
+            pace: pace,
             message: nil
         )
+    }
+
+    private static func isWorkingDay(_ date: Date, calendar: Calendar) -> Bool {
+        let w = calendar.component(.weekday, from: date)
+        return w != 7 && w != 1
     }
 
     // MARK: Day counting

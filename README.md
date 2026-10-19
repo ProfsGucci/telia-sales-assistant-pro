@@ -14,12 +14,12 @@ iPhone och iPad, allt lokalt på din enhet.**
 
 | Område | Funktioner |
 |---|---|
-| **Hem** | säljens kommandocentral (DS 2.0): Dagens fokus-hero med pass/countdown/stats, Snabbåtgärder & Produktgenvägar (cirkulära kontroller), Kampanj Center-kort, checklistor, målringar, snabbsök, dagens tips, mini-quiz, senast visade, prisfräschhet — allt ordningsbart/döljbart |
+| **Hem** | säljens kommandocentral (DS 2.0): **Dagens prioriteringar-kort (1.5): försenade/dagens uppföljningar, daglig måltarget med tempohäng, dagens händelser, kampanjer som snart slutar, EN praktisk rekommendation + "Dagens brief"** — allting från verkligt sparad data, Dagens fokus-hero med pass/countdown/stats, Snabbåtgärder & Produktgenvägar (cirkulära kontroller), Kampanj Center-kort, checklistor, målringar, snabbsök, dagens tips, mini-quiz, senast visade, prisfräschhet — allt ordningsbart/döljbart |
 | **Kampanj Center** | kampanjer verifierade mot offentliga telia.se-sidor: kort med pris (månads-/engångspris hålls isär), ordinarie pris, besparing endast när jämförbart, bindningstid, villkor, källa + verifieringstid. Detaljvy, jämför upp till 3, sök/filter/sortering, favoriter, senast visade, "slutar snart"-hantering, utgångna visas aldrig som aktiva |
 | **Produkter** | verifierad pris-/produktkatalog med sök, filter, sortering, jämför upp till 3, total-/snittkostnad per bindningstid, kampanjpris & slutdatum |
 | **Räknare** | abonnemangstotalkostnad, enhet+abonnemang (kontant vs delbetalning), familjeräknare, kampanjutgång — allt mot inläst katalogdata |
 | **AI-coach** | chatt med svensk, produkt- och kampanjförankrad coach. Echtd streaming mot egen OpenAI-kompatibel server; **demoläge tydligt märkt** när ingen server konfigurerats. Historik, källhänvisningar, försök-igen |
-| **Schema** | månad/vecka/kommande + dagsvy, pass & uppgifter, återkommande händelser, valfri export till Apple Calendar, lokala påminnelser, **enhetlig kalender: Apple/Google/Outlook-import (skrivskyddat, dupliceringsskydd)**, snabba uppföljningar (Kolla senare) och **säljmål med per-dag-beräkning** |
+| **Schema** | månad/vecka/kommande + dagsvy, pass & uppgifter, återkommande händelser, valfri export till Apple Calendar, lokala påminnelser, **enhetlig kalender: Apple/Google/Outlook-import (skrivskyddat, dupliceringsskydd)**, snabba uppföljningar (Kolla senare; datumfilter, röd brådskande-markering, integritetssäkra lokala påminnelser kl 09:00 — endast antal, aldrig namn/personnummer) och **säljmål med per-dag-beräkning och tempomätning (före/om/jämfört med väntad progresfunktion)** |
 | **Min utveckling** | manuella passloggar (appens hittar **aldrig** på siffror), Swift Charts-grafer, mål vs utfall, personliga förslag, träningsstatistik |
 | **Säljmanus** | spelbok med 6-delad objectionsstruktur, redigerbara manus |
 | **Rollspel** | kundsimulator med svårighetsgrad, 9-dimensionell bedömning — belönar aldrig påtryckningstaktik |
@@ -156,6 +156,21 @@ ingår inte.
 
 ## Versionshistorik
 
+- **1.5 (6) — Update 1.5 BETA**: smart säljhem — Dagens prioriteringar-kort
+  (försenade + dagens uppföljningar, daglig säljtarget med tempohäng,
+  dagens händelser från schema OCH importerade kalendrar, kampanjer som
+  snart slutar, exakt EN datadriven rekommendation), "Dagens brief" med
+  tydliga käll-etiketter (Uppmätt/Inmatat/Beräknat/Verifierat) — säger
+  "saknas" istället för att hitta på, säljmålsmotor med dynamisk
+  per-dag-beräkning och tempomätning (±5 %-band, helhetsavrundning,
+  kanter: klara/över/Passerat datum/inga dagar), uppföljningsuppdateringar
+  (datumfilter, röd brådskandelist, dubbeltrycksskydd, lokala
+  integritetssäkra påminnelser kl 09:00 som visar bara antalet), coachen
+  öppningsbar direkt från produkt- och kampanjsidor med förifylld fråga
+  (användaren skickar — inget skickas automatiskt), kalender-dagsvy visar
+  uppföljningar (endast visning, aldrig dubbletter), Visual QA-workflow
+  som bygger, startar och skärmdumpar appen i simulator (ljust + mörkt)
+  på varje push och bifogar bilderna i releasen, 166 kärntester gröna (+15).
 - **1.4 (5) — Update 1.4 BETA**: enhetlig kalender (Apple/Google/Outlook,
   riktiga OAuth-flöden med PKCE, dupliceringsskydd, skrivskyddade
   importer), snabba Kolla senare-uppföljningar (fyra fält, validerat
