@@ -117,12 +117,23 @@ inom befintliga arkitektur-/designmönster.
   inga rotorsaks-regressioner har introducerats (inga nya lager ovanpå
   glaskorten; TodayCard använder befintliga SectionCard/Gloss-komponenter).
 - **Ny Visual QA-workflow** fångar dashboard i ljust + mörkt på varje push
-  och bifogar bilderna i releasen. Skärmdumparna för v1.5-beta har
-  granskats (dashboard med kortvy, båda lägena) — resultat: glansen är
-  synlig (ljusband, kant, sweep) i båda lägena.
-- Ärlighetsgräns: CI-simulatorn fångar **dashboarden efter start** —
-  djupare vyer (kampanjdetalj, produktkort med sweep på markerade kort)
-  verifieras inte automatiskt; det kräver manuell granskning i simulator
+  och bifogar bilderna i releasen (v1.5-beta-assets: dashboard-light.png,
+  dashboard-light-2.png, dashboard-dark.png).
+- **Hur bilderna verifierades (ärligt redovisat):** programmätning på
+  pixelnivå — fullupplösta 1206×2622-PNG:er (1,7–2,7 MB), ljusläge
+  medelluminans 187 (p5=47 → p95=255: mörk text på ljusa kort + ljusa
+  höjdpunkter), mörkläge medelluminans 49 med p95=128 (synligt innehåll,
+  inte en tom svart ruta), 250+ distinkta kvantiserade färger och ~105
+  radkanter per bild i båda lägena (strukturerat kort-UI), Telia-lila
+  representerat (~1,9 % av pixlarna) och orangeaccenter i båda lägena.
+  Appen startade alltså, renderade hela dashboarden med kortstruktur och
+  dynamiskt omfång i båda lägena.
+- **Ärlighetsgräns:** mänsklig okulärbesiktning av glansens estetik har
+  INTE utförts i denna session — verifieringen ovan är programmatisk
+  (struktur/kontrast/färger/dynamiskt omfång, inte "ser snyggt ut").
+  Bilderna bifogas i releasen just så att de kan granskas med ögonen.
+  Dessutom fångar CI-simulatorn bara dashboarden efter start — djupare
+  vyer (kampanjdetalj, produktkort) kräver manuell granskning i simulator
   på egen dator. Detta dokumenteras som kvarvarande begränsning.
 
 ## 6. Kvarvarande begränsningar (kända och medvetna)
