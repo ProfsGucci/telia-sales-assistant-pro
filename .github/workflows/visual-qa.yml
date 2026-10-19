@@ -67,29 +67,38 @@ jobs:
           set -euo pipefail
           APP="dd/Build/Products/Debug-iphonesimulator/TeliaSalesAssistantPro.app"
           test -d "$APP"
+          # simctl does NOT create parent directories and (on some Xcode
+          # versions) exits 0 even when the write fails — so create the dir
+          # ourselves and verify each file afterwards.
+          SHOTS="$PWD/screenshots"
+          mkdir -p "$SHOTS"
           xcrun simctl install "${{ steps.sim.outputs.device }}" "$APP"
           xcrun simctl ui "${{ steps.sim.outputs.device }}" appearance light
           xcrun simctl launch "${{ steps.sim.outputs.device }}" se.sthlm.teliacoachpro
           sleep 12   # first launch: seed import + first layout pass
-          xcrun simctl io "${{ steps.sim.outputs.device }}" screenshot screenshots/dashboard-light.png
+          xcrun simctl io "${{ steps.sim.outputs.device }}" screenshot "$SHOTS/dashboard-light.png"
+          test -s "$SHOTS/dashboard-light.png" || { echo "light screenshot missing"; exit 1; }
           # A second capture a moment later catches settled animations
           # (the diagonal reflection sweep animates on selection).
           sleep 3
-          xcrun simctl io "${{ steps.sim.outputs.device }}" screenshot screenshots/dashboard-light-2.png
+          xcrun simctl io "${{ steps.sim.outputs.device }}" screenshot "$SHOTS/dashboard-light-2.png"
+          test -s "$SHOTS/dashboard-light-2.png" || { echo "light-2 screenshot missing"; exit 1; }
 
       - name: Screenshot (dark)
         run: |
           set -euo pipefail
+          SHOTS="$PWD/screenshots"
           xcrun simctl ui "${{ steps.sim.outputs.device }}" appearance dark
           sleep 4
-          xcrun simctl io "${{ steps.sim.outputs.device }}" screenshot screenshots/dashboard-dark.png
+          xcrun simctl io "${{ steps.sim.outputs.device }}" screenshot "$SHOTS/dashboard-dark.png"
+          test -s "$SHOTS/dashboard-dark.png" || { echo "dark screenshot missing"; exit 1; }
           xcrun simctl terminate "${{ steps.sim.outputs.device }}" se.sthlm.teliacoachpro || true
 
       - name: Verify screenshots exist and are non-trivial
         run: |
           set -euo pipefail
-          ls -la screenshots/
-          for f in screenshots/*.png; do
+          ls -la "$PWD/screenshots/"
+          for f in "$PWD"/screenshots/*.png; do
             # Each screenshot must be a real PNG > 30 KB (not a black frame).
             SIZE=$(stat -f%z "$f")
             if [ "$SIZE" -lt 30000 ]; then
